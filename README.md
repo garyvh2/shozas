@@ -1,3 +1,5 @@
+![](https://travis-ci.com/garyvh2/shozas.svg?branch=master)
+
 # shozas
 
 This application was generated using JHipster 5.8.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.8.1](https://www.jhipster.tech/documentation-archive/v5.8.1).
