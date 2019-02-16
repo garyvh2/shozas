@@ -36,8 +36,8 @@ spring:
             indent-output: true
     data:
         mongodb:
-            uri: mongodb://localhost:27017
-            database: shozas
+            uri: $MONGODB_URI
+            database: $MONGODB_NAME
     mail:
         host: localhost
         port: 25
