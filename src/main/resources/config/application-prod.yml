@@ -27,7 +27,8 @@ spring:
             enabled: false
     data:
         mongodb:
-            uri: ${MONGODB_URI:mongodb://localhost:27017/shozas}
+            uri: ${MONGODB_URI:mongodb://localhost:27017}
+            database: ${MONGO_DATABASE:shozas}
     mail:
         host: smtp.gmail.com
         port: 587
