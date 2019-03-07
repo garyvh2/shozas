@@ -6,6 +6,7 @@ const rxPaths = require('rxjs/_esm5/path-mapping');
 const utils = require('./utils.js');
 
 module.exports = (options) => ({
+    parallelism: 2000,
     resolve: {
         extensions: ['.ts', '.js'],
         modules: ['node_modules'],
