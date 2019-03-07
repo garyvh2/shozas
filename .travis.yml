@@ -32,8 +32,7 @@ install:
   - npm install
 script:
   - chmod +x mvnw
-  - ./mvnw clean test
-  - ./mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test' -Dmaven.repo.local=$MAVEN_USER_HOME
+  - ./mvnw clean
   - ./mvnw verify -Pprod -DskipTests
   - if [ "$TRAVIS_BRANCH" = "master" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas fi
   - if [ "$TRAVIS_BRANCH" = "stage" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas-stage fi
