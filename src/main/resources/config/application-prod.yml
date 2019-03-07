@@ -27,13 +27,18 @@ spring:
             enabled: false
     data:
         mongodb:
-            uri: mongodb://localhost:27017
-            database: shozas
+            uri: ${MONGODB_URI:mongodb://localhost:27017/shozas}
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: ${MAIL_USERNAME:gvalverdeh@ucenfotec.ac.cr}
+        password: ${MAIL_PASSWORD:shozascr123}
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
     thymeleaf:
         cache: true
 
@@ -88,7 +93,7 @@ jhipster:
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: shozas@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        base-url: https://shozas.herokuapp.com # Modify according to your server's URL
     metrics:
         logs: # Reports metrics in the logs
             enabled: false
