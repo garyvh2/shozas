@@ -34,10 +34,11 @@ script:
   - chmod +x mvnw
   - ./mvnw clean
   - ./mvnw verify -Pprod -DskipTests
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas fi
-  - if [ "$TRAVIS_BRANCH" = "stage" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas-stage fi
-  - if [ "$TRAVIS_BRANCH" = "sprint" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas-sprint fi
-  - if [ "$TRAVIS_BRANCH" = "develop" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas-develop fi
+  - echo $TRAVIS_BRANCH
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas; fi
+  - if [ "$TRAVIS_BRANCH" = "stage" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas-stage; fi
+  - if [ "$TRAVIS_BRANCH" = "sprint" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas-sprint; fi
+  - if [ "$TRAVIS_BRANCH" = "develop" ]; then ./mvnw com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=shozas-develop; fi
 notifications:
   webhooks:
     on_success: change  # options: [always|never|change] default: always
