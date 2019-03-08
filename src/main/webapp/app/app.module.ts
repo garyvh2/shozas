@@ -20,6 +20,7 @@ import { ShozasEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { DetailModule } from 'app/modules/detail/detail.module';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         ShozasAccountModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         ShozasEntityModule,
-        ShozasAppRoutingModule
+        ShozasAppRoutingModule,
+        DetailModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [

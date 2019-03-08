@@ -13,6 +13,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'admin',
                     loadChildren: './admin/admin.module#ShozasAdminModule'
                 },
+                {
+                    path: 'detail',
+                    loadChildren: './modules/detail/detail.module#DetailModule'
+                },
                 ...LAYOUT_ROUTES
             ],
             { useHash: true, enableTracing: DEBUG_INFO_ENABLED }
