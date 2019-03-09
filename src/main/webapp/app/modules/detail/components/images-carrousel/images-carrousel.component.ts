@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { Image } from '@ks89/angular-modal-gallery';
 
 @Component({
     selector: 'jhi-images-carrousel',
     templateUrl: './images-carrousel.component.html',
-    styles: []
+    styles: ['./images-carrousel.component.scss']
 })
-export class ImagesCarrouselComponent implements OnInit {
+export class ImagesCarrouselComponent implements OnChanges {
+    @Input()
+    images: any[];
+    carrouserImages = [];
     constructor() {}
 
-    ngOnInit() {}
+    ngOnChanges() {
+        this.carrouserImages = this.images.map(image => new Image(image.id, { img: image.source }));
+    }
 }

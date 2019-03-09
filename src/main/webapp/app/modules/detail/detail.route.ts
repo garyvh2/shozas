@@ -1,21 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HouseComponent } from 'app/modules/detail/views/house/house.component';
-import { ApartmentComponent } from 'app/modules/detail/views/apartment/apartment.component';
-import { LotComponent } from 'app/modules/detail/views/lot/lot.component';
+import { StateDetail } from 'app/modules/detail/views/state-detail/state-detail';
 
 const routes: Routes = [
     {
-        path: 'home/:id',
-        component: HouseComponent
-    },
-    {
-        path: 'lot/:id',
-        component: LotComponent
-    },
-    {
-        path: 'apartment/:id',
-        component: ApartmentComponent
+        path: '/:id',
+        component: StateDetail
     }
 ];
 

@@ -1,7 +1,7 @@
 import { DetailStore } from './detail.store';
 
 import { HttpClient } from '@angular/common/http';
-import sample from 'app/modules/detail/state/sample-data';
+import sample from 'src/main/webapp/app/akita/detail/sample-data';
 import { Injectable } from '@angular/core';
 
 @Injectable()

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Detail, DetailQuery, DetailService } from 'app/modules/detail/state';
+import { Detail, DetailQuery, DetailService } from 'app/akita/detail';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'jhi-house',
-    templateUrl: './house.component.html',
+    selector: 'jhi-state-detail',
+    templateUrl: './state-detail.html',
     styles: []
 })
-export class HouseComponent implements OnInit {
+export class StateDetail implements OnInit {
     id: number;
 
     constructor(private detailService: DetailService, private detailQuery: DetailQuery, private route: ActivatedRoute) {}

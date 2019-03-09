@@ -1,6 +1,10 @@
+
 <p>
   house works!
     <ng-container *ngIf="detail$ | async as detail">
+        <div>
+            <jhi-images-carrousel [images]="detail."></jhi-images-carrousel>
+        </div>
         {{detail.latitude}}
     </ng-container>
     <button mat-raised-button>Hello Im on Material</button>

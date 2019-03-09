@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { errorRoute, navbarRoute } from './layouts';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
+import { DetailModule } from 'app/modules/detail/detail.module';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -15,7 +16,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 },
                 {
                     path: 'detail',
-                    loadChildren: './modules/detail/detail.module#DetailModule'
+                    loadChildren: () => DetailModule
                 },
                 ...LAYOUT_ROUTES
             ],
