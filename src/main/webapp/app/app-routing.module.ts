@@ -13,11 +13,11 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
             [
                 {
                     path: 'admin',
-                    loadChildren: () => ShozasAdminModule
+                    loadChildren: './admin/admin.module#ShozasAdminModule'
                 },
                 {
                     path: 'detail',
-                    loadChildren: () => DetailModule
+                    loadChildren: './modules/detail/detail.module#DetailModule'
                 },
                 ...LAYOUT_ROUTES
             ],
