@@ -1,3 +1,4 @@
+import { AngularMaterialModule } from './../../shared/angular-material/angular-material.module';
 import { NgModule } from '@angular/core';
 
 import { ImagesCarrouselComponent } from './components/images-carrousel/images-carrousel.component';
@@ -8,7 +9,7 @@ import { StateDetailComponent } from 'app/modules/detail/views/state-detail/stat
 import { CommonModule } from '@angular/common';
 @NgModule({
     declarations: [StateDetailComponent, ImagesCarrouselComponent],
-    imports: [DetailRoutingModule, GalleryModule.forRoot(), CommonModule],
+    imports: [DetailRoutingModule, GalleryModule.forRoot(), CommonModule, AngularMaterialModule],
     providers: [RealStateStore, RealStateQuery, RealStateService]
 })
 export class DetailModule {}
