@@ -13,6 +13,7 @@ export class ImagesCarrouselComponent implements OnChanges {
     constructor() {}
 
     ngOnChanges() {
-        this.carrouserImages = this.images.map(image => new Image(image.id, { img: image.source }));
+        this.carrouserImages = this.images.map((image, index) => new Image(index, { img: image.source }));
+        console.log(this.carrouserImages, 'carrousel');
     }
 }

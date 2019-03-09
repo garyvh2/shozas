@@ -3,7 +3,7 @@
   house works!
     <ng-container *ngIf="detail$ | async as detail">
         <div>
-            <jhi-images-carrousel [images]="detail."></jhi-images-carrousel>
+            <jhi-images-carrousel [images]="detail.images"></jhi-images-carrousel>
         </div>
         {{detail.latitude}}
     </ng-container>
