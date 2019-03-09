@@ -7,6 +7,9 @@ export interface Detail {
     province: string;
     city: string;
     price: number;
+    description: string;
+    stories: number;
+    baths: number;
 }
 
 export function createDetail(params: Partial<Detail>) {
