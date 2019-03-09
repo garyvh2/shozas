@@ -22,6 +22,7 @@ import * as moment from 'moment';
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
 import { DetailModule } from 'app/modules/detail/detail.module';
 import { AngularMaterialModule } from 'app/shared/angular-material/angular-material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -33,14 +34,16 @@ import { AngularMaterialModule } from 'app/shared/angular-material/angular-mater
             alertTimeout: 5000
         }),
         ShozasSharedModule.forRoot(),
-        AngularMaterialModule,
         ShozasCoreModule,
         ShozasHomeModule,
         ShozasAccountModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         ShozasEntityModule,
         ShozasAppRoutingModule,
-        DetailModule
+        /** SHOZAS CUSTOM */
+        BrowserAnimationsModule,
+        AngularMaterialModule
+        /** SHOZAS CUSTOM */
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [

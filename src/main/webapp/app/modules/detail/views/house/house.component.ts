@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Detail, DetailQuery, DetailService } from 'app/modules/detail/state';
+import { Detail, DetailQuery, DetailService } from 'app/@akita/detail';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -10,9 +10,9 @@ import { Observable } from 'rxjs';
 })
 export class HouseComponent implements OnInit {
     id: number;
+    detail$: Observable<Detail>;
 
     constructor(private detailService: DetailService, private detailQuery: DetailQuery, private route: ActivatedRoute) {}
-    detail$: Observable<Detail>;
     ngOnInit() {
         this.id = parseInt(this.route.snapshot.paramMap.get('id'));
         this.detailService.get(this.id);
