@@ -1,11 +1,92 @@
-
-<p>
-  house works!
-    <ng-container *ngIf="detail$ | async as detail">
-        <div>
-            <jhi-images-carrousel [images]="detail.images"></jhi-images-carrousel>
+<ng-container *ngIf="detail$ | async as detail">
+    <div class="cover">
+        <div class="row">
+            <div class="col-8 noPadding">
+                <!-- <jhi-images-carrousel [detailImages]="detail.images"></jhi-images-carrousel> -->
+            </div>
+            <div class="col-4 noPadding">
+                <!-- <jhi-map [latitude]="detail.latitude" [longitude]="detail.longitude"></jhi-map> -->
+            </div>
         </div>
-        {{detail.latitude}}
-    </ng-container>
-    <button mat-raised-button>Hello Im on Material</button>
-</p>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-8 noPadding">
+                <div class="row">
+                    <div class="col-8 noPadding" [ngSwitch]="detail.realStateType">
+                        <span *ngSwitchCase="'H'">Casa</span>
+                        <span *ngSwitchCase="'L'">Lote</span>
+                        <span *ngSwitchCase="'D'">Apartamento</span>
+                    </div>
+                    <div class="col-4 noPadding" [ngSwitch]="detail.realStateType">
+                        <span>{{detail.time}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 noPadding">
+                        <h1>{{detail.title}}</h1>
+                        <span>
+                            <mat-icon>place</mat-icon>{{detail.city}}, {{detail.province}}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 noPadding" *ngIf="detail.rooms > 0">
+                        <mat-icon>home-floor-l</mat-icon>
+                        <span>
+                            Cuartos
+                        </span>
+                    </div>
+                    <div class="col-6 noPadding" *ngIf="detail.garage > 0">
+                        <mat-icon>home-floor-l</mat-icon>
+                        <span>
+                            Plazas de Estacionamiento
+                        </span>
+                    </div>
+                    <div class="col-6 noPadding" *ngIf="detail.baths > 0">
+                        <mat-icon>home-floor-l</mat-icon>
+                        <span>
+                            Baños
+                        </span>
+                    </div>
+                    <div class="col-6 noPadding" *ngIf="detail.size > 0">
+                        <mat-icon>home-floor-l</mat-icon>
+                        <span>
+                            {{detail.size}} metros cuadrados
+                        </span>
+                    </div>
+                    <div class="col-6 noPadding" *ngIf="detail.stories > 0">
+                        <mat-icon>home-floor-l</mat-icon>
+                        <span>
+                            {{detail.stories}} Pisos/Plantas
+                        </span>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="row">
+                    <div class="col-12 noPadding">
+                        <span>Amenidades</span>
+                        <div class="row">
+                            <div class="col-4 noPadding" *ngFor="let amenity of detail.customAmenities">
+                                <mat-icon>wifi</mat-icon>
+                                <span>
+                                    {{amenity.name}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+                <div class="col-12">
+                    {{detail.description}}
+                </div>
+            </div>
+            <div class="col-4 noPadding">
+
+            </div>
+        </div>
+
+    </div>
+</ng-container>

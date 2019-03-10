@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'jhi-state-detail',
     templateUrl: './state-detail.component.html',
-    styles: []
+    styleUrls: ['state-detail.component.scss']
 })
 export class StateDetailComponent implements OnInit {
     id: number;
@@ -14,6 +14,7 @@ export class StateDetailComponent implements OnInit {
 
     constructor(private detailService: RealStateService, private detailQuery: RealStateQuery, private route: ActivatedRoute) {}
     ngOnInit() {
+        console.log('Reached: state-detail-component!!!');
         this.id = Number(this.route.snapshot.paramMap.get('id'));
         this.detailService.get(this.id);
         this.detail$ = this.detailQuery.getDetail(this.id);
