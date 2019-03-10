@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'jhi-state-detail',
     templateUrl: './state-detail.component.html',
-    styles: []
+    styleUrls: ['state-detail.component.scss']
 })
 export class StateDetailComponent implements OnInit {
     id: number;

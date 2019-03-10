@@ -1,11 +1,17 @@
 
-<p>
-  house works!
     <ng-container *ngIf="detail$ | async as detail">
-        <div>
-            <jhi-images-carrousel [images]="detail.images"></jhi-images-carrousel>
+        <div class="cover">
+                <div class="row">
+                        <div class="col-8 noPadding">
+                            <jhi-images-carrousel [detailImages]="detail.images"></jhi-images-carrousel>
+                        </div>
+                        <div class="col-4 noPadding">
+                            <jhi-map [latitude]="detail.latitude" [longitude]="detail.longitude"></jhi-map>
+                        </div>
+                    </div>
         </div>
-        {{detail.latitude}}
+        <div class="content">
+                <h2>Calificaciones</h2>
+        </div>
+
     </ng-container>
-    <button mat-raised-button>Hello Im on Material</button>
-</p>
