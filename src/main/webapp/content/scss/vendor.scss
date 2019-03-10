@@ -5,8 +5,24 @@ put Sass variables here:
 eg $input-color: red;
 ****************************/
 // Override Boostrap variables
+@import url('https://fonts.googleapis.com/css?family=Muli');
+
 @import 'bootstrap-variables';
 // Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap';
-
+@import '~@angular/material/_theming.scss';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@include mat-core();
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */
+
+body {
+    $my-app-primary: mat-palette($mat-grey, 100);
+    $my-app-accent: mat-palette($mat-grey, 500);
+    $my-app-warn: mat-palette($mat-grey, 900);
+    $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+    @include angular-material-theme($my-app-theme);
+}
+
+* {
+    font-family: 'Muli', sans-serif;
+}
