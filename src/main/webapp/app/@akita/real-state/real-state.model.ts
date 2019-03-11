@@ -1,7 +1,8 @@
 import { ID } from '@datorama/akita';
 import { RealStateImage } from 'app/@akita/external-models/real-state-image.model';
+import { TempUser } from '../external-models/tempUser';
 
-export interface Detail {
+export interface RealState {
     id?: ID;
     latitude: number;
     longitude: number;
@@ -27,10 +28,11 @@ export interface Detail {
     images?: RealStateImage;
     isSold?: boolean;
     customAmenities: string[];
+    user: TempUser;
 }
 
-export function createDetail(params: Partial<Detail>) {
+export function createDetail(params: Partial<RealState>) {
     return {
         ...params
-    } as Detail;
+    } as RealState;
 }

@@ -1,17 +1,15 @@
-
-    <ng-container *ngIf="detail$ | async as detail">
-        <div class="cover">
-                <div class="row">
-                        <div class="col-8 noPadding">
-                            <jhi-images-carrousel [detailImages]="detail.images"></jhi-images-carrousel>
-                        </div>
-                        <div class="col-4 noPadding">
-                            <jhi-map [latitude]="detail.latitude" [longitude]="detail.longitude"></jhi-map>
-                        </div>
-                    </div>
+<ng-container *ngIf="(detail$ | async) as detail">
+    <div class="cover">
+        <div class="row">
+            <div class="col-8 noPadding">
+                <jhi-images-carrousel [detailImages]="detail.images"></jhi-images-carrousel>
+            </div>
+            <div class="col-4 noPadding">
+                <jhi-map [latitude]="detail.latitude" [longitude]="detail.longitude"></jhi-map>
+            </div>
         </div>
-        <div class="content">
-                <h2>Calificaciones</h2>
-        </div>
-
-    </ng-container>
+    </div>
+    <div class="content">
+        <jhi-comment-section [realStateId]="detail.id"></jhi-comment-section>
+    </div>
+</ng-container>
