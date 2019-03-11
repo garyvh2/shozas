@@ -12,7 +12,7 @@ public class Image {
         return isPrimary;
     }
 
-    public void setPrimary(boolean primary) {
+    public void setIsPrimary(boolean primary) {
         isPrimary = primary;
     }
 

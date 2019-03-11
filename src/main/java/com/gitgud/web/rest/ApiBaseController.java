@@ -24,8 +24,7 @@ public class ApiBaseController {
         }
         finally {
             timer.stop();
-            long min = timer.getTime();
-            result.setTime(String.format("%d:%02d", min / 60, min % 60));
+            result.setTime(Long.toString(timer.getTime()));
             timer.reset();
         }
 
