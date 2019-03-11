@@ -7,8 +7,21 @@ import { GalleryModule } from '@ks89/angular-modal-gallery';
 import { RealStateQuery, RealStateService, RealStateStore } from '../../@akita/real-state';
 import { StateDetailComponent } from 'app/modules/detail/views/state-detail/state-detail.component';
 import { CommonModule } from '@angular/common';
+import { TitleComponent } from './components/title/title.component';
+import { FeaturesComponent } from './components/features/features.component';
+import { AmenitiesComponent } from './components/amenities/amenities.component';
+import { SidecardComponent } from './components/sidecard/sidecard.component';
+import { DescriptionComponent } from './components/description/description.component';
 @NgModule({
-    declarations: [StateDetailComponent, ImagesCarrouselComponent],
+    declarations: [
+        StateDetailComponent,
+        ImagesCarrouselComponent,
+        TitleComponent,
+        FeaturesComponent,
+        AmenitiesComponent,
+        SidecardComponent,
+        DescriptionComponent
+    ],
     imports: [DetailRoutingModule, GalleryModule.forRoot(), CommonModule, AngularMaterialModule],
     providers: [RealStateStore, RealStateQuery, RealStateService]
 })

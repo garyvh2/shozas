@@ -3,8 +3,183 @@
     margin-top: 10px;
 }
 .content {
-    padding: 10px 60px;
+    font-family: Lato;
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 32px 60px 0;
+
+    .row {
+        margin: 0;
+        padding: 0;
+    }
+
+    .rsd__content--padding-r {
+        padding-right: 32px;
+    }
+
+    .rsd__super-title {
+        font-style: italic;
+        font-weight: bold;
+        color: #9a9a9a;
+
+        .rsd__type {
+            color: #9a9a9a;
+            span {
+                color: #9a9a9a;
+            }
+        }
+
+        .rsd__date {
+            display: flex;
+            flex-direction: row-reverse;
+            color: #e4e4e4;
+        }
+    }
+
+    .rsd__title {
+        font-weight: bold;
+        div {
+            h1 {
+                font-weight: bold;
+                font-size: 32px;
+                margin: 0;
+            }
+
+            .rsd__subtitle {
+                color: #e0e0e0;
+                font-style: italic;
+            }
+            .rsd__subtitle-icon {
+                height: 16px;
+                width: 16px;
+            }
+        }
+    }
+
+    .rsd__features {
+        font-weight: bold;
+        padding: 16px 0 24px;
+
+        .rsd__feature {
+            display: flex;
+            align-items: center;
+
+            .rsd__features-icon-label {
+                font-weight: bold;
+            }
+
+            .rsd__icon {
+                height: 32px;
+                width: 32px;
+            }
+        }
+    }
+
+    .rsd__amenities {
+        margin-top: 12px;
+
+        h3 {
+            color: #999999;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .rsd__amenity {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .rsd__sidecard {
+        font-weight: bold;
+
+        .mat-card-header {
+            .mat-card-title {
+                font-weight: bold;
+                font-size: 14px;
+            }
+            .mat-card-subtitle {
+                font-size: 16px;
+                font-weight: bold;
+                .mat-icon {
+                    width: 12px;
+                    height: 12px;
+                }
+            }
+        }
+
+        .mat-card-content {
+            margin-top: 8px;
+        }
+
+        .rsd__price {
+            font-weight: bold;
+            font-size: 24px;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .rsd__financing {
+            display: flex;
+            flex-direction: row-reverse;
+            a {
+                font-weight: bold;
+                color: #474747;
+                text-decoration: underline;
+            }
+        }
+
+        .rsd__contact-seller {
+            margin-top: 16px;
+            .rsd__btn--full {
+                background-color: #ff6666;
+                color: white;
+                font-weight: bold;
+                width: 100%;
+            }
+        }
+
+        .rsd__btn--empty {
+            border: 1px solid #ff6666;
+            background-color: #ffffff;
+            color: #ff6666;
+            font-weight: bold;
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            .rsd__icon {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        .mat-card-footer {
+            font-weight: bold;
+            font-size: 12px;
+            margin: 0;
+            a {
+                color: #ff6666;
+            }
+        }
+    }
+
+    .rds__description {
+        .mat-divider {
+            margin-top: 28px;
+        }
+
+        .rds__description-content {
+            margin-top: 16px;
+        }
+    }
 }
 .noPadding {
     padding: 0;
+}
+
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
 }
