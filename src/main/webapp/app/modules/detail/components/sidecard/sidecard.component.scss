@@ -1,0 +1,81 @@
+.rsd__sidecard {
+    font-weight: bold;
+
+    .mat-card-header {
+        .mat-card-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .mat-card-subtitle {
+            align-items: center;
+            display: flex;
+            font-size: 16px;
+            font-weight: bold;
+
+            .mat-icon {
+                width: 12px;
+                height: 12px;
+                margin-right: 8px;
+            }
+
+            .paint {
+                color: #ff6666;
+            }
+        }
+    }
+
+    .mat-card-content {
+        margin-top: 8px;
+    }
+
+    .rsd__price {
+        font-weight: bold;
+        font-size: 24px;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .rsd__financing {
+        display: flex;
+        flex-direction: row-reverse;
+        a {
+            font-weight: bold;
+            color: #474747;
+            text-decoration: underline;
+        }
+    }
+
+    .rsd__contact-seller {
+        margin-top: 16px;
+        .rsd__btn--full {
+            background-color: #ff6666;
+            color: white;
+            font-weight: bold;
+            width: 100%;
+        }
+    }
+
+    .rsd__btn--empty {
+        border: 1px solid #ff6666;
+        background-color: #ffffff;
+        color: #ff6666;
+        font-weight: bold;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        .rsd__icon {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .mat-card-footer {
+        font-weight: bold;
+        font-size: 12px;
+        margin: 0;
+        a {
+            color: #ff6666;
+        }
+    }
+}

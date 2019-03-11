@@ -11,7 +11,7 @@ import { TitleComponent } from './components/title/title.component';
 import { FeaturesComponent } from './components/features/features.component';
 import { AmenitiesComponent } from './components/amenities/amenities.component';
 import { SidecardComponent } from './components/sidecard/sidecard.component';
-import { DescriptionComponent } from './components/description/description.component';
+
 @NgModule({
     declarations: [
         StateDetailComponent,
@@ -19,8 +19,7 @@ import { DescriptionComponent } from './components/description/description.compo
         TitleComponent,
         FeaturesComponent,
         AmenitiesComponent,
-        SidecardComponent,
-        DescriptionComponent
+        SidecardComponent
     ],
     imports: [DetailRoutingModule, GalleryModule.forRoot(), CommonModule, AngularMaterialModule],
     providers: [RealStateStore, RealStateQuery, RealStateService]

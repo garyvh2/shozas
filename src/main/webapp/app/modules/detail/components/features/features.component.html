@@ -1,0 +1,32 @@
+<div class="row rsd__features">
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.rooms > 0">
+        <img src="../../../../../content/images/bed.png" alt="Icono de Cama" class="rsd__icon">
+        <span class="rsd__features-icon-label">
+            {{detail.rooms}} Cuarto{{(detail.rooms > 1 ? "s" : "")}}
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.garage > 0">
+        <img src="../../../../../content/images/garage.png" alt="Icono de Garaje" class="rsd__icon">
+        <span>
+            {{detail.garage}} Plaza{{(detail.garage > 1 ? "s" : "")}} de Estacionamiento
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.baths > 0">
+        <img src="../../../../../content/images/bath.png" alt="Icono de Baño" class="rsd__icon">
+        <span>
+            {{detail.baths}} Baño{{(detail.baths > 1 ? "s" : "")}}
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.size > 0">
+        <img src="../../../../../content/images/ruler.png" alt="Icono de Regla" class="rsd__icon">
+        <span>
+            {{detail.size}} metros cuadrados
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.stories > 0">
+        <img src="../../../../../content/images/favorite.png" alt="Icono de Pisos" class="rsd__icon">
+        <span>
+            {{detail.stories}} Piso{{(detail.stories > 1 ? "s" : "")}}
+        </span>
+    </div>
+</div>
