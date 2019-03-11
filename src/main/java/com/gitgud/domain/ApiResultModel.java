@@ -6,6 +6,7 @@ public class ApiResultModel<T> {
     private String status;
     private T result;
     private Exception exception;
+    private String message;
 
     public String getTime() {
         return time;
@@ -37,5 +38,13 @@ public class ApiResultModel<T> {
 
     public void setException(Exception exception) {
         this.exception = exception;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

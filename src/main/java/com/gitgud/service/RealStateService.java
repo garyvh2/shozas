@@ -5,9 +5,12 @@ import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
 import com.gitgud.service.util.ResultType;
+import com.mongodb.DBRef;
 import dev.morphia.Datastore;
+import dev.morphia.Key;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -41,7 +44,7 @@ public class RealStateService {
         return realStateRepository.save(realState);
     }
 
-    public List<RealState> getRealStateElements (ResultType resultType, ApiSearchParams parameters){
+    public List<RealState> getRealStateElements (ResultType resultType, ApiSearchParams parameters) throws Exception {
 
        Query<RealState> realStates = datastore.createQuery(RealState.class);
 
@@ -93,10 +96,6 @@ public class RealStateService {
           realStates.and(realStates.criteria("postalCode").equal(parameters.getZip()));
        }
 
-       if(parameters.getUser() != null && !parameters.getUser().isEmpty()){
-          realStates.and(realStates.criteria("postalCode").equal(parameters.getZip()));
-       }
-
        if(parameters.getPrLow()!=0 && parameters.getPrHigh() != 0){
            realStates.field("price").greaterThan(parameters.getPrLow())
                      .field("price").lessThanOrEq(parameters.getPrHigh());
@@ -108,7 +107,11 @@ public class RealStateService {
        }
 
        if(parameters.getUser() != null && !parameters.getUser().isEmpty()){
-           
+           Optional<User> user = userService.getUserByEmail(parameters.getUser());
+           if(!user.isPresent())
+               throw new Exception("El usuario no existe");
+            User u = user.get();
+           realStates.disableValidation().field("owner").equal(new DBRef("jhi_user", new ObjectId(u.getId())));
        }
 
         return realStates.asList(new FindOptions().skip(page).limit(pageSize));

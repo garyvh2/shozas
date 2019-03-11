@@ -19,8 +19,8 @@ public class ApiBaseController {
         }
         catch (Exception e){
             result.setStatus("Fail");
-
             result.setException(e);
+            result.setMessage(e.getMessage());
         }
         finally {
             timer.stop();
