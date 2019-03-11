@@ -65,7 +65,7 @@ public class RealState {
     private HashSet<Services> services = new HashSet<>();;
 
     @Field
-    private HashSet<CustomAmenity> CustomAmenities = new HashSet<>();;
+    private HashSet<CustomAmenity> customAmenities = new HashSet<>();;
 
     @DBRef
     @Field
@@ -272,11 +272,11 @@ public class RealState {
     }
 
     public HashSet<CustomAmenity> getCustomAmenities() {
-        return CustomAmenities;
+        return customAmenities;
     }
 
     public void setCustomAmenities(HashSet<CustomAmenity> customAmenities) {
-        CustomAmenities = customAmenities;
+        this.customAmenities = customAmenities;
     }
 
     public User getOwner() {

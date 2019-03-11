@@ -3,8 +3,8 @@ package com.gitgud.domain;
 public class ApiResultModel<T> {
 
     private String time;
-    private T result;
     private String status;
+    private T result;
     private Exception exception;
 
     public String getTime() {
