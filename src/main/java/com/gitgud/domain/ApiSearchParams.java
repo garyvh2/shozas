@@ -7,6 +7,8 @@ public class ApiSearchParams {
     private String district;
     private int prLow;
     private int prHigh;
+    private int sizeLow;
+    private int sizeHigh;
     private int beds;
     private int baths;
     private int garages;
@@ -14,6 +16,8 @@ public class ApiSearchParams {
     private int zip;
     private String user;
     private String similarTo;
+    private int page;
+    private int pageSize;
 
     public String getProvince() {
         return province;
@@ -109,5 +113,37 @@ public class ApiSearchParams {
 
     public void setSimilarTo(String similarTo) {
         this.similarTo = similarTo;
+    }
+
+    public int getSizeLow() {
+        return sizeLow;
+    }
+
+    public void setSizeLow(int sizeLow) {
+        this.sizeLow = sizeLow;
+    }
+
+    public int getSizeHigh() {
+        return sizeHigh;
+    }
+
+    public void setSizeHigh(int sizeHigh) {
+        this.sizeHigh = sizeHigh;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

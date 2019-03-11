@@ -3,6 +3,7 @@ package com.gitgud.domain;
 import com.gitgud.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.morphia.annotations.Entity;
 import org.apache.commons.lang3.StringUtils;
 import javax.validation.constraints.Email;
 import org.springframework.data.annotation.Id;
@@ -25,10 +26,12 @@ import java.time.Instant;
  */
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_user")
+@Entity("jhi_user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @dev.morphia.annotations.Id
     private String id;
 
     @NotNull

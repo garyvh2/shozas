@@ -4,6 +4,7 @@ import com.gitgud.domain.ApiResultModel;
 import com.gitgud.domain.ApiSearchParams;
 import com.gitgud.domain.RealState;
 import com.gitgud.service.RealStateService;
+import com.gitgud.service.util.ResultType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,20 +23,24 @@ public class RealStateController extends ApiBaseController {
         this.realStateService = realStateService;
     }
 
-    @PostMapping("/search")
-    public ApiResultModel<List<RealState>> searchRealStateElements(@RequestBody ApiSearchParams apiSearchParams){
-        return GetApiResultModel(() ->{
+    @PostMapping("/search/homes")
+    public ApiResultModel<List<RealState>> searchHomes(@RequestBody ApiSearchParams apiSearchParams){
+        return GetApiResultModel(() -> realStateService.getRealStateElements(ResultType.Homes, apiSearchParams));
+    }
 
-            return new ArrayList<RealState>();
-        });
+    @PostMapping("/search/lots")
+    public ApiResultModel<List<RealState>> searchLots (@RequestBody ApiSearchParams apiSearchParams){
+        return GetApiResultModel(() -> realStateService.getRealStateElements(ResultType.Lots, apiSearchParams));
+    }
+
+    @PostMapping("/search/deps")
+    public ApiResultModel<List<RealState>> searchDepartments(@RequestBody ApiSearchParams apiSearchParams){
+        return GetApiResultModel(() -> realStateService.getRealStateElements(ResultType.Departments, apiSearchParams));
     }
 
     @PostMapping("/create")
     public ApiResultModel<RealState> createRealState(@RequestBody RealState realState){
-        return GetApiResultModel(() ->{
-
-            return realStateService.save(realState);
-        });
+        return GetApiResultModel(() ->  realStateService.save(realState));
     }
 
 

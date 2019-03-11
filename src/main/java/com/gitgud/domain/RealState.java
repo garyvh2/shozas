@@ -1,5 +1,8 @@
 package com.gitgud.domain;
 
+import dev.morphia.annotations.Embedded;
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,9 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.HashSet;
 
 @Document
+@Entity("realState")
 public class RealState {
 
     @Id
+    @dev.morphia.annotations.Id
     private String id;
 
     private double latitude;
@@ -56,19 +61,24 @@ public class RealState {
     private boolean isSold;
 
     @Field
+    @Embedded
     private HashSet<Image> images  = new HashSet<>();;
 
     @Field
+    @Embedded
     private HashSet<String> schools = new HashSet<>();;
 
     @Field
+    @Embedded
     private HashSet<Services> services = new HashSet<>();;
 
     @Field
+    @Embedded
     private HashSet<CustomAmenity> customAmenities = new HashSet<>();;
 
     @DBRef
     @Field
+    @Reference
     private User owner;
 
     public String getId() {
