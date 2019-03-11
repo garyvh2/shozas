@@ -1,0 +1,34 @@
+$background: rgba(0, 0, 0, 0.7);
+.insidedescription {
+    display: none;
+}
+mat-grid-tile {
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.more {
+    position: absolute;
+    display: flex;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    span {
+        margin: auto;
+        @media (min-width: 1028px) {
+            font-size: 24px;
+        }
+    }
+}
+.btn-fotos {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 10px;
+}
