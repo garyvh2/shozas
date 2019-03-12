@@ -1,0 +1,21 @@
+<div class="commentSection">
+    <h2 >Calificaciones</h2>
+
+    <mat-spinner *ngIf="(isLoading$ | async)" [diameter]="40"></mat-spinner>
+
+    <jhi-comment *ngFor="let comment of (comments | slice: 0:showQuatity)" [comment]="comment"></jhi-comment>
+    <div class="showButton">
+        <button *ngIf="comments.length > 1"  mat-button (click)="show()">
+            <ng-container *ngIf="showQuatity === 1; else less" >
+                    Mostrar más<mat-icon>arrow_downward</mat-icon>
+            </ng-container>
+            <ng-template #less>
+                    Mostrar menos<mat-icon>arrow_upward</mat-icon>
+            </ng-template>
+        </button>
+    </div>
+
+    <h3 *ngIf="(isLoading$ | async) === false && comments.length === 0" class="noComment">No hay comentarios</h3>
+
+    <hr>
+</div>

@@ -1,0 +1,31 @@
+.noComment {
+    text-align: center;
+    color: #7e7e7e;
+    font-size: 1.5rem;
+}
+.commentSection {
+    margin-top: 10px;
+    h2 {
+        margin-bottom: 30px;
+    }
+}
+mat-spinner {
+    margin: auto;
+}
+.mat-spinner::ng-deep circle {
+    stroke: #ff6e6e;
+}
+
+.showButton {
+    display: flex;
+    justify-content: flex-end;
+    button,
+    mat-icon {
+        color: #ff6e6e;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    mat-icon {
+        padding: 2px;
+    }
+}
