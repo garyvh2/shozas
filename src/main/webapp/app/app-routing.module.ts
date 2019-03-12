@@ -13,7 +13,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
             [
                 {
                     path: '',
-                    loadChildren: './modules/landing/landing.module.ts#LandingModule'
+                    loadChildren: './modules/landing/landing.module#LandingModule'
                 },
                 {
                     path: 'admin',

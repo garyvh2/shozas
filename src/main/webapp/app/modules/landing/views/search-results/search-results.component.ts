@@ -22,12 +22,9 @@ export class SearchResultsComponent implements OnInit {
 
     homes: Home[];
 
-    constructor(private landingService: LandingService, private searchService: SearchResultsService) {}
+    constructor(private searchService: SearchResultsService) {}
 
     ngOnInit() {
-        this.landingService.getLocation().subscribe(data => {
-            console.log(data);
-        });
         this.searchService.getHomes().subscribe(homes => (this.homes = homes));
     }
 }

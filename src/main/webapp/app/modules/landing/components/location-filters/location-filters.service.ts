@@ -17,7 +17,7 @@ export class LocationFiltersService {
             this.getProvincias().subscribe(provincias => {
                 Object.keys(provincias).forEach(key => {
                     if (data.city === provincias[key]) {
-                        provincia.next(provincias[key]);
+                        provincia.next(Number(key));
                     }
                 });
             });
