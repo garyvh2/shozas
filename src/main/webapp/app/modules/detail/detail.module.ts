@@ -1,15 +1,18 @@
 import { ReviewService } from './../../@akita/review/review.service';
+import { AgmCoreModule } from '@agm/core';
+import { CommonModule } from '@angular/common';
+import { GalleryModule } from '@ks89/angular-modal-gallery';
+import { NgModule } from '@angular/core';
+import { StarRatingModule } from 'angular-star-rating';
+
 import { ReviewStore } from './../../@akita/review/review.store';
 import { ReviewQuery } from './../../@akita/review/review.query';
 import { MAPS_API_KEY } from './../../app.constants';
 import { AngularMaterialModule } from './../../shared/angular-material/angular-material.module';
-import { NgModule } from '@angular/core';
-
 import { ImagesCarrouselComponent } from './components/images-carrousel/images-carrousel.component';
-import { AgmCoreModule } from '@agm/core';
-import { CommonModule } from '@angular/common';
+
 import { DetailRoutingModule } from './detail.route';
-import { GalleryModule } from '@ks89/angular-modal-gallery';
+
 import { RealStateQuery, RealStateService, RealStateStore } from '../../@akita/real-state';
 import { StateDetailComponent } from './views/state-detail/state-detail.component';
 import { TitleComponent } from './components/title/title.component';
@@ -38,6 +41,7 @@ import { SidecardComponent } from './components/sidecard/sidecard.component';
         GalleryModule.forRoot(),
         CommonModule,
         AngularMaterialModule,
+        StarRatingModule,
         AgmCoreModule.forRoot({
             apiKey: MAPS_API_KEY
         })
