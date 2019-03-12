@@ -1,5 +1,6 @@
 <ng-container *ngIf="(detail$ | async) as detail">
-    <div class="cover">
+<div class="stateDetail">
+    <div class="cover container-fluid">
         <div class="row">
             <div class="col-8 noPadding">
                 <jhi-images-carrousel [detailImages]="detail.images"></jhi-images-carrousel>
@@ -12,4 +13,5 @@
     <div class="content">
         <jhi-comment-section [realStateId]="detail.id"></jhi-comment-section>
     </div>
+</div>
 </ng-container>

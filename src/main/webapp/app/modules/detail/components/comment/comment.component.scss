@@ -1,6 +1,7 @@
 .perfil {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .photo {
     width: 60px;
@@ -27,7 +28,6 @@
     }
 }
 .stars {
-    margin-left: auto;
     display: flex;
     flex-direction: row;
     span {
