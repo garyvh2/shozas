@@ -3,6 +3,9 @@ import {
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatTabsModule,
     MatGridListModule,
     MatDividerModule,
     MatCardModule,
@@ -15,9 +18,12 @@ import { NgModule } from '@angular/core';
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-        MatGridListModule,
         MatDividerModule,
+        MatSelectModule,
         MatCardModule,
+        MatRadioModule,
+        MatTabsModule,
+        MatGridListModule,
         MatProgressSpinnerModule
     ],
     exports: [
@@ -25,9 +31,12 @@ import { NgModule } from '@angular/core';
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-        MatGridListModule,
         MatDividerModule,
+        MatSelectModule,
         MatCardModule,
+        MatRadioModule,
+        MatTabsModule,
+        MatGridListModule,
         MatProgressSpinnerModule
     ]
 })

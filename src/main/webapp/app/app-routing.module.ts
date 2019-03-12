@@ -10,9 +10,14 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         RouterModule.forRoot(
             [
                 {
+                    path: '',
+                    loadChildren: './modules/landing/landing.module#LandingModule'
+                },
+                {
                     path: 'admin',
                     loadChildren: './admin/admin.module#ShozasAdminModule'
                 },
+
                 {
                     path: 'detail',
                     loadChildren: './modules/detail/detail.module#DetailModule'
