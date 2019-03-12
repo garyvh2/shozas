@@ -3,7 +3,9 @@ package com.gitgud.domain;
 import com.gitgud.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.morphia.annotations.Embedded;
 import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Property;
 import org.apache.commons.lang3.StringUtils;
 import javax.validation.constraints.Email;
 import org.springframework.data.annotation.Id;
@@ -47,10 +49,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Size(max = 50)
     @Field("first_name")
+    @Property("first_name")
     private String firstName;
 
     @Size(max = 50)
     @Field("last_name")
+    @Property("last_name")
     private String lastName;
 
     @Email
@@ -66,6 +70,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Size(max = 256)
     @Field("image_url")
+    @Property("image_url")
     private String imageUrl;
 
     @Size(max = 20)
@@ -88,15 +93,17 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private int phone;
 
-    private String userImage;
+    @DBRef
+    @Field
+    private HashSet<Review> reviews = new HashSet<>();
 
     @DBRef
     @Field
-    private HashSet<Review> reviews = new HashSet<>();;
+    private HashSet<RealState> favorites = new HashSet<>();
 
-    @DBRef
     @Field
-    private HashSet<RealState> favorites = new HashSet<>();;
+    @Embedded
+    private Image image;
 
     public String getId() {
         return id;
@@ -235,12 +242,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.favorites = favorites;
     }
 
-    public String getUserImage() {
-        return userImage;
+    public Image getImage() {
+        return image;
     }
 
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override

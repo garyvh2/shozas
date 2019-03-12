@@ -3,7 +3,7 @@ package com.gitgud.api.objects;
 public class ApiUser {
 
       private String name;
-      private String userImg;
+      private ApiImage image;
       private double stars;
 
     public String getName() {
@@ -14,12 +14,12 @@ public class ApiUser {
         this.name = name;
     }
 
-    public String getUserImg() {
-        return userImg;
+    public ApiImage getImage() {
+        return image;
     }
 
-    public void setUserImg(String userImg) {
-        this.userImg = userImg;
+    public void setImage(ApiImage image) {
+        this.image = image;
     }
 
     public double getStars() {

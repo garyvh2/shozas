@@ -1,6 +1,7 @@
 package com.gitgud.service;
 
 import com.cloudinary.Api;
+import com.gitgud.api.objects.ApiImage;
 import com.gitgud.api.objects.ApiRealState;
 import com.gitgud.api.objects.ApiSearchParams;
 import com.gitgud.api.objects.ApiUser;
@@ -116,12 +117,14 @@ public class RealStateService {
            realStates.disableValidation().field("owner").equal(new DBRef("jhi_user", new ObjectId(u.getId())));
        }
 
+
         return realStates.asList(new FindOptions().skip(page).limit(pageSize));
     }
 
     public ApiRealState toApiRealState (RealState realState){
         ApiRealState result = new ApiRealState();
         ApiUser user = new ApiUser();
+        ApiImage image = new ApiImage();
 
         result.setId(realState.getId());
         result.setAddr(realState.getProvince()+", " + realState.getCity() +", " +realState.getDistrict());
@@ -132,11 +135,14 @@ public class RealStateService {
         result.setGar(realState.getGarage());
         result.setTitle(realState.getTitle());
 
-        realState.setOwner(userService.getUserByEmail(realState.getOwner().getEmail()).get());
         user.setName(realState.getOwner().getFirstName() +" " +realState.getOwner().getLastName());
         user.setStars(realState.getOwner().getRaiting());
-        user.setUserImg(realState.getOwner().getImageUrl());
+        if(realState.getOwner().getImage() != null){
+            image.setSource(realState.getOwner().getImage().getSource());
+        }
+        user.setImage(image);
         result.setUser(user);
+
         realState.getImages().forEach(i -> {
             if(i.isPrimary())
                 result.setImage(i.getSource());
