@@ -49,3 +49,16 @@
 .commentBody {
     margin: 10px 0;
 }
+.details__rating {
+    svg {
+        fill: #ff6e6e !important;
+    }
+}
+
+::ng-deep .rating .star-container .star svg {
+    &.star-half,
+    &.star-empty,
+    &.star-filled {
+        fill: #ff6e6e !important;
+    }
+}
