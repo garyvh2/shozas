@@ -1,5 +1,5 @@
-import { Detail } from './../../../../@akita/real-state/real-state.model';
 import { Component, OnInit, Input } from '@angular/core';
+import { RealState } from '../../../../@akita/real-state';
 
 @Component({
     selector: 'jhi-sidecard',
@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SidecardComponent implements OnInit {
     @Input()
-    detail: Detail;
+    detail: RealState;
     constructor() {}
 
     ngOnInit() {}

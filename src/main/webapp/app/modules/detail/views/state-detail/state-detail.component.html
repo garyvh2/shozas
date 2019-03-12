@@ -1,32 +1,31 @@
-<ng-container *ngIf="detail$ | async as detail">
+<ng-container *ngIf="(detail$ | async) as detail">
     <div class="cover">
         <div class="row">
             <div class="col-8 noPadding">
-                <!-- <jhi-images-carrousel [detailImages]="detail.images"></jhi-images-carrousel> -->
+                <jhi-images-carrousel [detailImages]="detail.images"></jhi-images-carrousel>
             </div>
             <div class="col-4 noPadding">
-                <!-- <jhi-map [latitude]="detail.latitude" [longitude]="detail.longitude"></jhi-map> -->
+                <jhi-map [latitude]="detail.latitude" [longitude]="detail.longitude"></jhi-map>
             </div>
         </div>
     </div>
+
     <div class="content">
         <div class="row">
-            <div class="col-8 noPadding rsd__content--padding-r">
+            <div class="col-md-8 col-sm-12 noPadding rsd__content--padding-r">
                 <jhi-title [detail]="detail"></jhi-title>
                 <jhi-features [detail]="detail"></jhi-features>
                 <mat-divider></mat-divider>
                 <jhi-amenities [detail]="detail"></jhi-amenities>
             </div>
-            <div class="col-4 noPadding">
+            <div class="col-md-4 col-sm-12  noPadding">
                 <jhi-sidecard [detail]="detail"></jhi-sidecard>
             </div>
             <div class="col-12 noPadding rds__description">
                 <mat-divider></mat-divider>
-                <p class="rds__description-content">{{detail.description}}</p>
+                <p class="rds__description-content">{{ detail.description }}</p>
             </div>
-
-
         </div>
-
+        <jhi-comment-section [realStateId]="detail.id"></jhi-comment-section>
     </div>
 </ng-container>

@@ -1,4 +1,4 @@
-import { Detail } from './../../../../@akita/real-state/real-state.model';
+import { RealState } from './../../../../@akita/real-state/real-state.model';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AmenitiesComponent implements OnInit {
     @Input()
-    detail: Detail;
+    detail: RealState;
 
     constructor() {}
 

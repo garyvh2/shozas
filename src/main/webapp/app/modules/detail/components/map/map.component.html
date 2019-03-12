@@ -1,0 +1,6 @@
+<div class="map">
+    <a target="_blank" href=" http://maps.google.co.uk/maps?q={{latitude}},{{longitude}}"></a>
+    <agm-map [streetViewControl]=false [zoomControl]=false [latitude]="latitude" [longitude]="longitude" [zoom]="15">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    </agm-map>
+</div>

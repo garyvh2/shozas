@@ -1,5 +1,5 @@
-import { Detail } from 'app/@akita/real-state';
 import { Component, OnInit, Input } from '@angular/core';
+import { RealState } from '../../../../@akita/real-state';
 
 @Component({
     selector: 'jhi-features',
@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FeaturesComponent implements OnInit {
     @Input()
-    detail: Detail;
+    detail: RealState;
 
     constructor() {}
 

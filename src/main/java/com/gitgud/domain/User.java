@@ -3,10 +3,12 @@ package com.gitgud.domain;
 import com.gitgud.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.morphia.annotations.Entity;
 import org.apache.commons.lang3.StringUtils;
 import javax.validation.constraints.Email;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
@@ -24,10 +26,12 @@ import java.time.Instant;
  */
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_user")
+@Entity("jhi_user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @dev.morphia.annotations.Id
     private String id;
 
     @NotNull
@@ -79,6 +83,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
+
+    private double raiting;
+
+    private int phone;
+
+    @DBRef
+    @Field
+    private HashSet<Review> reviews = new HashSet<>();;
+
+    @DBRef
+    @Field
+    private HashSet<RealState> favorites = new HashSet<>();;
 
     public String getId() {
         return id;
@@ -183,6 +199,38 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public double getRaiting() {
+        return raiting;
+    }
+
+    public void setRaiting(double raiting) {
+        this.raiting = raiting;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public HashSet<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(HashSet<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public HashSet<RealState> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(HashSet<RealState> favorites) {
+        this.favorites = favorites;
     }
 
     @Override
