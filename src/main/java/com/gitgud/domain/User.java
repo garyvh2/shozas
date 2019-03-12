@@ -88,6 +88,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private int phone;
 
+    private String userImage;
+
     @DBRef
     @Field
     private HashSet<Review> reviews = new HashSet<>();;
@@ -231,6 +233,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setFavorites(HashSet<RealState> favorites) {
         this.favorites = favorites;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 
     @Override
