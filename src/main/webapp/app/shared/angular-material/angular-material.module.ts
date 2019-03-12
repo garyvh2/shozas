@@ -6,7 +6,9 @@ import {
     MatSelectModule,
     MatRadioModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule,
+    MatProgressSpinnerModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 @NgModule({
@@ -18,7 +20,9 @@ import { NgModule } from '@angular/core';
         MatSelectModule,
         MatCardModule,
         MatRadioModule,
-        MatTabsModule
+        MatTabsModule,
+        MatGridListModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         MatButtonModule,
@@ -28,7 +32,9 @@ import { NgModule } from '@angular/core';
         MatSelectModule,
         MatCardModule,
         MatRadioModule,
-        MatTabsModule
+        MatTabsModule,
+        MatGridListModule,
+        MatProgressSpinnerModule
     ]
 })
 export class AngularMaterialModule {}

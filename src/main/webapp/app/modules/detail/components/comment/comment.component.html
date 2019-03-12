@@ -1,0 +1,26 @@
+<div class="commentBody">
+    <div class="perfil">
+        <div class="user">
+            <div class="photo">
+                <img src="https://www.alo.doctor/assets/images/usuario_chat.jpg" />
+            </div>
+            <div>
+                <p>{{comment.user.name}}</p>
+                <span> {{getFormatDate()}}</span>
+            </div>
+        </div>
+        <div class="stars">
+            <span>{{comment.stars}}</span>
+            <div>
+                <mat-icon class="rated">star_rate</mat-icon>
+                <mat-icon class="rated">star_rate</mat-icon>
+                <mat-icon class="rated">star_rate</mat-icon>
+                <mat-icon class="rated">star_rate</mat-icon>
+                <mat-icon >star_rate</mat-icon>
+            </div>
+        </div>
+    </div>
+    <p class="comment">
+        {{comment.comment}}
+    </p>
+</div>
