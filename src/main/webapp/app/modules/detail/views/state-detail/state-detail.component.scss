@@ -1,0 +1,42 @@
+.cover {
+    position: relative;
+    margin-top: 10px;
+}
+.content {
+    margin: 0 auto;
+
+    .row {
+        margin: 0;
+        padding: 0;
+    }
+
+    .rsd__content--padding-r {
+        padding-right: 32px;
+    }
+
+    .rds__description {
+        .mat-divider {
+            margin-top: 28px;
+        }
+
+        .rds__description-content {
+            margin-top: 16px;
+        }
+    }
+    padding: 20px 60px;
+}
+.noPadding {
+    padding: 0;
+}
+
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.stateDetail {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+}

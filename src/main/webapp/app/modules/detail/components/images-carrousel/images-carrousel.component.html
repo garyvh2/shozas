@@ -1,3 +1,16 @@
-<p>
-  images-carrousel works!
-</p>
+<mat-grid-list cols="5" rowHeight="1.5:1">
+    <mat-grid-tile [colspan]="3" [rowspan]="2">
+        <img [src]="carrouselImages[0].modal.img" (click)="openImageModal(carrouselImages[0])" />
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <img [src]="carrouselImages[1].modal.img" (click)="openImageModal(carrouselImages[1])" />
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <div class="more" *ngIf="carrouselImages.length > 3" (click)="openImageModal(carrouselImages[2])">
+            <span>+{{ carrouselImages.length - 3 }} more</span>
+        </div>
+        <img [src]="carrouselImages[2].modal.img" (click)="openImageModal(carrouselImages[2])" />
+    </mat-grid-tile>
+    <button mat-raised-button class="btn-fotos" (click)="openImageModal(carrouselImages[0])" > Ver fotos</button>
+</mat-grid-list>
+<ks-modal-gallery [id]="0" [plainGalleryConfig]="customPlainGalleryRowDescConfig" [currentImageConfig]="{description: customDescription}" [modalImages]="carrouselImages"></ks-modal-gallery>
