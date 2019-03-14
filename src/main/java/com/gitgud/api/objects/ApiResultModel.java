@@ -1,4 +1,4 @@
-package com.gitgud.domain;
+package com.gitgud.api.objects;
 
 public class ApiResultModel<T> {
 
