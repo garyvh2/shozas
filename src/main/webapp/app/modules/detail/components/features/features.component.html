@@ -1,0 +1,32 @@
+<div class="row rsd__features">
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.rooms > 0">
+        <mat-icon svgIcon="rsd_bed"></mat-icon>
+        <span class="rsd__features-icon-label">
+            {{detail.rooms}} Cuarto{{(detail.rooms > 1 ? "s" : "")}}
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.garage > 0">
+        <mat-icon svgIcon="rsd_garage"></mat-icon>
+        <span>
+            {{detail.garage}} Plaza{{(detail.garage > 1 ? "s" : "")}} de Estacionamiento
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.baths > 0">
+        <mat-icon svgIcon="rsd_bath"></mat-icon>
+        <span>
+            {{detail.baths}} Baño{{(detail.baths > 1 ? "s" : "")}}
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.size > 0">
+        <mat-icon svgIcon="rsd_ruler"></mat-icon>
+        <span>
+            {{detail.size}} metros cuadrados
+        </span>
+    </div>
+    <div class="col-6 noPadding rsd__feature" *ngIf="detail.stories > 0">
+        <mat-icon svgIcon="rsd_up"></mat-icon>
+        <span>
+            {{detail.stories}} Piso{{(detail.stories > 1 ? "s" : "")}}
+        </span>
+    </div>
+</div>
