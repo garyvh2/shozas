@@ -1,6 +1,7 @@
 .perfil {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .photo {
     width: 60px;
@@ -27,7 +28,6 @@
     }
 }
 .stars {
-    margin-left: auto;
     display: flex;
     flex-direction: row;
     span {
@@ -48,4 +48,17 @@
 }
 .commentBody {
     margin: 10px 0;
+}
+.details__rating {
+    svg {
+        fill: #ff6e6e !important;
+    }
+}
+
+::ng-deep .rating .star-container .star svg {
+    &.star-half,
+    &.star-empty,
+    &.star-filled {
+        fill: #ff6e6e !important;
+    }
 }

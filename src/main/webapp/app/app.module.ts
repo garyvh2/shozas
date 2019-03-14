@@ -1,5 +1,7 @@
 import './vendor.ts';
 
+import { DetailModule } from './modules/detail/detail.module';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';

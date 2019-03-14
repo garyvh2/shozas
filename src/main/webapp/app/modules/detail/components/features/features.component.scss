@@ -1,0 +1,18 @@
+.rsd__features {
+    font-weight: bold;
+    padding: 16px 0 24px;
+
+    .rsd__feature {
+        display: flex;
+        align-items: center;
+
+        .rsd__features-icon-label {
+            font-weight: bold;
+        }
+
+        .rsd__icon {
+            height: 32px;
+            width: 32px;
+        }
+    }
+}

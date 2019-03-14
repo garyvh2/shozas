@@ -6,8 +6,9 @@ import {
     MatSelectModule,
     MatRadioModule,
     MatTabsModule,
-    MatCardModule,
     MatGridListModule,
+    MatDividerModule,
+    MatCardModule,
     MatProgressSpinnerModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
@@ -17,6 +18,7 @@ import { NgModule } from '@angular/core';
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatDividerModule,
         MatSelectModule,
         MatCardModule,
         MatRadioModule,
@@ -29,6 +31,7 @@ import { NgModule } from '@angular/core';
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatDividerModule,
         MatSelectModule,
         MatCardModule,
         MatRadioModule,
