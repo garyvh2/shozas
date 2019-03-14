@@ -1,10 +1,7 @@
 package com.gitgud.service;
 
 import com.cloudinary.Api;
-import com.gitgud.api.objects.ApiImage;
-import com.gitgud.api.objects.ApiRealState;
-import com.gitgud.api.objects.ApiSearchParams;
-import com.gitgud.api.objects.ApiUser;
+import com.gitgud.api.objects.*;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
@@ -47,7 +44,7 @@ public class RealStateService {
         return realStateRepository.save(realState);
     }
 
-    public List<RealState> getRealStateElements (ResultType resultType, ApiSearchParams parameters) throws Exception {
+    public List<RealState> getRealStateElements (ResultType resultType, ApiSearchParams parameters, ApiSearchResults results) throws Exception {
 
        Query<RealState> realStates = datastore.createQuery(RealState.class);
 
@@ -115,6 +112,10 @@ public class RealStateService {
                throw new Exception("El usuario no existe");
             User u = user.get();
            realStates.disableValidation().field("owner").equal(new DBRef("jhi_user", new ObjectId(u.getId())));
+       }
+
+       if(results != null){
+
        }
 
 
