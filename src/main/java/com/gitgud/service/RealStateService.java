@@ -67,16 +67,16 @@ public class RealStateService {
        }
 
        if(parameters.getProvince() != null &&!parameters.getProvince().isEmpty() && parameters.getCity()!= null && !parameters.getCity().isEmpty() && parameters.getDistrict()!= null && !parameters.getDistrict().isEmpty()){
-           realStates.and(realStates.criteria("province").equal(parameters.getProvince()),
-                          realStates.criteria("city").equal(parameters.getCity()),
-                          realStates.criteria("district").equal(parameters.getDistrict()));
+           realStates.and(realStates.criteria("province").endsWithIgnoreCase(parameters.getProvince()),
+                          realStates.criteria("city").endsWithIgnoreCase(parameters.getCity()),
+                          realStates.criteria("district").endsWithIgnoreCase(parameters.getDistrict()));
        }
        else if(parameters.getProvince() != null &&!parameters.getProvince().isEmpty() && parameters.getCity()!= null && !parameters.getCity().isEmpty() ){
-           realStates.and(realStates.criteria("province").equal(parameters.getProvince()),
-                          realStates.criteria("city").equal(parameters.getCity()));
+           realStates.and(realStates.criteria("province").endsWithIgnoreCase(parameters.getProvince()),
+                          realStates.criteria("city").endsWithIgnoreCase(parameters.getCity()));
        }
        else if(parameters.getProvince() != null &&!parameters.getProvince().isEmpty() ){
-           realStates.and(realStates.criteria("province").equal(parameters.getProvince()));
+           realStates.and(realStates.criteria("province").endsWithIgnoreCase(parameters.getProvince()));
        }
 
        if(parameters.getBaths() != 0){
