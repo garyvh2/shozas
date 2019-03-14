@@ -1,13 +1,16 @@
 package com.gitgud.service;
 
-import com.gitgud.domain.ApiSearchParams;
+import com.cloudinary.Api;
+import com.gitgud.api.objects.ApiImage;
+import com.gitgud.api.objects.ApiRealState;
+import com.gitgud.api.objects.ApiSearchParams;
+import com.gitgud.api.objects.ApiUser;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
 import com.gitgud.service.util.ResultType;
 import com.mongodb.DBRef;
 import dev.morphia.Datastore;
-import dev.morphia.Key;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
 import org.bson.types.ObjectId;
@@ -114,8 +117,38 @@ public class RealStateService {
            realStates.disableValidation().field("owner").equal(new DBRef("jhi_user", new ObjectId(u.getId())));
        }
 
+
         return realStates.asList(new FindOptions().skip(page).limit(pageSize));
     }
 
+    public ApiRealState toApiRealState (RealState realState){
+        ApiRealState result = new ApiRealState();
+        ApiUser user = new ApiUser();
+        ApiImage image = new ApiImage();
+
+        result.setId(realState.getId());
+        result.setAddr(realState.getProvince()+", " + realState.getCity() +", " +realState.getDistrict());
+        result.setBaths(realState.getBaths());
+        result.setBeds(realState.getRooms());
+        result.setPrice(realState.getPrice());
+        result.setSize(realState.getSize());
+        result.setGar(realState.getGarage());
+        result.setTitle(realState.getTitle());
+
+        user.setName(realState.getOwner().getFirstName() +" " +realState.getOwner().getLastName());
+        user.setStars(realState.getOwner().getRaiting());
+        if(realState.getOwner().getImage() != null){
+            image.setSource(realState.getOwner().getImage().getSource());
+        }
+        user.setImage(image);
+        result.setUser(user);
+
+        realState.getImages().forEach(i -> {
+            if(i.isPrimary())
+                result.setImage(i.getSource());
+        });
+
+        return result;
+    }
 
 }

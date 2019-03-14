@@ -1,6 +1,6 @@
 package com.gitgud.web.rest;
 
-import com.gitgud.domain.ApiResultModel;
+import com.gitgud.api.objects.ApiResultModel;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.concurrent.Callable;
