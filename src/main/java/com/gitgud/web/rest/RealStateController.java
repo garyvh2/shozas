@@ -3,6 +3,7 @@ package com.gitgud.web.rest;
 import com.gitgud.api.objects.ApiRealState;
 import com.gitgud.api.objects.ApiResultModel;
 import com.gitgud.api.objects.ApiSearchParams;
+import com.gitgud.api.objects.ApiSearchResults;
 import com.gitgud.domain.RealState;
 import com.gitgud.service.RealStateService;
 import com.gitgud.service.util.ResultType;
@@ -25,18 +26,30 @@ public class RealStateController extends ApiBaseController {
     }
 
     @PostMapping("/search/homes")
-    public ApiResultModel<List<ApiRealState>> searchHomes(@RequestBody ApiSearchParams apiSearchParams){
-        return GetApiResultModel(() -> realStateService.getRealStateElements(ResultType.Homes, apiSearchParams).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+    public ApiResultModel<ApiSearchResults> searchHomes(@RequestBody ApiSearchParams apiSearchParams){
+        return GetApiResultModel(() ->{
+            ApiSearchResults results = new ApiSearchResults();
+            results.setElements(realStateService.getRealStateElements(ResultType.Homes, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+            return results;
+        } );
     }
 
     @PostMapping("/search/lots")
-    public ApiResultModel<List<ApiRealState>> searchLots (@RequestBody ApiSearchParams apiSearchParams){
-        return GetApiResultModel(() -> realStateService.getRealStateElements(ResultType.Lots, apiSearchParams).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+    public ApiResultModel<ApiSearchResults> searchLots (@RequestBody ApiSearchParams apiSearchParams){
+        return GetApiResultModel(() ->{
+            ApiSearchResults results = new ApiSearchResults();
+            results.setElements(realStateService.getRealStateElements(ResultType.Lots, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+            return results;
+        } );
     }
 
     @PostMapping("/search/deps")
-    public ApiResultModel<List<ApiRealState>> searchDepartments(@RequestBody ApiSearchParams apiSearchParams){
-        return GetApiResultModel(() -> realStateService.getRealStateElements(ResultType.Departments, apiSearchParams).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+    public ApiResultModel<ApiSearchResults> searchDepartments(@RequestBody ApiSearchParams apiSearchParams){
+        return GetApiResultModel(() ->{
+            ApiSearchResults results = new ApiSearchResults();
+            results.setElements(realStateService.getRealStateElements(ResultType.Departments, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+            return results;
+        } );
     }
 
     @PostMapping("/create")

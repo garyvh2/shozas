@@ -105,6 +105,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Embedded
     private Image image;
 
+    ///User Identifier, Cedula Fisica o juridica
+    private String userId;
+
+    private String userType;
+
     public String getId() {
         return id;
     }
@@ -248,6 +253,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     @Override
