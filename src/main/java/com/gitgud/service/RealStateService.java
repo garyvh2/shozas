@@ -8,6 +8,8 @@ import com.gitgud.repository.RealStateRepository;
 import com.gitgud.service.util.ResultType;
 import com.mongodb.DBRef;
 import dev.morphia.Datastore;
+import dev.morphia.Key;
+import dev.morphia.query.Criteria;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
 import org.bson.types.ObjectId;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,7 +114,20 @@ public class RealStateService {
            if(!user.isPresent())
                throw new Exception("El usuario no existe");
             User u = user.get();
-           realStates.disableValidation().field("owner").equal(new DBRef("jhi_user", new ObjectId(u.getId())));
+           realStates.disableValidation().field("owner").equal(new DBRef("jhi_user", new ObjectId(user.get().getId())));
+       }
+
+       if(parameters.getRaiting()!= 0){
+            List<User> raitingUsers = userService.getUsersByRaiting(parameters.getRaiting());
+            if (!raitingUsers.isEmpty()){
+                Criteria[] criterias = new Criteria[raitingUsers.size()];
+                int count = 0;
+                for (User userToFind : raitingUsers ) {
+                    criterias[count] = (realStates.criteria("owner").equal(new DBRef("jhi_user", new ObjectId(userToFind.getId()))));
+                    count++;
+                }
+                realStates.or(criterias);
+            }
        }
 
        if(results != null){
@@ -155,6 +171,14 @@ public class RealStateService {
         });
 
         return result;
+    }
+
+    private List<DBRef> toKeys(List<User> users) {
+        List<DBRef> keys = new ArrayList<DBRef>();
+        for(User user: users) {
+            keys.add(new DBRef("jhi_user", new ObjectId(user.getId())));
+        }
+        return keys;
     }
 
 }
