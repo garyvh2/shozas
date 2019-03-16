@@ -4,7 +4,7 @@ public class ApiRealState{
     private String id;
     private String title;
     private String addr;
-    private String image;
+    private ApiImage image;
     private int beds;
     private int baths;
     private int gar;
@@ -36,11 +36,11 @@ public class ApiRealState{
         this.addr = addr;
     }
 
-    public String getImage() {
+    public ApiImage getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(ApiImage image) {
         this.image = image;
     }
 
