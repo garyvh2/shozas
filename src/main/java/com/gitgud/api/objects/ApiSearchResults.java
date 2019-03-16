@@ -7,7 +7,7 @@ public class ApiSearchResults {
     private int maxPrice;
     private int minPrice;
     private double maxSize;
-    private int minSize;
+    private double minSize;
     private List<ApiRealState> elements;
 
     public int getMaxPrice() {
@@ -34,11 +34,11 @@ public class ApiSearchResults {
         this.maxSize = maxSize;
     }
 
-    public int getMinSize() {
+    public double getMinSize() {
         return minSize;
     }
 
-    public void setMinSize(int minSize) {
+    public void setMinSize(double minSize) {
         this.minSize = minSize;
     }
 

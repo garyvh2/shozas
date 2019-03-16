@@ -126,12 +126,20 @@ public class RealStateService {
                     criterias[count] = (realStates.criteria("owner").equal(new DBRef("jhi_user", new ObjectId(userToFind.getId()))));
                     count++;
                 }
-                realStates.or(criterias);
+                realStates.disableValidation().or(criterias);
             }
        }
 
        if(results != null){
+           Query<RealState> maxPrice = realStates;
+           results.setMaxPrice(maxPrice.order("-price").asList(new FindOptions().limit(1)).get(0).getPrice());
+           Query<RealState> minPrice = realStates;
+           results.setMinPrice(minPrice.order("price").asList(new FindOptions().limit(1)).get(0).getPrice());
 
+           Query<RealState> minSize = realStates;
+           results.setMinSize(minSize.order("size").asList(new FindOptions().limit(1)).get(0).getSize());
+           Query<RealState> maxSize = realStates;
+           results.setMaxSize(maxSize.order("-size").asList(new FindOptions().limit(1)).get(0).getSize());
        }
 
 
