@@ -23,6 +23,9 @@ import { CommentComponent } from './components/comment/comment.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 import { SidecardComponent } from './components/sidecard/sidecard.component';
+import { IpsDataComponent } from './components/ips-data/ips-data.component';
+
+import { ShareButtonsModule } from '@ngx-share/buttons';
 
 @NgModule({
     declarations: [
@@ -34,7 +37,8 @@ import { SidecardComponent } from './components/sidecard/sidecard.component';
         TitleComponent,
         SidecardComponent,
         AmenitiesComponent,
-        FeaturesComponent
+        FeaturesComponent,
+        IpsDataComponent
     ],
     imports: [
         DetailRoutingModule,
@@ -42,6 +46,7 @@ import { SidecardComponent } from './components/sidecard/sidecard.component';
         CommonModule,
         AngularMaterialModule,
         StarRatingModule,
+        ShareButtonsModule,
         AgmCoreModule.forRoot({
             apiKey: MAPS_API_KEY
         })

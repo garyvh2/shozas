@@ -1,3 +1,4 @@
+import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
@@ -24,7 +25,6 @@ export class StateDetailComponent implements OnInit {
         private domSanitizer: DomSanitizer
     ) {}
     ngOnInit() {
-        console.log('Reached: state-detail-component!!!');
         this.id = Number(this.route.snapshot.paramMap.get('id'));
         this.detailService.get(this.id);
         this.detail$ = this.detailQuery.getDetail(this.id);
