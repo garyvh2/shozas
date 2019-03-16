@@ -126,6 +126,7 @@ public class RealStateService {
         ApiRealState result = new ApiRealState();
         ApiUser user = new ApiUser();
         ApiImage image = new ApiImage();
+        ApiImage realStateImage = new ApiImage();
 
         result.setId(realState.getId());
         result.setAddr(realState.getProvince()+", " + realState.getCity() +", " +realState.getDistrict());
@@ -145,8 +146,12 @@ public class RealStateService {
         result.setUser(user);
 
         realState.getImages().forEach(i -> {
-            if(i.isPrimary())
-                result.setImage(i.getSource());
+            if(i.isPrimary()){
+                realStateImage.setSource(i.getSource());
+                realStateImage.setPrimary(i.isPrimary());
+                realStateImage.setIs360Image(i.isIs360Image());
+            }
+                result.setImage(realStateImage);
         });
 
         return result;
