@@ -9,6 +9,7 @@ import { NgbDateMomentAdapter } from './util/datepicker-adapter';
 import { ShozasSharedLibsModule, ShozasSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';
 import { AngularMaterialModule } from 'app/shared/angular-material/angular-material.module';
 import { UserRatingComponent } from './user-rating/user-rating.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [ShozasSharedLibsModule, ShozasSharedCommonModule, StarRatingModule.forRoot()],
@@ -30,7 +31,9 @@ import { UserRatingComponent } from './user-rating/user-rating.component';
         DetailLikeComponent,
         DetailSpecComponent,
         ListingComponent,
-        UserRatingComponent
+        UserRatingComponent,
+        ReactiveFormsModule,
+        FormsModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

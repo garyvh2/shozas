@@ -1,124 +1,83 @@
-<div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1>Registration</h1>
+<div class="register__container justify-content-center">
+    <h1>Registrarse</h1>
 
-            <div class="alert alert-success" *ngIf="success">
-                <strong>Registration saved!</strong> Please check your email for confirmation.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="error">
-                <strong>Registration failed!</strong> Please try again later.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorUserExists">
-                <strong>Login name already registered!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorEmailExists">
-                <strong>Email is already in use!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="doNotMatch">
-                The password and its confirmation do not match!
-            </div>
-        </div>
+    <div class="alert alert-success" *ngIf="success">
+        <strong>Se ha creado el Usuario</strong> Se le ha enviado un correo de confirmacion.
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm" *ngIf="!success">
-                <div class="form-group">
-                    <label class="form-control-label" for="login">Username</label>
-                    <input type="text" class="form-control" [(ngModel)]="registerAccount.login" id="login" name="login" #login="ngModel" placeholder="Your username"
-                            required minlength="1" maxlength="50" pattern="^[_.@A-Za-z0-9-]*$">
-                    <div *ngIf="login.dirty && login.invalid">
-                        <small class="form-text text-danger" *ngIf="login.errors.required">
-                            Your username is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="login.errors.minlength"
-                               >
-                            Your username is required to be at least 1 character.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="login.errors.maxlength"
-                               >
-                            Your username cannot be longer than 50 characters.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="login.errors.pattern"
-                              >
-                            Your username can only contain letters and digits.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Your email"
-                            [(ngModel)]="registerAccount.email" minlength=5 maxlength=254 email required>
-                    <div *ngIf="email.dirty && email.invalid">
-                        <small class="form-text text-danger" *ngIf="email.errors.required"
-                               >
-                            Your email is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="email.errors.invalid"
-                              >
-                            Your email is invalid.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="email.errors.minlength"
-                              >
-                            Your email is required to be at least 5 characters.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="email.errors.maxlength"
-                              >
-                            Your email cannot be longer than 100 characters.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="password">New password</label>
-                    <input type="password" class="form-control" id="password" name="password" #password="ngModel" placeholder="New password"
-                            [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
-                    <div *ngIf="password.dirty && password.invalid">
-                        <small class="form-text text-danger" *ngIf="password.errors.required"
-                               >
-                            Your password is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="password.errors.minlength"
-                               >
-                            Your password is required to be at least 4 characters.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="password.errors.maxlength"
-                               >
-                            Your password cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                    <jhi-password-strength-bar [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="confirmPassword">New password confirmation</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Confirm the new password"
-                            [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
-                    <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
-                        <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required"
-                              >
-                            Your confirmation password is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.minlength"
-                             >
-                            Your confirmation password is required to be at least 4 characters.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.maxlength"
-                              >
-                            Your confirmation password cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
 
-                <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary">Register</button>
-            </form>
-            <p></p>
-            <div class="alert alert-warning">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="openLogin()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
-        </div>
+    <div class="alert alert-danger" *ngIf="error">
+        <strong>No hemos podido registrar el usuario!</strong> Intentelo de nuevo.
     </div>
+
+    <div class="alert alert-danger" *ngIf="errorUserExists">
+        <strong>Esa identificacion ya esta en uso!</strong> Por favor use otra.
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorEmailExists">
+        <strong>Ese correo ya esta en uso!</strong> Por favor use otro.
+    </div>
+
+    <form [formGroup]="registerForm">
+        <mat-label class="radio__label">Tipo de Usuario</mat-label>
+        <mat-radio-group formControlName="userType">
+            <mat-radio-button color="warn" value="{{userType.Personal}}">Personal</mat-radio-button>
+            <mat-radio-button color="warn" value="{{userType.Company}}">Juridico</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>{{ getUserIdentifierText() }}</mat-label>
+            <input formControlName="userIdentifier" mask="{{getIdentifierMask()}}" matInput placeholder="{{ getUserIdentifierText() }}" />
+            <mat-hint>Formato: {{getIdentifierMask()}}</mat-hint>
+            <mat-error *ngIf="registerForm.get('userIdentifier').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="registerForm.get('userIdentifier').hasError('Mask error')">No cumple con el formato requerido {{getIdentifierMask()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="firstName" matInput placeholder="Nombre" />
+            <mat-error *ngIf="registerForm.get('firstName').hasError('required')">Este campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="registerForm.get('userType').value === 'P'"  color="accent" appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input formControlName="lastName" matInput placeholder="Apellidos" />
+            <mat-error *ngIf="registerForm.get('lastName').hasError('required')">Este campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Correo</mat-label>
+            <input formControlName="email" matInput placeholder="Correo" />
+            <mat-error *ngIf="registerForm.get('email').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="registerForm.get('email').hasError('email')">Por favor digite un correo valido</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="password" placeholder="Contraseña" type="password" />
+            <mat-hint>Minimo de 8 caracteres</mat-hint>
+            <mat-error *ngIf="registerForm.get('password').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="registerForm.get('password').hasError('minlength')"
+                >La contraseña tiene que ser minimo de 8 caracteres</mat-error
+            >
+        </mat-form-field>
+        <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password').value"></jhi-password-strength-bar>
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input
+                matInput
+                placeholder="Confirmar contraseña"
+                formControlName="confirmPass"
+                type="password"
+                [errorStateMatcher]="passwordsMatcher"
+            />
+            <mat-error *ngIf="registerForm.get('confirmPass').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="registerForm.hasError('passwordsNotEqual')">Las contraseñas tiene que se iguales</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input mask="0000-0000" formControlName="phone" matInput placeholder="Teléfono" />
+            <mat-hint>Formato: 0000-0000</mat-hint>
+            <mat-error *ngIf="registerForm.get('phone').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="registerForm.get('userIdentifier').hasError('Mask error')">No cumple con el formato requerido 0000-0000</mat-error>
+        </mat-form-field>
+        <div class="submit__button">
+            <button mat-raised-button (click)="register()">Registrar</button>
+        </div>
+    </form>
 </div>

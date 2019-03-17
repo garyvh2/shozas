@@ -22,7 +22,6 @@ Navbar
     .dropdown-item.active:hover {
         background-color: $dark;
     }
-
     ul.navbar-nav {
         .nav-item {
             margin-left: 0.5em;
@@ -30,7 +29,9 @@ Navbar
     }
 
     a.nav-link {
-        font-weight: 400;
+        font-weight: 600;
+    }
+    a mat-icon {
     }
 
     .navbar-toggler {
@@ -38,6 +39,13 @@ Navbar
             color: $navbar-dark-hover-color;
         }
     }
+}
+.navbar-title {
+    color: #ff6666;
+    font-size: 24px;
+}
+.dot-com {
+    font-size: 14px;
 }
 
 /* ==========================================================================
