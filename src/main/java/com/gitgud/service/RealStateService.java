@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public class RealStateService {
             throw new Exception("Usuario no existe");
         }
         realState.setOwner(userOwner.get());
-
+        realState.setDateCreated(new Date());
         return realStateRepository.save(realState);
     }
 
@@ -181,12 +182,11 @@ public class RealStateService {
         return result;
     }
 
-    private List<DBRef> toKeys(List<User> users) {
-        List<DBRef> keys = new ArrayList<DBRef>();
-        for(User user: users) {
-            keys.add(new DBRef("jhi_user", new ObjectId(user.getId())));
-        }
-        return keys;
+    public RealState getRealStateDetailElement(String id) throws Exception {
+        Optional<RealState> result = realStateRepository.findById(id);
+        if (!result.isPresent())
+            throw new Exception("El elemento solicitado ya no existe");
+        return result.get();
     }
 
 }

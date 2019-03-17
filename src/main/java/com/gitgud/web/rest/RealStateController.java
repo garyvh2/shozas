@@ -7,10 +7,7 @@ import com.gitgud.api.objects.ApiSearchResults;
 import com.gitgud.domain.RealState;
 import com.gitgud.service.RealStateService;
 import com.gitgud.service.util.ResultType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,5 +54,9 @@ public class RealStateController extends ApiBaseController {
         return GetApiResultModel(() ->  realStateService.save(realState));
     }
 
+    @GetMapping("/detail")
+    public ApiResultModel<RealState> detailRealState(@RequestParam String id){
+        return GetApiResultModel(() ->  realStateService.getRealStateDetailElement(id));
+    }
 
 }
