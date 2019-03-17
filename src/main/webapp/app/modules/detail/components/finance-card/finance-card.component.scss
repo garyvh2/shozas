@@ -1,0 +1,29 @@
+.flex-space-between {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.mat-card-title {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.mat-card-content {
+    span {
+        width: 50%;
+    }
+
+    .financeCard__feeHolder {
+        font-weight: bold;
+        span {
+            font-size: 20px;
+        }
+    }
+}
+
+.width-50 {
+    width: 50%;
+}

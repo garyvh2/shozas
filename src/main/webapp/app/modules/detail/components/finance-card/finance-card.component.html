@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{bank.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="flex-space-between">
+            <label>Tasa Fija:</label><span>{{bank.rate}} %</span>
+        </div>
+        <div class="flex-space-between">
+            <label>Prima (₡): </label>
+            <mat-form-field class="width-50">
+                <input
+                    type="number"
+                    [(ngModel)]="premium"
+                    matInput min="{{rs.price * (bank.prima / 100)}}"
+                    max="{{rs.price}}"
+                    (change)="calculateMonthlyFee()">
+            </mat-form-field>
+        </div>
+        <div class="flex-space-between">
+            <label>Plazo: </label><span>{{bank.terms[0]}} años</span>
+        </div>
+        <div class="flex-space-between financeCard__feeHolder">
+            <label>Cuota Mensual (₡):</label><span>{{monthlyFee}}</span>
+        </div>
+    </mat-card-content>
+    <mat-card-footer></mat-card-footer>
+</mat-card>

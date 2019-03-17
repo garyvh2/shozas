@@ -10,3 +10,4 @@ export const MAPS_API_KEY = 'AIzaSyBN4W3Ej_21icSVaTwxXoElWi_Qp4TQvN8';
 export const BUILD_TIMESTAMP = process.env.BUILD_TIMESTAMP;
 
 export const IPS_URL = 'http://localhost:8080/api/ips/';
+export const FINANCE_INFO_URL = 'http://localhost:8080/api/financing/';

@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { ReviewService } from './../../@akita/review/review.service';
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
@@ -25,7 +26,9 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
 import { SidecardComponent } from './components/sidecard/sidecard.component';
 import { IpsDataComponent } from './components/ips-data/ips-data.component';
 
-import { ShareButtonsModule } from '@ngx-share/buttons';
+import { FinanceModalComponent } from './components/finance-modal/finance-modal.component';
+import { MatDialogModule } from '@angular/material';
+import { FinanceCardComponent } from './components/finance-card/finance-card.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +41,9 @@ import { ShareButtonsModule } from '@ngx-share/buttons';
         SidecardComponent,
         AmenitiesComponent,
         FeaturesComponent,
-        IpsDataComponent
+        IpsDataComponent,
+        FinanceModalComponent,
+        FinanceCardComponent
     ],
     imports: [
         DetailRoutingModule,
@@ -46,11 +51,13 @@ import { ShareButtonsModule } from '@ngx-share/buttons';
         CommonModule,
         AngularMaterialModule,
         StarRatingModule,
-        ShareButtonsModule,
+        MatDialogModule,
+        FormsModule,
         AgmCoreModule.forRoot({
             apiKey: MAPS_API_KEY
         })
     ],
-    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore]
+    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore],
+    entryComponents: [FinanceModalComponent]
 })
 export class DetailModule {}

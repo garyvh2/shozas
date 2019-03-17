@@ -1,5 +1,5 @@
 import { DataCRP } from './../../../@akita/external-models/data-crp';
-import { IPS_URL } from './../../../app.constants';
+import { IPS_URL, SERVER_API_URL } from './../../../app.constants';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -19,9 +19,7 @@ export class IpsDataService {
     constructor(private http: HttpClient) {}
 
     getCRPDataCanton(rs: RealState): Observable<DataCRP> {
-        console.log('IPS DATA SERVICE!:', 'Token is');
-        console.log(localStorage.getItem('jhi-authenticationtoken'));
-
+        console.log('SERVER_API_URL', SERVER_API_URL);
         return this.http.get<DataCRP>(IPS_URL + this.formatText(rs.city), this.options);
     }
 
