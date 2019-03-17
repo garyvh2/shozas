@@ -40,6 +40,10 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
+    private static final String CLIENT = "client";
+    private static final String OWNER = "owner";
+    private static final String CONTACT_TEMPLATE = "mail/contactEmail";
+
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
             MessageSource messageSource, SpringTemplateEngine templateEngine) {
 
@@ -82,7 +86,6 @@ public class MailService {
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
-
     }
 
     @Async
@@ -101,5 +104,16 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    public void sendEmailToOwner(User client, User owner) {
+        Locale locale = Locale.forLanguageTag(owner.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(CLIENT, client);
+        context.setVariable(OWNER, owner);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(CONTACT_TEMPLATE, context);
+        String subject = messageSource.getMessage("email.contact.title", null, locale);
+        sendEmail(owner.getEmail(), subject, content, false, true);
     }
 }

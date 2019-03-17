@@ -4,6 +4,7 @@ import com.gitgud.config.Constants;
 import com.gitgud.domain.User;
 import com.gitgud.repository.UserRepository;
 import com.gitgud.security.AuthoritiesConstants;
+import com.gitgud.security.SecurityUtils;
 import com.gitgud.service.MailService;
 import com.gitgud.service.UserService;
 import com.gitgud.service.dto.UserDTO;
@@ -179,5 +180,10 @@ public class UserResource {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
+    }
+
+    @PostMapping("/users/contact-owner")
+    public User sendEmail(@RequestBody User owner) {
+        return userService.sendEmailToOwner(owner.getId());
     }
 }

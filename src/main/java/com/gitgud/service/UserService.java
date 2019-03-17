@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -38,10 +39,13 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    private final MailService mailService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.mailService = mailService;
     }
 
     public Optional<User> getUserByEmail(String email){
@@ -273,5 +277,32 @@ public class UserService {
      */
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+
+    public User sendEmailToOwner(String ownerId) {
+
+        User user = new User();
+        user.setFirstName("F U ANONYMOUS");
+
+        Optional<String> login = SecurityUtils.getCurrentUserLogin();
+
+        if (login.isPresent()) {
+            Optional<User> client = userRepository.findOneByLogin(login.get());
+            Optional<User> owner = userRepository.getOneById(ownerId);
+
+            if (client.isPresent() && owner.isPresent()) {
+
+                System.out.println("CLIENT");
+                System.out.println(client.get().toString());
+                System.out.println("OWNER");
+                System.out.println(owner.get().toString());
+
+                mailService.sendEmailToOwner(client.get(), owner.get());
+
+                return client.get();
+            }
+        }
+
+        return user;
     }
 }
