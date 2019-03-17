@@ -48,7 +48,14 @@ public class UserService {
         return userRepository.findOneByEmailIgnoreCase(email);
     }
 
-
+    public List<User> getUsersByRaiting(double raiting){
+        List<User> resultUser = new ArrayList<User>();
+        Optional<List<User>> dbResult = userRepository.findUsersByRaiting(raiting);
+        if(dbResult.isPresent()){
+            resultUser = dbResult.get();
+        }
+        return  resultUser;
+    }
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
@@ -99,6 +106,13 @@ public class UserService {
                 throw new EmailAlreadyUsedException();
             }
         });
+        userRepository.findOneByEmailIgnoreCase(userDTO.getUserId()).ifPresent(existingUser -> {
+            boolean removed = removeNonActivatedUser(existingUser);
+            if (!removed) {
+                throw new UserIdentifierAlreadyUsed();
+            }
+        });
+
         User newUser = new User();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(userDTO.getLogin().toLowerCase());
@@ -108,7 +122,12 @@ public class UserService {
         newUser.setLastName(userDTO.getLastName());
         newUser.setEmail(userDTO.getEmail().toLowerCase());
         newUser.setImageUrl(userDTO.getImageUrl());
+        newUser.setUserId(userDTO.getUserId());
+        newUser.setImage(userDTO.getImage());
+        newUser.setDisplayPhone(userDTO.isDisplayPhone());
+        newUser.setUserType(userDTO.getUserType());
         newUser.setLangKey(userDTO.getLangKey());
+        newUser.setPhone(userDTO.getPhone());
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
