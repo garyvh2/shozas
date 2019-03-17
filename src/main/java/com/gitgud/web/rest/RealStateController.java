@@ -23,7 +23,7 @@ public class RealStateController extends ApiBaseController {
     }
 
     @PostMapping("/search/homes")
-    public ApiResultModel<ApiSearchResults> searchHomes(@RequestBody ApiSearchParams apiSearchParams){
+    public ApiResultModel<ApiSearchResults> searchHomes(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() ->{
             ApiSearchResults results = new ApiSearchResults();
             results.setElements(realStateService.getRealStateElements(ResultType.Homes, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
@@ -32,7 +32,7 @@ public class RealStateController extends ApiBaseController {
     }
 
     @PostMapping("/search/lots")
-    public ApiResultModel<ApiSearchResults> searchLots (@RequestBody ApiSearchParams apiSearchParams){
+    public ApiResultModel<ApiSearchResults> searchLots (@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() ->{
             ApiSearchResults results = new ApiSearchResults();
             results.setElements(realStateService.getRealStateElements(ResultType.Lots, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
@@ -41,7 +41,7 @@ public class RealStateController extends ApiBaseController {
     }
 
     @PostMapping("/search/deps")
-    public ApiResultModel<ApiSearchResults> searchDepartments(@RequestBody ApiSearchParams apiSearchParams){
+    public ApiResultModel<ApiSearchResults> searchDepartments(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() ->{
             ApiSearchResults results = new ApiSearchResults();
             results.setElements(realStateService.getRealStateElements(ResultType.Departments, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
@@ -50,12 +50,12 @@ public class RealStateController extends ApiBaseController {
     }
 
     @PostMapping("/create")
-    public ApiResultModel<RealState> createRealState(@RequestBody RealState realState){
+    public ApiResultModel<RealState> createRealState(@RequestBody RealState realState) throws Exception {
         return GetApiResultModel(() ->  realStateService.save(realState));
     }
 
     @GetMapping("/detail")
-    public ApiResultModel<RealState> detailRealState(@RequestParam String id){
+    public ApiResultModel<RealState> detailRealState(@RequestParam String id) throws Exception {
         return GetApiResultModel(() ->  realStateService.getRealStateDetailElement(id));
     }
 
