@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Date;
 import java.util.HashSet;
 
 @Document
@@ -59,6 +60,8 @@ public class RealState {
     private boolean hasHealthServices;
 
     private boolean isSold;
+
+    private Date dateCreated;
 
     @Field
     @Embedded
@@ -295,5 +298,13 @@ public class RealState {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

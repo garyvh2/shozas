@@ -1,4 +1,4 @@
-package com.gitgud.domain;
+package com.gitgud.api.objects;
 
 public class ApiSearchParams {
 
@@ -18,6 +18,7 @@ public class ApiSearchParams {
     private String similarTo;
     private int page;
     private int pageSize;
+    private double raiting;
 
     public String getProvince() {
         return province;
@@ -145,5 +146,13 @@ public class ApiSearchParams {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public double getRaiting() {
+        return raiting;
+    }
+
+    public void setRaiting(double raiting) {
+        this.raiting = raiting;
     }
 }

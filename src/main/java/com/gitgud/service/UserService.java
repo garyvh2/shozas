@@ -52,7 +52,14 @@ public class UserService {
         return userRepository.findOneByEmailIgnoreCase(email);
     }
 
-
+    public List<User> getUsersByRaiting(double raiting){
+        List<User> resultUser = new ArrayList<User>();
+        Optional<List<User>> dbResult = userRepository.findUsersByRaiting(raiting);
+        if(dbResult.isPresent()){
+            resultUser = dbResult.get();
+        }
+        return  resultUser;
+    }
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
