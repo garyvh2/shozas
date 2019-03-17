@@ -3,6 +3,7 @@ package com.gitgud.service.dto;
 import com.gitgud.config.Constants;
 
 import com.gitgud.domain.Authority;
+import com.gitgud.domain.Image;
 import com.gitgud.domain.User;
 
 import javax.validation.constraints.Email;
@@ -53,6 +54,18 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private String userType;
+
+    private Image image;
+
+    private String userId;
+
+    private int phone;
+
+    private double raiting;
+
+    private boolean displayPhone;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -70,6 +83,12 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.userType = user.getUserType();
+        this.image = user.getImage();
+        this.userId = user.getUserId();
+        this.phone = user.getPhone();
+        this.displayPhone = user.isDisplayPhone();
+        this.raiting = user.getRaiting();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -179,6 +198,54 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public double getRaiting() {
+        return raiting;
+    }
+
+    public void setRaiting(double raiting) {
+        this.raiting = raiting;
+    }
+
+    public boolean isDisplayPhone() {
+        return displayPhone;
+    }
+
+    public void setDisplayPhone(boolean displayPhone) {
+        this.displayPhone = displayPhone;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -193,6 +260,7 @@ public class UserDTO {
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
+            ", userType=" + userType +
             ", authorities=" + authorities +
             "}";
     }
