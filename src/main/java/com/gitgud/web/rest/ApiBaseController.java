@@ -9,8 +9,10 @@ public class ApiBaseController {
 
     private StopWatch timer = new StopWatch();
 
-    public <T> ApiResultModel<T> GetApiResultModel (Callable<T> func){
+    public <T> ApiResultModel<T> GetApiResultModel (Callable<T> func ) throws Exception {
         ApiResultModel<T> result = new ApiResultModel<T>();
+        boolean error = false;
+        Exception exception = null;
         timer.start();
 
         try {
@@ -18,8 +20,10 @@ public class ApiBaseController {
             result.setStatus("Ok");
         }
         catch (Exception e){
+            error = true;
             result.setStatus("Fail");
             result.setException(e);
+            exception = e;
             result.setMessage(e.getMessage());
         }
         finally {
@@ -27,6 +31,9 @@ public class ApiBaseController {
             result.setTime(Long.toString(timer.getTime()));
             timer.reset();
         }
+
+        if (error)
+            throw exception;
 
         return result;
     }
