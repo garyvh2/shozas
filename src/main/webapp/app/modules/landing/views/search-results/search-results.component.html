@@ -1,125 +1,19 @@
 <div class="left">
-    <mat-tab-group animationDuration="0ms" color="#FD6666">
+    <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex">
         <mat-tab label="Casas">
-            <form>
-                <div class="filter">
-                    <label>Precio</label>
-                    <app-range-component [options]="precioOpciones" [max]="15000000"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Tamaño</label>
-                    <app-range-component [options]="tamanoOpciones" [max]="2500"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Calificación</label>
-                    <star-rating class="details__rating" [starType]="'svg'" [rating]="1"></star-rating>
-                </div>
-                <div class="filter">
-                    <h4>Secciones</h4>
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bed.png">Cuartos</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bath.png">Baño</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/garage.png">Parqueo</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/house.png">Pisos</app-detail-spec>
-                        <app-filter-amount [size]="3"></app-filter-amount>
-                    </div>
-                </div>
-
-                <div class="filter">
-                    <label>Codigo Postal</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="ZIP">
-                    </mat-form-field>
-                </div>
-                <button mat-button>Aplicar</button>
-            </form>
+            <jhi-filter-home [searchFilters]="homeFilters"></jhi-filter-home>
         </mat-tab>
         <mat-tab label="Apartamentos">
-            <form>
-                <div class="filter">
-                    <label>Precio</label>
-                    <app-range-component [options]="precioOpciones" [max]="15000000"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Tamaño</label>
-                    <app-range-component [options]="tamanoOpciones" [max]="2500"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Calificación</label>
-                    <star-rating class="details__rating" [starType]="'svg'" [rating]="2.63"></star-rating>
-                </div>
-                <div class="filter">
-                    <h4>Secciones</h4>
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bed.png">Cuartos</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bath.png">Baño</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/garage.png">Parqueo</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/house.png">Pisos</app-detail-spec>
-                        <app-filter-amount [size]="3"></app-filter-amount>
-                    </div>
-                </div>
-
-                <div class="filter">
-                    <label>Codigo Postal</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="ZIP">
-                    </mat-form-field>
-                </div>
-                <button mat-button>Aplicar</button>
-            </form>
+            <jhi-filter-appartment [searchFilters]="appartmentFilters"></jhi-filter-appartment>
         </mat-tab>
         <mat-tab label="Lotes">
-            <form>
-                <div class="filter">
-                    <label>Precio</label>
-                    <app-range-component [options]="precioOpciones" [max]="15000000"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Tamaño</label>
-                    <app-range-component [options]="tamanoOpciones" [max]="2500"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Calificación</label>
-                    <star-rating class="details__rating" [starType]="'svg'" [rating]="2.63"></star-rating>
-                </div>
-
-                <div class="filter">
-                    <label>Codigo Postal</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="ZIP">
-                    </mat-form-field>
-                </div>
-                <button mat-button>Aplicar</button>
-            </form>
+            <jhi-filter-lot [searchFilters]="lotFilters"></jhi-filter-lot>
         </mat-tab>
     </mat-tab-group>
+    <button mat-button (click)="applyFilters()">Aplicar</button>
 </div>
 <div class="right">
-    <app-location-filters></app-location-filters>
+    <jhi-location-filters [searchFilters]="locationFilters"></jhi-location-filters>
     <div class="items">
         <app-listing *ngFor="let home of homes" [listing]="home"></app-listing>
     </div>

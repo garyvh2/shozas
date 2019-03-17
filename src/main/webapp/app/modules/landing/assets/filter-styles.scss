@@ -1,0 +1,28 @@
+:host {
+    .filter {
+        display: flex;
+        flex-direction: column;
+        margin: 5px 10px;
+        justify-content: flex-start;
+
+        star-rating {
+            align-self: flex-start;
+            margin: 5px 0;
+        }
+
+        h4 {
+            margin: 0;
+        }
+
+        .seccion {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            app-detail-spec {
+                width: 120px;
+                height: 40px;
+            }
+        }
+    }
+}

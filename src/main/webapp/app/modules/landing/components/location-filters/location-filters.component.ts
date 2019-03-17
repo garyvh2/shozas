@@ -1,8 +1,10 @@
 import { LocationFiltersService } from './location-filters.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { SearchFilter } from 'app/@akita/external-models/searchFilter';
+import { KeyValue } from '@angular/common';
 
 @Component({
-    selector: 'app-location-filters',
+    selector: 'jhi-location-filters',
     templateUrl: './location-filters.component.html',
     styleUrls: ['./location-filters.component.scss'],
     providers: [LocationFiltersService]
@@ -15,9 +17,12 @@ export class LocationFiltersComponent implements OnInit {
 
     /** Selected */
     @Input()
-    provincia: number;
-    canton: number;
-    distrito: number;
+    provincia: KeyValue<string, string>;
+    canton: KeyValue<string, string>;
+    distrito: KeyValue<string, string>;
+
+    @Input()
+    searchFilters: SearchFilter = new SearchFilter();
 
     constructor(private locationFiltersService: LocationFiltersService) {}
 
@@ -27,21 +32,25 @@ export class LocationFiltersComponent implements OnInit {
             .subscribe(
                 provincias => (
                     (this.provincias = provincias),
-                    this.locationFiltersService.getProvincia().subscribe(provincia => (this.provincia = provincia))
+                    this.locationFiltersService.getProvincia().subscribe(provincia => (this.provincia.value = String(provincia)))
                 )
             );
     }
 
-    selectedProvincia({ value }) {
+    selectedProvincia({ value: { key, value } }) {
         this.canton = undefined;
         this.distrito = undefined;
-
-        this.locationFiltersService.getGetCantones(value).subscribe(cantones => (this.cantones = cantones));
+        this.searchFilters.province = value;
+        this.locationFiltersService.getGetCantones(key).subscribe(cantones => (this.cantones = cantones));
     }
 
-    selectedCanton({ value }) {
+    selectedCanton({ value: { key, value } }) {
         this.distrito = undefined;
+        this.searchFilters.city = value;
+        this.locationFiltersService.getGetDistritos(this.provincia.key, key).subscribe(distritos => (this.distritos = distritos));
+    }
 
-        this.locationFiltersService.getGetDistritos(this.provincia, value).subscribe(distritos => (this.distritos = distritos));
+    selectedDistrito({ value: { value } }) {
+        this.searchFilters.district = value;
     }
 }

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export interface DetailState extends EntityState<RealState> {}
 
 @Injectable()
-@StoreConfig({ name: 'detail' })
+@StoreConfig({ name: 'realstate' })
 export class RealStateStore extends EntityStore<DetailState, RealState> {
     constructor() {
         super();

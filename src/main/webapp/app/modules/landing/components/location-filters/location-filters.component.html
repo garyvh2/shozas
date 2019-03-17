@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline">
     <mat-select placeholder="Provincia" [(ngModel)]="provincia" name="provincia" (selectionChange)="selectedProvincia($event)">
-        <mat-option *ngFor="let value of provincias | keyvalue" [value]="value.key">
+        <mat-option *ngFor="let value of provincias | keyvalue" [value]="value">
             {{value.value}}
         </mat-option>
     </mat-select>
@@ -8,14 +8,15 @@
 <mat-form-field appearance="outline">
     <mat-select placeholder="Canton" [(ngModel)]="canton" name="canton" [disabled]="!provincia?true:null"
         (selectionChange)="selectedCanton($event)">
-        <mat-option *ngFor="let value of cantones | keyvalue" [value]="value.key">
+        <mat-option *ngFor="let value of cantones | keyvalue" [value]="value">
             {{value.value}}
         </mat-option>
     </mat-select>
 </mat-form-field>
 <mat-form-field appearance="outline">
-    <mat-select placeholder="Distrito" [(ngModel)]="distrito" name="distrito" [disabled]="!canton?true:null">
-        <mat-option *ngFor="let value of distritos | keyvalue" [value]="value.key">
+    <mat-select placeholder="Distrito" [(ngModel)]="distrito" name="distrito" [disabled]="!canton?true:null"
+        (selectionChange)="selectedDistrito($event)">
+        <mat-option *ngFor="let value of distritos | keyvalue" [value]="value">
             {{value.value}}
         </mat-option>
     </mat-select>
