@@ -1,7 +1,7 @@
 import { RealState } from './../../../../@akita/real-state/real-state.model';
 
 import { Component, OnInit, Input } from '@angular/core';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
     selector: 'jhi-title',

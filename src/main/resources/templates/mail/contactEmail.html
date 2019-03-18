@@ -16,7 +16,7 @@
             <li th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">
                 Name: Anonymous
             </li>
-            <li th:text="#{email.contact.email(${client.email})}">
+            <li th:text="#{email.contact.email(${client.login})}">
                 Email: anonymous@anonymous.com
             </li>
             <li th:text="#{email.contact.phone(${client.phone})}">
@@ -35,7 +35,7 @@
             </li>
         </ul>
         <p>
-            <span th:text="#{email.activation.text2}">Regards, </span>
+            <span th:text="#{email.contact.regards}">Regards, </span>
             <br/>
             <em th:text="#{email.signature}">JHipster.</em>
         </p>

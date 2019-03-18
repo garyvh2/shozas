@@ -87,7 +87,7 @@ public class MailService {
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(user.getEmail(), subject, content, false, true);
+        sendEmail(user.getLogin(), subject, content, false, true);
     }
 
     @Async
@@ -119,6 +119,6 @@ public class MailService {
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(CONTACT_TEMPLATE, context);
         String subject = messageSource.getMessage("email.contact.title", null, locale);
-        sendEmail(owner.getEmail(), subject, content, false, true);
+        sendEmail(owner.getLogin(), subject, content, false, true);
     }
 }
