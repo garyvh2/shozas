@@ -11,13 +11,15 @@ import {
     MatCardModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSidenavModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 @NgModule({
     imports: [
         MatButtonModule,
         MatFormFieldModule,
+        MatSidenavModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,
@@ -33,6 +35,7 @@ import { NgModule } from '@angular/core';
     exports: [
         MatButtonModule,
         MatFormFieldModule,
+        MatSidenavModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,

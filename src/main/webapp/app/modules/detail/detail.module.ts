@@ -1,4 +1,5 @@
 import { FormsModule } from '@angular/forms';
+import { SearchRealStateStore } from './../landing/@akita/search/search.store';
 import { ReviewService } from './../../@akita/review/review.service';
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
@@ -57,7 +58,7 @@ import { FinanceCardComponent } from './components/finance-card/finance-card.com
             apiKey: MAPS_API_KEY
         })
     ],
-    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore],
+    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, SearchRealStateStore],
     entryComponents: [FinanceModalComponent]
 })
 export class DetailModule {}

@@ -1,5 +1,5 @@
 import { DataCRP } from './../../../@akita/external-models/data-crp';
-import { IPS_URL, SERVER_API_URL } from './../../../app.constants';
+import { SERVER_API_URL } from './../../../app.constants';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';

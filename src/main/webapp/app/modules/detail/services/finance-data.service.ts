@@ -1,5 +1,4 @@
 import { FinanceData } from './../../../@akita/external-models/finance-data';
-import { FINANCE_INFO_URL } from './../../../app.constants';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';

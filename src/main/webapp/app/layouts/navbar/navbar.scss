@@ -16,11 +16,20 @@ Navbar
 }
 
 .navbar {
+    height: 60px;
+    background: #fff !important;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+
+    * {
+        background: #fff !important;
+        color: #fd6666 !important;
+    }
+
     padding: 0.2rem 1rem;
     .dropdown-item.active,
     .dropdown-item.active:focus,
     .dropdown-item.active:hover {
-        background-color: $dark;
+        background-color: #fff;
     }
     ul.navbar-nav {
         .nav-item {
