@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,8 +44,9 @@ public class RealStateService {
         if (!userOwner.isPresent()){
             throw new Exception("Usuario no existe");
         }
+        realState.setDateCreated(Instant.now());
         realState.setOwner(userOwner.get());
-        realState.setDateCreated(new Date());
+
         return realStateRepository.save(realState);
     }
 
@@ -132,6 +134,8 @@ public class RealStateService {
        }
 
        if(results != null){
+           try {
+
            Query<RealState> maxPrice = realStates;
            results.setMaxPrice(maxPrice.order("-price").asList(new FindOptions().limit(1)).get(0).getPrice());
            Query<RealState> minPrice = realStates;
@@ -140,7 +144,10 @@ public class RealStateService {
            Query<RealState> minSize = realStates;
            results.setMinSize(minSize.order("size").asList(new FindOptions().limit(1)).get(0).getSize());
            Query<RealState> maxSize = realStates;
-           results.setMaxSize(maxSize.order("-size").asList(new FindOptions().limit(1)).get(0).getSize());
+           results.setMaxSize(maxSize.order("-size").asList(new FindOptions().limit(1)).get(0).getSize());}
+           catch (Exception e){
+               return new ArrayList<RealState>();
+           }
        }
 
 
