@@ -2,6 +2,8 @@
     margin: 10px;
 
     mat-card {
+        min-height: 350px;
+
         mat-card-header {
             .details {
                 flex: 1;

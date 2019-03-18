@@ -1,14 +1,14 @@
-import { User } from './../../modules/landing/views/search-results/search-results.model';
 import { Component, OnInit, Input } from '@angular/core';
+import { TempUser } from 'app/@akita/external-models/tempUser';
 
 @Component({
-    selector: 'app-user-rating',
+    selector: 'jhi-user-rating',
     templateUrl: './user-rating.component.html',
     styleUrls: ['./user-rating.component.scss']
 })
 export class UserRatingComponent implements OnInit {
     @Input()
-    user: User;
+    user: TempUser;
 
     constructor() {}
 

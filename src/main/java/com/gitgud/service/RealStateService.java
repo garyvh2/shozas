@@ -131,7 +131,7 @@ public class RealStateService {
             }
        }
 
-       if(results != null){
+       if(realStates.asList().size() > 0 && results != null){
            Query<RealState> maxPrice = realStates;
            results.setMaxPrice(maxPrice.order("-price").asList(new FindOptions().limit(1)).get(0).getPrice());
            Query<RealState> minPrice = realStates;

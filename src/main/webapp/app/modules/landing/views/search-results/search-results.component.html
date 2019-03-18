@@ -1,13 +1,13 @@
 <div class="left">
-    <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex">
+    <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex" (selectedIndexChange)="selectedIndexChange()">
         <mat-tab label="Casas">
-            <jhi-filter-home [searchFilters]="homeFilters"></jhi-filter-home>
+            <jhi-filter-home [searchFilters]="homeFilters" [priceConfig]="priceRange$ | async" [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
         </mat-tab>
         <mat-tab label="Apartamentos">
-            <jhi-filter-appartment [searchFilters]="appartmentFilters"></jhi-filter-appartment>
+            <jhi-filter-appartment [searchFilters]="appartmentFilters" [priceConfig]="priceRange$ | async" [sizeConfig]="sizeRange$ | async"></jhi-filter-appartment>
         </mat-tab>
         <mat-tab label="Lotes">
-            <jhi-filter-lot [searchFilters]="lotFilters"></jhi-filter-lot>
+            <jhi-filter-lot [searchFilters]="lotFilters" [priceConfig]="priceRange$ | async" [sizeConfig]="sizeRange$ | async"></jhi-filter-lot>
         </mat-tab>
     </mat-tab-group>
     <button mat-button (click)="applyFilters()">Aplicar</button>
@@ -15,6 +15,7 @@
 <div class="right">
     <jhi-location-filters [searchFilters]="locationFilters"></jhi-location-filters>
     <div class="items">
-        <app-listing *ngFor="let home of homes" [listing]="home"></app-listing>
+        <h2 *ngIf="(elements$ | async).length <= 0"> No se han encontrado resultados.</h2>
+        <jhi-listing *ngFor="let realstate of (elements$ | async)" [listing]="realstate" [routerLink]="['/detail/', realstate.id]"></jhi-listing>
     </div>
 </div>

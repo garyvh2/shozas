@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
-import { Options, LabelType } from 'ng5-slider';
+import { Component, Input } from '@angular/core';
+import { Options } from 'ng5-slider';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
 
 @Component({
@@ -7,40 +7,17 @@ import { SearchFilter } from 'app/@akita/external-models/searchFilter';
     templateUrl: './filter-appartment.component.html',
     styleUrls: ['../../assets/filter-styles.scss']
 })
-export class FilterAppartmentComponent implements OnInit {
+export class FilterAppartmentComponent {
     @Input()
     searchFilters: SearchFilter = new SearchFilter();
-
+    @Input()
     priceConfig: Options = {
         floor: 0,
-        ceil: 15000000,
-        translate: (value: number, label: LabelType): string => {
-            switch (label) {
-                case LabelType.Low:
-                    return '¢' + value;
-                case LabelType.High:
-                    return '¢' + value;
-                default:
-                    return '¢' + value;
-            }
-        }
+        ceil: 0
     };
+    @Input()
     sizeConfig: Options = {
         floor: 0,
-        ceil: 2500,
-        translate: (value: number, label: LabelType): string => {
-            switch (label) {
-                case LabelType.Low:
-                    return value + 'mt<sup>2</sub>';
-                case LabelType.High:
-                    return value + 'mt<sup>2</sub>';
-                default:
-                    return value + 'mt<sup>2</sub>';
-            }
-        }
+        ceil: 0
     };
-
-    constructor() {}
-
-    ngOnInit() {}
 }

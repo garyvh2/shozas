@@ -2,8 +2,8 @@ export class SearchFilter {
     public province?;
     public city?;
     public district?;
-    public prLow = 0;
-    public prHigh = 3000000;
+    public prLow = 1;
+    public prHigh = 0;
     private _rangePrice = {
         low: this.prLow,
         high: this.prHigh
@@ -16,8 +16,8 @@ export class SearchFilter {
         this.prHigh = value.high;
         this._rangePrice = value;
     }
-    public sizeLow = 0;
-    public sizeHigh = 1000;
+    public sizeLow = 1;
+    public sizeHigh = 0;
     private _rangeSize = {
         low: this.sizeLow,
         high: this.sizeHigh
@@ -30,10 +30,10 @@ export class SearchFilter {
         this.sizeHigh = value.high;
         this._rangeSize = value;
     }
-    public beds = 1;
-    public baths = 1;
-    public garages = 1;
-    public stories = 1;
+    public beds?: number;
+    public baths?: number;
+    public garages?: number;
+    public stories?: number;
     public zip: number = null;
     public user = '';
     public page = 1;

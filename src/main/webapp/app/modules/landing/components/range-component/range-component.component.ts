@@ -21,7 +21,7 @@ export class RangeComponentComponent implements ControlValueAccessor {
     @Input()
     options: Options = {
         floor: 0,
-        ceil: 100
+        ceil: 0
     };
 
     /** NG MODEL */

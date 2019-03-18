@@ -1,4 +1,3 @@
-import { SearchResultsService } from './views/search-results/search-results.service';
 import { LocationFiltersComponent } from './components/location-filters/location-filters.component';
 import { LandingService } from './landing.service';
 import { StarRatingModule } from 'angular-star-rating';
@@ -12,6 +11,8 @@ import { RangeComponentComponent } from './components/range-component/range-comp
 import { FilterAppartmentComponent } from './components/filter-appartment/filter-appartment.component';
 import { FilterLotComponent } from './components/filter-lot/filter-lot.component';
 import { FilterHomeComponent } from './components/filter-home/filter-home.component';
+import { RealStateStore, RealStateService } from 'app/@akita/real-state';
+import { SearchRealStateQuery, SearchRealStateStore } from './@akita/search';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,7 @@ import { FilterHomeComponent } from './components/filter-home/filter-home.compon
         FilterHomeComponent
     ],
     imports: [ShozasSharedModule, LandingRoutingModule, StarRatingModule.forRoot()],
-    providers: [LandingService, SearchResultsService],
+    providers: [LandingService, RealStateStore, RealStateService, SearchRealStateStore, SearchRealStateQuery],
     exports: [FilterAppartmentComponent, FilterLotComponent, FilterHomeComponent]
 })
 export class LandingModule {}
