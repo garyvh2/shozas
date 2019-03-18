@@ -4,7 +4,7 @@
         <span *ngSwitchCase="'L'">Lote</span>
         <span *ngSwitchCase="'D'">Apartamento</span>
     </div>
-    <div class="col-4 noPadding rsd__date">
+    <div class="col-4 noPadding rsd__date" *ngIf="detail.dateCreated" >
         <span>{{formattedDate}}</span>
     </div>
 </div>
