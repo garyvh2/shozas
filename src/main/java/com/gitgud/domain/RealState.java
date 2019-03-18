@@ -3,11 +3,13 @@ package com.gitgud.domain;
 import dev.morphia.annotations.Embedded;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Reference;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -61,7 +63,7 @@ public class RealState {
 
     private boolean isSold;
 
-    private Date dateCreated;
+    private Instant dateCreated;
 
     @Field
     @Embedded
@@ -300,11 +302,11 @@ public class RealState {
         this.owner = owner;
     }
 
-    public Date getDateCreated() {
+    public Instant getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(Instant dateCreated) {
         this.dateCreated = dateCreated;
     }
 }
