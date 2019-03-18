@@ -43,6 +43,7 @@ export class LocationFiltersComponent implements OnInit {
                     this.provinciaSubscription.unsubscribe();
                     this.provincia = this.provinciaSelect.options.map(item => item.value).find(item => item.key === String(provincia));
                     this.searchFilters.province = provincias[provincia];
+                    this.locationFiltersService.getGetCantones(provincia).subscribe(cantones => (this.cantones = cantones));
                     this.provinciaContext.emit(this.provincia);
                 })
             )
