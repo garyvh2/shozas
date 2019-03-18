@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { LocationFiltersService } from './location-filters.service';
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
 import { KeyValue } from '@angular/common';
 import { MatSelect } from '@angular/material';
@@ -12,6 +12,9 @@ import { MatSelect } from '@angular/material';
     providers: [LocationFiltersService]
 })
 export class LocationFiltersComponent implements OnInit {
+    @Output()
+    provinciaContext: EventEmitter<KeyValue<string, string>> = new EventEmitter<KeyValue<string, string>>();
+
     /** Values */
     provincias: { [key: string]: string };
     cantones: { [key: string]: string };
@@ -40,6 +43,7 @@ export class LocationFiltersComponent implements OnInit {
                     this.provinciaSubscription.unsubscribe();
                     this.provincia = this.provinciaSelect.options.map(item => item.value).find(item => item.key === String(provincia));
                     this.searchFilters.province = provincias[provincia];
+                    this.provinciaContext.emit(this.provincia);
                 })
             )
         );

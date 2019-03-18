@@ -141,4 +141,8 @@ export class SearchResultsComponent implements OnInit {
         this.setRange('rangePrice', this.getFilters().prHigh);
         this.applyFilters();
     }
+
+    provinciaContext() {
+        this.applyFilters();
+    }
 }
