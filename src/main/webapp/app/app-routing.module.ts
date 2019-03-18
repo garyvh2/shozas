@@ -10,7 +10,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         RouterModule.forRoot(
             [
                 {
-                    path: '',
+                    path: 'landing',
                     loadChildren: './modules/landing/landing.module#LandingModule'
                 },
                 {

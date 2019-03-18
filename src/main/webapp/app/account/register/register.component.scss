@@ -1,0 +1,28 @@
+.register__container {
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6666;
+    }
+    padding: 10px 70px;
+    display: block;
+    .radio__label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+    ::ng-deep .mat-radio-label {
+        margin-right: 10px;
+    }
+    .submit__button {
+        text-align: right;
+        button {
+            background: #ff6666;
+            color: #fff;
+        }
+    }
+}
+
+mat-form-field {
+    width: 100%;
+}

@@ -40,9 +40,9 @@ public class RealStateService {
         this.userService = userService;
     }
 
-    public RealState save(RealState realState) throws Exception {
-        Optional<User> userOwner = userService.getUserByEmail(realState.getOwner().getEmail());
-        if (!userOwner.isPresent()) {
+    public RealState save (RealState realState) throws Exception {
+        Optional<User> userOwner = userService.getUserByEmail(realState.getOwner().getLogin());
+        if (!userOwner.isPresent()){
             throw new Exception("Usuario no existe");
         }
         realState.setDateCreated(Instant.now());
