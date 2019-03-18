@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-md">
     <a class="navbar-brand logo navbar-title" routerLink="/" (click)="collapseNavbar()">
-        Shozas<span class="dot-com">.com</span>
-
+        Shozas
     </a>
     <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
         <fa-icon icon="bars"></fa-icon>
@@ -10,14 +9,9 @@
         <ul class="navbar-nav ml-auto">
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
-                  <span *ngIf="!getImageUrl()">
-                    <fa-icon icon="user"></fa-icon>
-                    <span>
-                      Cuenta
-                    </span>
-                  </span>
-                  <span *ngIf="getImageUrl()">
+                  <span >
                       <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
+                      {{getUserName()}}
                   </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
