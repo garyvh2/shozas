@@ -31,4 +31,6 @@ public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> getOneById(String id);
 
     Optional<List<User>> findUsersByRaiting(double raiting);
+
+    Optional<User> findByUserId (String userId);
 }

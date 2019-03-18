@@ -110,6 +110,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private String userType;
 
+    private boolean displayPhone;
+
     public String getId() {
         return id;
     }
@@ -269,6 +271,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public boolean isDisplayPhone() {
+        return displayPhone;
+    }
+
+    public void setDisplayPhone(boolean displayPhone) {
+        this.displayPhone = displayPhone;
     }
 
     @Override

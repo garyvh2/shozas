@@ -2,6 +2,8 @@ package com.gitgud.domain;
 
 public class Image {
 
+    private String imageId;
+
     private boolean isPrimary;
 
     private boolean is360Image;
@@ -30,5 +32,13 @@ public class Image {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 }
