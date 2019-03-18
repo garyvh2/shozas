@@ -38,14 +38,14 @@ export class LocationFiltersComponent implements OnInit {
     }
 
     selectedProvincia({ value: { key, value } }) {
-        this.canton = undefined;
-        this.distrito = undefined;
+        this.canton = this.searchFilters.city = undefined;
+        this.distrito = this.searchFilters.district = undefined;
         this.searchFilters.province = value;
         this.locationFiltersService.getGetCantones(key).subscribe(cantones => (this.cantones = cantones));
     }
 
     selectedCanton({ value: { key, value } }) {
-        this.distrito = undefined;
+        this.distrito = this.searchFilters.district = undefined;
         this.searchFilters.city = value;
         this.locationFiltersService.getGetDistritos(this.provincia.key, key).subscribe(distritos => (this.distritos = distritos));
     }

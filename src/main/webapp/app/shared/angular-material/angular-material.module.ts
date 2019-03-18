@@ -9,6 +9,7 @@ import {
     MatGridListModule,
     MatDividerModule,
     MatCardModule,
+    MatSidenavModule,
     MatProgressSpinnerModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
@@ -16,6 +17,7 @@ import { NgModule } from '@angular/core';
     imports: [
         MatButtonModule,
         MatFormFieldModule,
+        MatSidenavModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,
@@ -29,6 +31,7 @@ import { NgModule } from '@angular/core';
     exports: [
         MatButtonModule,
         MatFormFieldModule,
+        MatSidenavModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,
