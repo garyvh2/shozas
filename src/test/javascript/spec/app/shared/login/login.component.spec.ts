@@ -54,11 +54,11 @@ describe('Component Tests', () => {
             fakeAsync(() => {
                 // GIVEN
                 const credentials = {
-                    username: 'admin',
+                    email: 'admin',
                     password: 'admin',
                     rememberMe: true
                 };
-                comp.username = 'admin';
+                comp.email = 'admin';
                 comp.password = 'admin';
                 comp.rememberMe = true;
                 comp.credentials = credentials;
@@ -85,11 +85,11 @@ describe('Component Tests', () => {
             fakeAsync(() => {
                 // GIVEN
                 const credentials = {
-                    username: 'admin',
+                    email: 'admin',
                     password: 'admin',
                     rememberMe: true
                 };
-                comp.username = 'admin';
+                comp.email = 'admin';
                 comp.password = 'admin';
                 comp.rememberMe = true;
                 comp.credentials = credentials;
@@ -114,13 +114,13 @@ describe('Component Tests', () => {
         it('should empty the credentials upon cancel', () => {
             // GIVEN
             const credentials = {
-                username: 'admin',
+                email: 'admin',
                 password: 'admin',
                 rememberMe: true
             };
 
             const expected = {
-                username: null,
+                email: null,
                 password: null,
                 rememberMe: true
             };

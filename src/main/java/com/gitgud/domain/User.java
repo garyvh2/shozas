@@ -37,7 +37,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String id;
 
     @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
+    @Email
     @Size(min = 1, max = 50)
     @Indexed
     private String login;
@@ -57,10 +57,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Property("last_name")
     private String lastName;
 
-    @Email
-    @Size(min = 5, max = 254)
-    @Indexed
-    private String email;
 
     private boolean activated = false;
 
@@ -153,13 +149,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -305,7 +294,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
             "login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +

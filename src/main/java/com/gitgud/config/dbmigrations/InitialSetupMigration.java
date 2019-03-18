@@ -35,11 +35,10 @@ public class InitialSetupMigration {
 
         User systemUser = new User();
         systemUser.setId("user-0");
-        systemUser.setLogin("system");
+        systemUser.setLogin("system@system");
         systemUser.setPassword("$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG");
         systemUser.setFirstName("");
         systemUser.setLastName("System");
-        systemUser.setEmail("system@localhost");
         systemUser.setActivated(true);
         systemUser.setLangKey("en");
         systemUser.setCreatedBy(systemUser.getLogin());
@@ -50,11 +49,10 @@ public class InitialSetupMigration {
 
         User anonymousUser = new User();
         anonymousUser.setId("user-1");
-        anonymousUser.setLogin("anonymoususer");
+        anonymousUser.setLogin("anonymoususer@anonymoususer");
         anonymousUser.setPassword("$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO");
         anonymousUser.setFirstName("Anonymous");
         anonymousUser.setLastName("User");
-        anonymousUser.setEmail("anonymous@localhost");
         anonymousUser.setActivated(true);
         anonymousUser.setLangKey("en");
         anonymousUser.setCreatedBy(systemUser.getLogin());
@@ -63,11 +61,10 @@ public class InitialSetupMigration {
 
         User adminUser = new User();
         adminUser.setId("user-2");
-        adminUser.setLogin("admin");
+        adminUser.setLogin("admin@admin");
         adminUser.setPassword("$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC");
         adminUser.setFirstName("admin");
         adminUser.setLastName("Administrator");
-        adminUser.setEmail("admin@localhost");
         adminUser.setActivated(true);
         adminUser.setLangKey("en");
         adminUser.setCreatedBy(systemUser.getLogin());
@@ -78,11 +75,10 @@ public class InitialSetupMigration {
 
         User userUser = new User();
         userUser.setId("user-3");
-        userUser.setLogin("user");
+        userUser.setLogin("user@user");
         userUser.setPassword("$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K");
         userUser.setFirstName("");
         userUser.setLastName("User");
-        userUser.setEmail("user@localhost");
         userUser.setActivated(true);
         userUser.setLangKey("en");
         userUser.setCreatedBy(systemUser.getLogin());

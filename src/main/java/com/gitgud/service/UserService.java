@@ -50,7 +50,7 @@ public class UserService {
     }
 
     public Optional<User> getUserByEmail(String email){
-        return userRepository.findOneByEmailIgnoreCase(email);
+        return userRepository.findOneByLogin(email);
     }
 
     public List<User> getUsersByRaiting(double raiting){
@@ -88,7 +88,7 @@ public class UserService {
     }
 
     public Optional<User> requestPasswordReset(String mail) {
-        return userRepository.findOneByEmailIgnoreCase(mail)
+        return userRepository.findOneByLogin(mail)
             .filter(User::getActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
@@ -105,13 +105,7 @@ public class UserService {
                 throw new LoginAlreadyUsedException();
             }
         });
-        userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).ifPresent(existingUser -> {
-            boolean removed = removeNonActivatedUser(existingUser);
-            if (!removed) {
-                throw new EmailAlreadyUsedException();
-            }
-        });
-        userRepository.findOneByEmailIgnoreCase(userDTO.getUserId()).ifPresent(existingUser -> {
+        userRepository.findByUserId(userDTO.getUserId()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
                 throw new UserIdentifierAlreadyUsed();
@@ -125,13 +119,12 @@ public class UserService {
         newUser.setPassword(encryptedPassword);
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
-        newUser.setEmail(userDTO.getEmail().toLowerCase());
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setUserId(userDTO.getUserId());
         newUser.setImage(userDTO.getImage());
         newUser.setDisplayPhone(userDTO.isDisplayPhone());
         newUser.setUserType(userDTO.getUserType());
-        newUser.setLangKey(userDTO.getLangKey());
+        newUser.setLangKey("es_CR");
         newUser.setPhone(userDTO.getPhone());
         // new user is not active
         newUser.setActivated(false);
@@ -158,7 +151,6 @@ public class UserService {
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail().toLowerCase());
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
             user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
@@ -188,17 +180,15 @@ public class UserService {
      *
      * @param firstName first name of user
      * @param lastName last name of user
-     * @param email email id of user
      * @param langKey language key
      * @param imageUrl image URL of user
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(String firstName, String lastName, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
-                user.setEmail(email.toLowerCase());
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
                 userRepository.save(user);
@@ -221,7 +211,6 @@ public class UserService {
                 user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
-                user.setEmail(userDTO.getEmail().toLowerCase());
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());

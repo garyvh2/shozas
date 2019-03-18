@@ -128,7 +128,6 @@ public class AccountResourceIntTest {
         user.setLogin("test");
         user.setFirstName("john");
         user.setLastName("doe");
-        user.setEmail("john.doe@jhipster.com");
         user.setImageUrl("http://placehold.it/50x50");
         user.setLangKey("en");
         user.setAuthorities(authorities);
@@ -141,7 +140,6 @@ public class AccountResourceIntTest {
             .andExpect(jsonPath("$.login").value("test"))
             .andExpect(jsonPath("$.firstName").value("john"))
             .andExpect(jsonPath("$.lastName").value("doe"))
-            .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
             .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
             .andExpect(jsonPath("$.langKey").value("en"))
             .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
@@ -163,7 +161,6 @@ public class AccountResourceIntTest {
         validUser.setPassword("password");
         validUser.setFirstName("Alice");
         validUser.setLastName("Test");
-        validUser.setEmail("test-register-valid@example.com");
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(Constants.DEFAULT_LANGUAGE);
         validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
@@ -185,7 +182,6 @@ public class AccountResourceIntTest {
         invalidUser.setPassword("password");
         invalidUser.setFirstName("Funky");
         invalidUser.setLastName("One");
-        invalidUser.setEmail("funky@example.com");
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -197,7 +193,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
 
-        Optional<User> user = userRepository.findOneByEmailIgnoreCase("funky@example.com");
+        Optional<User> user = userRepository.findOneByLogin("funky@example.com");
         assertThat(user.isPresent()).isFalse();
     }
 
@@ -208,7 +204,6 @@ public class AccountResourceIntTest {
         invalidUser.setPassword("password");
         invalidUser.setFirstName("Bob");
         invalidUser.setLastName("Green");
-        invalidUser.setEmail("invalid");// <-- invalid
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -231,7 +226,6 @@ public class AccountResourceIntTest {
         invalidUser.setPassword("123");// password with only 3 digits
         invalidUser.setFirstName("Bob");
         invalidUser.setLastName("Green");
-        invalidUser.setEmail("bob@example.com");
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -254,7 +248,6 @@ public class AccountResourceIntTest {
         invalidUser.setPassword(null);// invalid null password
         invalidUser.setFirstName("Bob");
         invalidUser.setLastName("Green");
-        invalidUser.setEmail("bob@example.com");
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -278,7 +271,6 @@ public class AccountResourceIntTest {
         firstUser.setPassword("password");
         firstUser.setFirstName("Alice");
         firstUser.setLastName("Something");
-        firstUser.setEmail("alice@example.com");
         firstUser.setImageUrl("http://placehold.it/50x50");
         firstUser.setLangKey(Constants.DEFAULT_LANGUAGE);
         firstUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
@@ -289,7 +281,6 @@ public class AccountResourceIntTest {
         secondUser.setPassword(firstUser.getPassword());
         secondUser.setFirstName(firstUser.getFirstName());
         secondUser.setLastName(firstUser.getLastName());
-        secondUser.setEmail("alice2@example.com");
         secondUser.setImageUrl(firstUser.getImageUrl());
         secondUser.setLangKey(firstUser.getLangKey());
         secondUser.setCreatedBy(firstUser.getCreatedBy());
@@ -312,7 +303,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(secondUser)))
             .andExpect(status().isCreated());
 
-        Optional<User> testUser = userRepository.findOneByEmailIgnoreCase("alice2@example.com");
+        Optional<User> testUser = userRepository.findOneByLogin("alice2@example.com");
         assertThat(testUser.isPresent()).isTrue();
         testUser.get().setActivated(true);
         userRepository.save(testUser.get());
@@ -333,7 +324,6 @@ public class AccountResourceIntTest {
         firstUser.setPassword("password");
         firstUser.setFirstName("Alice");
         firstUser.setLastName("Test");
-        firstUser.setEmail("test-register-duplicate-email@example.com");
         firstUser.setImageUrl("http://placehold.it/50x50");
         firstUser.setLangKey(Constants.DEFAULT_LANGUAGE);
         firstUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
@@ -354,7 +344,6 @@ public class AccountResourceIntTest {
         secondUser.setPassword(firstUser.getPassword());
         secondUser.setFirstName(firstUser.getFirstName());
         secondUser.setLastName(firstUser.getLastName());
-        secondUser.setEmail(firstUser.getEmail());
         secondUser.setImageUrl(firstUser.getImageUrl());
         secondUser.setLangKey(firstUser.getLangKey());
         secondUser.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
@@ -379,7 +368,6 @@ public class AccountResourceIntTest {
         userWithUpperCaseEmail.setPassword(firstUser.getPassword());
         userWithUpperCaseEmail.setFirstName(firstUser.getFirstName());
         userWithUpperCaseEmail.setLastName(firstUser.getLastName());
-        userWithUpperCaseEmail.setEmail("TEST-register-duplicate-email@example.com");
         userWithUpperCaseEmail.setImageUrl(firstUser.getImageUrl());
         userWithUpperCaseEmail.setLangKey(firstUser.getLangKey());
         userWithUpperCaseEmail.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
@@ -393,7 +381,6 @@ public class AccountResourceIntTest {
 
         Optional<User> testUser4 = userRepository.findOneByLogin("test-register-duplicate-email-3");
         assertThat(testUser4.isPresent()).isTrue();
-        assertThat(testUser4.get().getEmail()).isEqualTo("test-register-duplicate-email@example.com");
 
         testUser4.get().setActivated(true);
         userService.updateUser((new UserDTO(testUser4.get())));
@@ -413,7 +400,6 @@ public class AccountResourceIntTest {
         validUser.setPassword("password");
         validUser.setFirstName("Bad");
         validUser.setLastName("Guy");
-        validUser.setEmail("badguy@example.com");
         validUser.setActivated(true);
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -436,7 +422,6 @@ public class AccountResourceIntTest {
         final String activationKey = "some activation key";
         User user = new User();
         user.setLogin("activate-account");
-        user.setEmail("activate-account@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(false);
         user.setActivationKey(activationKey);
@@ -461,7 +446,6 @@ public class AccountResourceIntTest {
     public void testSaveAccount() throws Exception {
         User user = new User();
         user.setLogin("save-account");
-        user.setEmail("save-account@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
 
@@ -471,7 +455,6 @@ public class AccountResourceIntTest {
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
-        userDTO.setEmail("save-account@example.com");
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -486,7 +469,6 @@ public class AccountResourceIntTest {
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
         assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
         assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
-        assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
         assertThat(updatedUser.getLangKey()).isEqualTo(userDTO.getLangKey());
         assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
         assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
@@ -498,8 +480,7 @@ public class AccountResourceIntTest {
     @WithMockUser("save-invalid-email")
     public void testSaveInvalidEmail() throws Exception {
         User user = new User();
-        user.setLogin("save-invalid-email");
-        user.setEmail("save-invalid-email@example.com");
+        user.setLogin("save-invalid-email");;
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
 
@@ -509,7 +490,6 @@ public class AccountResourceIntTest {
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
-        userDTO.setEmail("invalid email");
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -521,7 +501,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(userDTO)))
             .andExpect(status().isBadRequest());
 
-        assertThat(userRepository.findOneByEmailIgnoreCase("invalid email")).isNotPresent();
+        assertThat(userRepository.findOneByLogin("invalid email")).isNotPresent();
     }
 
     @Test
@@ -529,7 +509,6 @@ public class AccountResourceIntTest {
     public void testSaveExistingEmail() throws Exception {
         User user = new User();
         user.setLogin("save-existing-email");
-        user.setEmail("save-existing-email@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
 
@@ -537,7 +516,6 @@ public class AccountResourceIntTest {
 
         User anotherUser = new User();
         anotherUser.setLogin("save-existing-email2");
-        anotherUser.setEmail("save-existing-email2@example.com");
         anotherUser.setPassword(RandomStringUtils.random(60));
         anotherUser.setActivated(true);
 
@@ -547,7 +525,6 @@ public class AccountResourceIntTest {
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
-        userDTO.setEmail("save-existing-email2@example.com");
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -560,7 +537,7 @@ public class AccountResourceIntTest {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null);
-        assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email@example.com");
+        assertThat(updatedUser.getLogin()).isEqualTo("save-existing-email@example.com");
     }
 
     @Test
@@ -568,7 +545,6 @@ public class AccountResourceIntTest {
     public void testSaveExistingEmailAndLogin() throws Exception {
         User user = new User();
         user.setLogin("save-existing-email-and-login");
-        user.setEmail("save-existing-email-and-login@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
 
@@ -578,7 +554,6 @@ public class AccountResourceIntTest {
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
-        userDTO.setEmail("save-existing-email-and-login@example.com");
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -591,7 +566,6 @@ public class AccountResourceIntTest {
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);
-        assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
     }
 
     @Test
@@ -601,7 +575,6 @@ public class AccountResourceIntTest {
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-wrong-existing-password");
-        user.setEmail("change-password-wrong-existing-password@example.com");
         userRepository.save(user);
 
         restMvc.perform(post("/api/account/change-password")
@@ -621,7 +594,6 @@ public class AccountResourceIntTest {
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password");
-        user.setEmail("change-password@example.com");
         userRepository.save(user);
 
         restMvc.perform(post("/api/account/change-password")
@@ -640,7 +612,6 @@ public class AccountResourceIntTest {
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-small");
-        user.setEmail("change-password-too-small@example.com");
         userRepository.save(user);
 
         String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MIN_LENGTH - 1);
@@ -661,7 +632,6 @@ public class AccountResourceIntTest {
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-long");
-        user.setEmail("change-password-too-long@example.com");
         userRepository.save(user);
 
         String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MAX_LENGTH + 1);
@@ -682,7 +652,6 @@ public class AccountResourceIntTest {
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-empty");
-        user.setEmail("change-password-empty@example.com");
         userRepository.save(user);
 
         restMvc.perform(post("/api/account/change-password")
@@ -700,7 +669,6 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
         user.setLogin("password-reset");
-        user.setEmail("password-reset@example.com");
         userRepository.save(user);
 
         restMvc.perform(post("/api/account/reset-password/init")
@@ -714,7 +682,6 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
         user.setLogin("password-reset");
-        user.setEmail("password-reset@example.com");
         userRepository.save(user);
 
         restMvc.perform(post("/api/account/reset-password/init")
@@ -735,7 +702,6 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("finish-password-reset");
-        user.setEmail("finish-password-reset@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));
         user.setResetKey("reset key");
         userRepository.save(user);
@@ -759,7 +725,6 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("finish-password-reset-too-small");
-        user.setEmail("finish-password-reset-too-small@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));
         user.setResetKey("reset key too small");
         userRepository.save(user);

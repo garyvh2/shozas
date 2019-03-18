@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = ShozasApp.class)
 public class UserMapperTest {
 
-    private static final String DEFAULT_LOGIN = "johndoe";
+    private static final String DEFAULT_LOGIN = "johndoe@aaa";
 
     @Autowired
     private UserMapper userMapper;
@@ -44,7 +44,6 @@ public class UserMapperTest {
         user.setLogin(DEFAULT_LOGIN);
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
-        user.setEmail("johndoe@localhost");
         user.setFirstName("john");
         user.setLastName("doe");
         user.setImageUrl("image_url");
