@@ -20,9 +20,12 @@ public class FinancingController extends ApiBaseController {
 
     @GetMapping()
     public String getTYTInfo(){
-
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, String.class);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.getForObject(url, String.class);
+        } catch (Exception ex){
+            return null;
+        }
     }
 
     public HttpStatus getStatus() {

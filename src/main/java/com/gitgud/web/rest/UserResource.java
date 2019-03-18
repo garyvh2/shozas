@@ -182,8 +182,4 @@ public class UserResource {
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
     }
 
-    @PostMapping("/users/contact-owner")
-    public User sendEmail(@RequestBody User owner) {
-        return userService.sendEmailToOwner(owner.getId());
-    }
 }

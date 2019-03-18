@@ -23,10 +23,14 @@ public class IPSController extends ApiBaseController {
 
         cantonName = cantonName.replace(' ', '-').toLowerCase();
 
-        RestTemplate restTemplate = new RestTemplate();
-        IPSCanton canton = restTemplate.getForObject(crpCantones + cantonName, IPSCanton.class);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            IPSCanton canton = restTemplate.getForObject(crpCantones + cantonName, IPSCanton.class);
 
-        return restTemplate.getForObject(crpIPS + canton.getCVE(), String.class);
+            return restTemplate.getForObject(crpIPS + canton.getCVE(), String.class);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     public HttpStatus getStatus() {

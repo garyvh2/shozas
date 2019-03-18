@@ -4,8 +4,8 @@
         <span *ngSwitchCase="'L'">Lote</span>
         <span *ngSwitchCase="'D'">Apartamento</span>
     </div>
-    <div class="col-4 noPadding rsd__date" [ngSwitch]="detail.realStateType">
-        <span>12 de Abril de 2019</span>
+    <div class="col-4 noPadding rsd__date">
+        <span>{{formattedDate}}</span>
     </div>
 </div>
 <div class="row rsd__title">

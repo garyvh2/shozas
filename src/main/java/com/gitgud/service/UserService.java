@@ -2,6 +2,7 @@ package com.gitgud.service;
 
 import com.gitgud.config.Constants;
 import com.gitgud.domain.Authority;
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.AuthorityRepository;
 import com.gitgud.repository.UserRepository;
@@ -286,7 +287,7 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
 
-    public User sendEmailToOwner(String ownerId) {
+    public User sendEmailToOwner(RealState tempRS) throws Exception{
 
         User user = new User();
         user.setFirstName("F U ANONYMOUS");
@@ -294,22 +295,21 @@ public class UserService {
         Optional<String> login = SecurityUtils.getCurrentUserLogin();
 
         if (login.isPresent()) {
+
             Optional<User> client = userRepository.findOneByLogin(login.get());
-            Optional<User> owner = userRepository.getOneById(ownerId);
 
-            if (client.isPresent() && owner.isPresent()) {
-
-                System.out.println("CLIENT");
-                System.out.println(client.get().toString());
-                System.out.println("OWNER");
-                System.out.println(owner.get().toString());
-
-                mailService.sendEmailToOwner(client.get(), owner.get());
+            if (client.isPresent()) {
+                if (!client.get().getId().equals(tempRS.getOwner().getId())) {
+                    mailService.sendEmailToOwner(client.get(), tempRS);
+                }
 
                 return client.get();
-            }
-        }
 
-        return user;
+            } else {
+                throw new Exception("El Usuario solicitado no existe");
+            }
+        } else {
+            throw new Exception("El Login solicitado no existe");
+        }
     }
 }

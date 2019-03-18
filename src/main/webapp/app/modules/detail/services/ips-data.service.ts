@@ -12,19 +12,22 @@ export class IpsDataService {
     options = {
         headers: new HttpHeaders().set(
             'Authorization',
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1MjgwNTg5N30.RAzvPQgfkM2NZo4MreoitJdlSIWOTyWCvpjFW4kaD5_wu3yVI12yi1-yDifv1NqOKT_RYE9EvbOAo7baYtzHOQ'
+            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1MjkzNTg3NH0.TpgTRXFgngKymA5oUw0zdlH8EeVn4hu28iAdQgumNk4iF567I0z-UugnsvKi10wjAAwQBB8VQqecrLFwdVuQgA'
         )
     };
 
     constructor(private http: HttpClient) {}
 
     getCRPDataCanton(rs: RealState): Observable<DataCRP> {
-        console.log('SERVER_API_URL', SERVER_API_URL);
-        return this.http.get<DataCRP>(IPS_URL + this.formatText(rs.city), this.options);
+        return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.city));
+        // return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.city), this.options);
     }
 
     formatText(txt: String): String {
-        const txtFormatted = txt.replace(/\s+/g, '-');
+        const txtFormatted = txt
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\s+/g, '-');
         return txtFormatted.toLowerCase();
     }
 }

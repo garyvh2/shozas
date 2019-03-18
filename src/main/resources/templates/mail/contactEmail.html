@@ -6,15 +6,34 @@
         <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
     </head>
     <body>
-        <p th:text="#{email.activation.greeting(${owner.firstName})}">
+        <p th:text="#{email.contact.greeting(${owner.firstName})}">
             Dear
         </p>
         <p>
-            A User has requested that you contact him/her. Contact information can be found below:
+            Un usuario está interesado en una de sus propiedades. Puede encontrar la información de contacto abajo:
         </p>
-        <p th:text="#{email.contact.email(${client.email})}">
-            Email: anonymous@anonymous.com
+        <ul>
+            <li th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">
+                Name: Anonymous
+            </li>
+            <li th:text="#{email.contact.email(${client.email})}">
+                Email: anonymous@anonymous.com
+            </li>
+            <li th:text="#{email.contact.phone(${client.phone})}">
+                Phone: unavailable
+            </li>
+        </ul>
+        <p>
+            Información de la propiedad:
         </p>
+        <ul>
+            <li th:text="#{email.contact.property1(${rs.id})}">
+                ID: Unavailable
+            </li>
+            <li th:text="#{email.contact.property2(${rs.title})}">
+                Title: unavailable
+            </li>
+        </ul>
         <p>
             <span th:text="#{email.activation.text2}">Regards, </span>
             <br/>

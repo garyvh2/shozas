@@ -10,7 +10,8 @@ import {
     MatDividerModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 @NgModule({
@@ -26,7 +27,8 @@ import { NgModule } from '@angular/core';
         MatTabsModule,
         MatGridListModule,
         MatProgressSpinnerModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSnackBarModule
     ],
     exports: [
         MatButtonModule,

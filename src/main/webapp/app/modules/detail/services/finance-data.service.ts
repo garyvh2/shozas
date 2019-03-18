@@ -12,14 +12,14 @@ export class FinanceDataService {
     options = {
         headers: new HttpHeaders().set(
             'Authorization',
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1MjgwNTg5N30.RAzvPQgfkM2NZo4MreoitJdlSIWOTyWCvpjFW4kaD5_wu3yVI12yi1-yDifv1NqOKT_RYE9EvbOAo7baYtzHOQ'
+            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1MjkzNTg3NH0.TpgTRXFgngKymA5oUw0zdlH8EeVn4hu28iAdQgumNk4iF567I0z-UugnsvKi10wjAAwQBB8VQqecrLFwdVuQgA'
         )
     };
 
     constructor(private http: HttpClient) {}
 
     getFinanceData(): Observable<FinanceData[]> {
-        console.log(SERVER_API_URL);
-        return this.http.get<any>(FINANCE_INFO_URL, this.options);
+        return this.http.get<any>(SERVER_API_URL + '/api/financing');
+        // return this.http.get<any>(SERVER_API_URL + '/api/financing', this.options);
     }
 }
