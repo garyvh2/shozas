@@ -4,7 +4,7 @@ import { SearchResultsComponent } from './views/search-results/search-results.co
 
 const routes: Routes = [
     {
-        path: 'landing',
+        path: '',
         component: SearchResultsComponent
     }
 ];

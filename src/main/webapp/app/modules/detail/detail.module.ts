@@ -1,3 +1,4 @@
+import { SearchRealStateStore } from './../landing/@akita/search/search.store';
 import { ReviewService } from './../../@akita/review/review.service';
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
@@ -46,6 +47,6 @@ import { SidecardComponent } from './components/sidecard/sidecard.component';
             apiKey: MAPS_API_KEY
         })
     ],
-    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore]
+    providers: [RealStateStore, RealStateQuery, SearchRealStateStore, RealStateService, ReviewQuery, ReviewService, ReviewStore]
 })
 export class DetailModule {}
