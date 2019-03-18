@@ -13,9 +13,10 @@ import {
     SettingsComponent,
     accountState
 } from './';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-    imports: [ShozasSharedModule, RouterModule.forChild(accountState)],
+    imports: [ShozasSharedModule, RouterModule.forChild(accountState), NgxMaskModule.forRoot()],
     declarations: [
         ActivateComponent,
         RegisterComponent,

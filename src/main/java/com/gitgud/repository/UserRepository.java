@@ -22,8 +22,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Optional<User> findOneByResetKey(String resetKey);
 
-    Optional<User> findOneByEmailIgnoreCase(String email);
-
     Optional<User> findOneByLogin(String login);
 
     Page<User> findAllByLoginNot(Pageable pageable, String login);
