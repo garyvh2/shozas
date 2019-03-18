@@ -1,10 +1,10 @@
 <div class="row rsd__super-title">
-    <div class="col-8 noPadding rsd__type" [ngSwitch]="detail.realStateType">
+    <div class="col-md-6 col-6 noPadding rsd__type" [ngSwitch]="detail.realStateType">
         <span *ngSwitchCase="'H'">Casa</span>
         <span *ngSwitchCase="'L'">Lote</span>
         <span *ngSwitchCase="'D'">Apartamento</span>
     </div>
-    <div class="col-4 noPadding rsd__date" *ngIf="detail.dateCreated" >
+    <div class="col-md-6 col-6 noPadding rsd__date" *ngIf="detail.dateCreated" >
         <span>{{formattedDate}}</span>
     </div>
 </div>

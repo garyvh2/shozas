@@ -22,13 +22,24 @@ export class FinanceCardComponent implements OnInit {
     }
 
     calculateMonthlyFee() {
+        this.validatePremium();
+
         const rate = this.bank.rate / 100 / 12;
         const price = this.rs.price - this.premium;
         const months = 84;
         const middleValue = Math.pow(1 + rate, months);
 
         this.monthlyFee = Math.ceil((price * (rate * middleValue)) / (middleValue - 1));
+    }
 
-        console.log('calculando cuota mensual', this.monthlyFee);
+    validatePremium() {
+        const minPremium = (this.bank.prima / 100) * this.rs.price;
+
+        if (this.premium > this.rs.price) {
+            this.premium = this.rs.price;
+        }
+        if (this.premium < minPremium) {
+            this.premium = minPremium;
+        }
     }
 }

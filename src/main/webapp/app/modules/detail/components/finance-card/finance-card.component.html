@@ -14,9 +14,9 @@
                 <input
                     type="number"
                     [(ngModel)]="premium"
-                    matInput min="{{rs.price * (bank.prima / 100)}}"
-                    max="{{rs.price}}"
-                    (change)="calculateMonthlyFee()">
+                    matInput
+                    (keyup.enter)="calculateMonthlyFee()"
+                    (blur)="calculateMonthlyFee()">
             </mat-form-field>
         </div>
         <div class="flex-space-between">
