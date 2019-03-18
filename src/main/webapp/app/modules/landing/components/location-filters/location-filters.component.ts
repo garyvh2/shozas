@@ -1,7 +1,9 @@
+import { Subscription } from 'rxjs';
 import { LocationFiltersService } from './location-filters.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
 import { KeyValue } from '@angular/common';
+import { MatSelect } from '@angular/material';
 
 @Component({
     selector: 'jhi-location-filters',
@@ -24,17 +26,23 @@ export class LocationFiltersComponent implements OnInit {
     @Input()
     searchFilters: SearchFilter = new SearchFilter();
 
+    @ViewChild('provinciaSelect') provinciaSelect: MatSelect;
+
+    provinciaSubscription: Subscription;
+
     constructor(private locationFiltersService: LocationFiltersService) {}
 
     ngOnInit() {
-        this.locationFiltersService
-            .getProvincias()
-            .subscribe(
-                provincias => (
-                    (this.provincias = provincias),
-                    this.locationFiltersService.getProvincia().subscribe(provincia => (this.provincia.value = String(provincia)))
-                )
-            );
+        this.provinciaSubscription = this.locationFiltersService.getProvincias().subscribe(
+            provincias => (
+                (this.provincias = provincias),
+                this.locationFiltersService.getProvincia().subscribe(provincia => {
+                    this.provinciaSubscription.unsubscribe();
+                    this.provincia = this.provinciaSelect.options.map(item => item.value).find(item => item.key === String(provincia));
+                    this.searchFilters.province = provincias[provincia];
+                })
+            )
+        );
     }
 
     selectedProvincia({ value: { key, value } }) {
