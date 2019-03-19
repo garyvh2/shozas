@@ -14,9 +14,10 @@ export class RealStateService {
     constructor(private detailStore: RealStateStore, private searchRealStateStore: SearchRealStateStore, private http: HttpClient) {}
 
     get(id: ID) {
-        const url = `${MOCK_SERVER_API_URL}/api/realstate/detail?id=${id}`;
+        const url = `${SERVER_API_URL}/api/realstate/detail?id=${id}`;
         return this.http.get(url).subscribe((response: any) => {
-            this.detailStore.upsert(response.Result.id, response.Result);
+            console.log('Service GET response is: ', response);
+            this.detailStore.upsert(response.result.id, response.result);
         });
     }
 

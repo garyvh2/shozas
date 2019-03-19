@@ -34,6 +34,8 @@ export interface RealState {
     isSold?: boolean;
     customAmenities: string[];
     user: TempUser;
+    owner: TempUser;
+    dateCreated: Date;
 }
 
 export function createDetail(params: Partial<RealState>) {

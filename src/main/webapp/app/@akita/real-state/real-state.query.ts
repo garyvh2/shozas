@@ -7,7 +7,7 @@ export class RealStateQuery extends QueryEntity<DetailState, RealState> {
     constructor(protected store: RealStateStore) {
         super(store);
     }
-    getDetail(id: number) {
+    getDetail(id: string) {
         return this.selectEntity(id);
     }
 }

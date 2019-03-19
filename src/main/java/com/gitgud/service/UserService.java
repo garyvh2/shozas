@@ -2,6 +2,7 @@ package com.gitgud.service;
 
 import com.gitgud.config.Constants;
 import com.gitgud.domain.Authority;
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.AuthorityRepository;
 import com.gitgud.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -38,10 +40,13 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    private final MailService mailService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.mailService = mailService;
     }
 
     public Optional<User> getUserByEmail(String email){
@@ -281,5 +286,31 @@ public class UserService {
      */
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+
+    public User sendEmailToOwner(RealState tempRS) throws Exception{
+
+        User user = new User();
+        user.setFirstName("F U ANONYMOUS");
+
+        Optional<String> login = SecurityUtils.getCurrentUserLogin();
+
+        if (login.isPresent()) {
+
+            Optional<User> client = userRepository.findOneByLogin(login.get());
+
+            if (client.isPresent()) {
+                if (!client.get().getId().equals(tempRS.getOwner().getId())) {
+                    mailService.sendEmailToOwner(client.get(), tempRS);
+                }
+
+                return client.get();
+
+            } else {
+                throw new Exception("El Usuario solicitado no existe");
+            }
+        } else {
+            throw new Exception("El Login solicitado no existe");
+        }
     }
 }

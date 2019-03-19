@@ -1,5 +1,6 @@
 package com.gitgud.service;
 
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -39,6 +40,11 @@ public class MailService {
     private final MessageSource messageSource;
 
     private final SpringTemplateEngine templateEngine;
+
+    private static final String CLIENT = "client";
+    private static final String OWNER = "owner";
+    private static final String RS = "rs";
+    private static final String CONTACT_TEMPLATE = "mail/contactEmail";
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
             MessageSource messageSource, SpringTemplateEngine templateEngine) {
@@ -82,7 +88,6 @@ public class MailService {
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(user.getLogin(), subject, content, false, true);
-
     }
 
     @Async
@@ -101,5 +106,19 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getLogin());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    public void sendEmailToOwner(User client, RealState rs) {
+        User owner = rs.getOwner();
+
+        Locale locale = Locale.forLanguageTag(owner.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(CLIENT, client);
+        context.setVariable(OWNER, owner);
+        context.setVariable(RS, rs);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(CONTACT_TEMPLATE, context);
+        String subject = messageSource.getMessage("email.contact.title", null, locale);
+        sendEmail(owner.getLogin(), subject, content, false, true);
     }
 }

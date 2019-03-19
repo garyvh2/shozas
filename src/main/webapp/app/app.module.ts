@@ -25,6 +25,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
 import { AngularMaterialModule } from 'app/shared/angular-material/angular-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingModule } from './modules/landing/landing.module';
+
 @NgModule({
     imports: [
         BrowserModule,
