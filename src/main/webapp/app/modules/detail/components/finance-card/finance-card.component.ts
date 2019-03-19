@@ -20,7 +20,6 @@ export class FinanceCardComponent implements OnInit {
     ngOnInit() {
         this.premium = (this.bank.prima / 100) * this.rs.price || 0;
         this.calculateMonthlyFee();
-        this.imgSource = './../../../../../assets/images/' + this.bank.name + '.png';
     }
 
     calculateMonthlyFee() {

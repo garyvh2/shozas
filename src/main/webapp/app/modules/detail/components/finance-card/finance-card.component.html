@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title>
-            <img src="{{imgSource}}" alt="{{bank.name}} logo">
+            <img [src]="'../../../../../../../assets/images/' + bank.name + '.png' | lowercase" alt="{{bank.name}} logo">
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -23,7 +23,7 @@
             <label>Plazo: </label><span>{{bank.terms[0]}} años</span>
         </div>
         <div class="flex-space-between financeCard__feeHolder">
-            <label>Cuota Mensual (₡):</label><span>{{monthlyFee}}</span>
+            <label>Cuota Mensual :</label><span>{{monthlyFee | currency: 'CRC':'¢'}}</span>
         </div>
     </mat-card-content>
     <mat-card-footer></mat-card-footer>
