@@ -85,20 +85,23 @@ public class RealStateService {
             realStates.and(realStates.criteria("province").endsWithIgnoreCase(parameters.getProvince()));
         }
 
-        if (parameters.getBaths() != 0) {
-            realStates.and(realStates.criteria("baths").greaterThanOrEq(parameters.getBaths()));
-        }
+        if(resultType != ResultType.Lots){
 
-        if (parameters.getBeds() != 0) {
-            realStates.and(realStates.criteria("rooms").greaterThanOrEq(parameters.getBeds()));
-        }
+            if (parameters.getBaths() != 0) {
+                realStates.and(realStates.criteria("baths").greaterThanOrEq(parameters.getBaths()));
+            }
 
-        if (parameters.getGarages() != 0) {
-            realStates.and(realStates.criteria("garage").greaterThanOrEq(parameters.getGarages()));
-        }
+            if (parameters.getBeds() != 0) {
+                realStates.and(realStates.criteria("rooms").greaterThanOrEq(parameters.getBeds()));
+            }
 
-        if (parameters.getStories() != 0) {
-            realStates.and(realStates.criteria("stories").greaterThanOrEq(parameters.getStories()));
+            if (parameters.getGarages() != 0) {
+                realStates.and(realStates.criteria("garage").greaterThanOrEq(parameters.getGarages()));
+            }
+
+            if (parameters.getStories() != 0) {
+                realStates.and(realStates.criteria("stories").greaterThanOrEq(parameters.getStories()));
+            }
         }
 
         if (parameters.getZip() != 0) {
