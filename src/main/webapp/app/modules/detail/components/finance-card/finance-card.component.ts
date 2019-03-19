@@ -13,12 +13,14 @@ export class FinanceCardComponent implements OnInit {
 
     premium: number;
     monthlyFee: number;
+    imgSource: string;
 
     constructor() {}
 
     ngOnInit() {
         this.premium = (this.bank.prima / 100) * this.rs.price || 0;
         this.calculateMonthlyFee();
+        this.imgSource = './../../../../../assets/images/' + this.bank.name + '.png';
     }
 
     calculateMonthlyFee() {
