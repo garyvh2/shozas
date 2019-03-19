@@ -12,8 +12,8 @@ import java.util.List;
 @RequestMapping("/api/ips")
 public class IPSController extends ApiBaseController {
 
-    private String crpCantones = "https://www.costaricapropone.go.cr/api/cantones/slug/";
-    private String crpIPS = "https://www.costaricapropone.go.cr/api/ips/cve/";
+    private String crpCantones = "http://www.costaricapropone.go.cr/api/cantones/slug/";
+    private String crpIPS = "http://www.costaricapropone.go.cr/api/ips/cve/";
     private RestTemplate rest;
     private HttpHeaders headers;
     private HttpStatus status;
@@ -22,6 +22,10 @@ public class IPSController extends ApiBaseController {
     public String getCRPData(@PathVariable String cantonName){
 
         cantonName = cantonName.replace(' ', '-').toLowerCase();
+
+        if (cantonName.equals("central")) {
+            cantonName = "san-jose";
+        }
 
         try {
             RestTemplate restTemplate = new RestTemplate();
