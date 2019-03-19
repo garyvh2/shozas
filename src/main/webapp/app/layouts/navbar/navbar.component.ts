@@ -37,6 +37,12 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+        this.accountService
+            .identity()
+            .then(account => {
+                this.accountInfo = { ...account };
+            })
+            .catch(() => (this.accountInfo = undefined));
         this.accountService.getAuthenticationState().subscribe(account => {
             this.accountInfo = { ...account };
         });
