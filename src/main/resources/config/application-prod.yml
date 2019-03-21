@@ -20,6 +20,10 @@ logging:
         io.github.jhipster: INFO
 
 spring:
+    profiles:
+        active: prod
+        include:
+            - swagger
     devtools:
         restart:
             enabled: false
