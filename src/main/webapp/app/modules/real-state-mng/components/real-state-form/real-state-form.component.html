@@ -1,0 +1,30 @@
+<form class="real__state">
+    <mat-label class="radio__label">Tipo de Inmueble</mat-label>
+    <mat-radio-group>
+        <mat-radio-button color="warn" value="{{ realStateType.HOUSE }}">Casa</mat-radio-button>
+        <mat-radio-button color="warn" value="{{ realStateType.DEPARTMENT }}">Apartamento</mat-radio-button>
+        <mat-radio-button color="warn" value="{{ realStateType.LOT }}">Lote</mat-radio-button>
+    </mat-radio-group>
+    <div class="amenities">
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Cuartos</mat-label>
+            <input type="text" mask="0" matInput placeholder="Cuartos" formControlName="secondCtrl" required />
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Baños</mat-label>
+            <input matInput type="text" mask="0.0" placeholder="Baños" formControlName="secondCtrl" required />
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Garaje</mat-label>
+            <input matInput mask="0" type="text" placeholder="Garaje" formControlName="secondCtrl" required />
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Pisos</mat-label>
+            <input matInput mask="0" type="text" placeholder="Pisos" formControlName="secondCtrl" required />
+        </mat-form-field>
+    </div>
+    <mat-form-field color="accent" appearance="outline" matAutosize="true">
+        <input matInput placeholder="Address" formControlName="secondCtrl" required />
+    </mat-form-field>
+    <jhi-location-filters label="true"></jhi-location-filters>
+</form>

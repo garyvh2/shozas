@@ -22,6 +22,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'detail',
                     loadChildren: './modules/detail/detail.module#DetailModule'
                 },
+                {
+                    path: 'real-state',
+                    loadChildren: './modules/real-state-mng/real-state-mng.module#RealStateMngModule'
+                },
                 ...LAYOUT_ROUTES
             ],
             { useHash: true, enableTracing: false }

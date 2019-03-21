@@ -1,0 +1,11 @@
+::ng-deep body .mat-step-header .mat-step-icon-selected,
+body .mat-step-header .mat-step-icon-state-done,
+body .mat-step-header .mat-step-icon-state-edit {
+    background-color: #ff6666;
+    color: #fff;
+}
+
+button {
+    background-color: #ff6666;
+    color: #fff;
+}

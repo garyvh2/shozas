@@ -2,6 +2,7 @@ import { ApiResponse } from './../external-models/apiResponse.model';
 import { ID } from '@datorama/akita';
 import { RealStateImage } from 'app/@akita/external-models/real-state-image.model';
 import { TempUser } from '../external-models/tempUser';
+import RealStateType from '../external-models/real-state-type';
 
 export interface RealState {
     id?: ID;
@@ -9,6 +10,7 @@ export interface RealState {
     longitude: number;
     province: string;
     city: string;
+    district: string;
     price: number;
     description: string;
     stories: number;
@@ -19,7 +21,7 @@ export interface RealState {
     size: number;
     garage: number;
     postalCode: string;
-    realStateType: 'H' | 'L' | 'D';
+    realStateType: RealStateType;
     hasPool?: boolean;
     hasWater?: boolean;
     hasElectricity?: boolean;

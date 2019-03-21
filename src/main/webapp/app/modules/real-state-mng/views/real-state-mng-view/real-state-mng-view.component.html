@@ -1,0 +1,25 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step color="warn" [stepControl]="firstFormGroup">
+        <ng-template matStepLabel>Llene la Información</ng-template>
+        <jhi-real-state-form></jhi-real-state-form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Sube tus fotos</ng-template>
+            <mat-form-field>
+                <input matInput placeholder="Address" formControlName="secondCtrl" required />
+            </mat-form-field>
+            <div>
+                <button mat-raised-button matStepperPrevious>Atrás</button>
+                <button mat-raised-button matStepperNext>Siguiente</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Listo!</ng-template>
+        You are now done.
+        <div>
+            <button mat-raised-button (click)="stepper.reset()">Salir</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

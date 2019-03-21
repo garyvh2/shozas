@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LocationFiltersService } from './location-filters.service';
 import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
@@ -19,6 +20,12 @@ export class LocationFiltersComponent implements OnInit {
     provincias: { [key: string]: string };
     cantones: { [key: string]: string };
     distritos: { [key: string]: string };
+
+    @Input()
+    label: boolean;
+
+    @Input()
+    formControl: FormControl;
 
     /** Selected */
     @Input()
