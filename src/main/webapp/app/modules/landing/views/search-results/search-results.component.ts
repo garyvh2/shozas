@@ -14,6 +14,7 @@ export class SearchResultsComponent implements OnInit {
     selectedIndex = 0;
 
     /** Queries */
+    loadMore$: Observable<boolean>;
     elements$: Observable<RealState[]>;
     priceRange$: Observable<Options>;
     sizeRange$: Observable<Options>;
@@ -56,6 +57,7 @@ export class SearchResultsComponent implements OnInit {
             }
             sizeRange$.next({ ...data, ...this.sizeRange } as Options);
         });
+        this.loadMore$ = this.searchRealStateQuery.loadMore$;
         this.sizeRange$ = sizeRange$.asObservable();
         this.elements$ = this.searchRealStateQuery.elements$;
         this.applyFilters();
@@ -144,5 +146,9 @@ export class SearchResultsComponent implements OnInit {
 
     provinciaContext() {
         this.applyFilters();
+    }
+
+    loadMore() {
+        this.realStateService.loadMore();
     }
 }

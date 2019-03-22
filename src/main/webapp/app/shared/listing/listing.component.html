@@ -2,13 +2,15 @@
     <img mat-card-image [src]="listing.image.source" />
     <mat-card-header>
         <div class="details">
-            <mat-card-title>{{ listing.title }}</mat-card-title>
-            <mat-card-subtitle>
+            <mat-card-title [title]="listing.title">{{ listing.title }}</mat-card-title>
+            <mat-card-subtitle [title]="listing.addr">
                 <mat-icon svgIcon="shozas_pin"></mat-icon>
-                {{ listing.addr }}
+                <span class="address">
+                    {{ listing.addr }}
+                </span>
             </mat-card-subtitle>
         </div>
-        <app-detail-like></app-detail-like>
+        <jhi-detail-like></jhi-detail-like>
     </mat-card-header>
     <mat-card-content>
         <div class="specs">

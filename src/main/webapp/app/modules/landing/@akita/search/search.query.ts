@@ -35,6 +35,7 @@ export class SearchRealStateQuery extends Query<SearchRealState> {
         }
     }));
     elements$ = this.select(search => search.elements);
+    loadMore$ = this.select(search => search.loadMore);
     constructor(protected store: SearchRealStateStore) {
         super(store);
     }
