@@ -1,10 +1,14 @@
 package com.gitgud.service;
 
 import com.cloudinary.Api;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.gitgud.api.objects.*;
+import com.gitgud.domain.Image;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
+import com.gitgud.service.util.CloudinaryUtil;
 import com.gitgud.service.util.ResultType;
 import com.mongodb.DBRef;
 import dev.morphia.Datastore;
@@ -17,11 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RealStateService {
@@ -40,15 +42,58 @@ public class RealStateService {
         this.userService = userService;
     }
 
-    public RealState save (RealState realState) throws Exception {
+    public RealState save (RealState realState) throws Exception, IOException {
         Optional<User> userOwner = userService.getUserByEmail(realState.getOwner().getLogin());
         if (!userOwner.isPresent()){
             throw new Exception("Usuario no existe");
         }
+        String realStateTitle = realState.getRealStateType().equals("H") ? "Casa en " : realState.getRealStateType().equals("D") ? "Departamento en " : "Lote en ";
+        realStateTitle = realStateTitle.concat(realState.getProvince() + " ").concat(realState.getDistrict());
+        realState.setTitle(realStateTitle);
+
+        if(realState.getImages() != null && !realState.getImages().isEmpty()){
+            Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
+            realState.getImages().forEach(i -> {
+                String source = "";
+                String imageId = "";
+                try {
+                    Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(),ObjectUtils.emptyMap());
+                    source = uploadResult.get("url").toString();
+                    imageId = uploadResult.get("public_id").toString();
+                } catch (IOException e) {
+                    source = "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png";
+                    imageId = "0";
+                }
+                i.setImageId(imageId);
+                i.setSource(source);
+            });
+        }
+
+        if(realState.getImages() == null || realState.getImages().isEmpty()){
+            realState.setImages(getDefaults());
+        }
+
         realState.setDateCreated(Instant.now());
         realState.setOwner(userOwner.get());
 
         return realStateRepository.save(realState);
+    }
+
+    private HashSet<Image> getDefaults(){
+        HashSet<Image> result = new HashSet<Image>();
+
+        for (int i = 0; i < 3; i++){
+            Image defaultImage = new Image();
+            defaultImage.setSource("http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
+            defaultImage.setImageId("0");
+
+            if (i == 0)
+                defaultImage.setIsPrimary(true);
+
+            result.add(defaultImage);
+        }
+
+        return result;
     }
 
     public List<RealState> getRealStateElements(ResultType resultType, ApiSearchParams parameters,
