@@ -39,12 +39,6 @@ export class SearchResultsComponent implements OnInit {
     constructor(private realStateService: RealStateService, private searchRealStateQuery: SearchRealStateQuery) {}
 
     ngOnInit() {
-        if (process.env.NODE_ENV === 'development') {
-            window.locationFilters = this.locationFilters;
-            window.appartmentFilters = this.appartmentFilters;
-            window.lotFilters = this.lotFilters;
-            window.homeFilters = this.homeFilters;
-        }
         /** Price Range */
         const priceRange$ = new Subject<Options>();
         this.searchRealStateQuery.priceRange$.subscribe(data => {
