@@ -14,6 +14,7 @@ export class SearchResultsComponent implements OnInit {
     selectedIndex = 0;
 
     /** Queries */
+    loading$: Observable<boolean>;
     loadMore$: Observable<boolean>;
     elements$: Observable<RealState[]>;
     priceRange$: Observable<Options>;
@@ -38,6 +39,12 @@ export class SearchResultsComponent implements OnInit {
     constructor(private realStateService: RealStateService, private searchRealStateQuery: SearchRealStateQuery) {}
 
     ngOnInit() {
+        if (process.env.NODE_ENV === 'development') {
+            window.locationFilters = this.locationFilters;
+            window.appartmentFilters = this.appartmentFilters;
+            window.lotFilters = this.lotFilters;
+            window.homeFilters = this.homeFilters;
+        }
         /** Price Range */
         const priceRange$ = new Subject<Options>();
         this.searchRealStateQuery.priceRange$.subscribe(data => {
@@ -57,6 +64,7 @@ export class SearchResultsComponent implements OnInit {
             }
             sizeRange$.next({ ...data, ...this.sizeRange } as Options);
         });
+        this.loading$ = this.searchRealStateQuery.selectLoading();
         this.loadMore$ = this.searchRealStateQuery.loadMore$;
         this.sizeRange$ = sizeRange$.asObservable();
         this.elements$ = this.searchRealStateQuery.elements$;

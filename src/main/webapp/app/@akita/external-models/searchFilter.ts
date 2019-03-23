@@ -2,6 +2,7 @@ export class SearchFilter {
     public province?;
     public city?;
     public district?;
+    public raiting = 1;
     public prLow = 1;
     public prHigh = 0;
     private _rangePrice = {

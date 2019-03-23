@@ -30,6 +30,7 @@ export class RealStateService {
         this.params.size = 20;
         this.params.page = 1;
         this.currentUrl = `${SERVER_API_URL}/api/realstate/search/homes`;
+        this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
             response.result.loadMore = data.length > 0;
@@ -37,6 +38,7 @@ export class RealStateService {
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
+            this.searchRealStateStore.setLoading(false);
         });
     }
 
@@ -58,6 +60,7 @@ export class RealStateService {
         this.params.size = 20;
         this.params.page = 1;
         this.currentUrl = `${SERVER_API_URL}/api/realstate/search/deps`;
+        this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
             response.result.loadMore = data.length > 0;
@@ -65,6 +68,7 @@ export class RealStateService {
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
+            this.searchRealStateStore.setLoading(false);
         });
     }
 
@@ -73,6 +77,7 @@ export class RealStateService {
         this.params.size = 20;
         this.params.page = 1;
         this.currentUrl = `${SERVER_API_URL}/api/realstate/search/lots`;
+        this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
             response.result.loadMore = data.length > 0;
@@ -80,6 +85,7 @@ export class RealStateService {
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
+            this.searchRealStateStore.setLoading(false);
         });
     }
 }

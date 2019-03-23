@@ -3,7 +3,7 @@
         <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex"
             (selectedIndexChange)="selectedIndexChange()">
             <mat-tab label="Casas">
-                <jhi-filter-home [searchFilters]="homeFilters" [priceConfig]="priceRange$ | async"
+                <jhi-filter-home [searchFilters]="homeFilters" *ngIf="homeFilters" [priceConfig]="priceRange$ | async"
                     [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
             </mat-tab>
             <mat-tab label="Apartamentos">
@@ -26,7 +26,10 @@
             <jhi-location-filters [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
             </jhi-location-filters>
         </div>
-        <div class="items">
+        <div class="items" *ngIf="(loading$ | async)">
+            <mat-spinner [diameter]="40"></mat-spinner>
+        </div>
+        <div class="items" *ngIf="!(loading$ | async)">
             <h2 *ngIf="(elements$ | async).length <= 0"> No se han encontrado resultados.</h2>
             <jhi-listing *ngFor="let realstate of (elements$ | async)" [listing]="realstate"
                 [routerLink]="['/detail/', realstate.id]"></jhi-listing>

@@ -8,6 +8,7 @@
         flex: 1;
 
         .left {
+            width: 365px;
             padding: 10px;
 
             mat-tab-group {
@@ -79,6 +80,14 @@
 
                 jhi-listing {
                     width: 240px;
+                }
+
+                mat-spinner {
+                    margin: auto;
+                }
+
+                .mat-spinner::ng-deep circle {
+                    stroke: #ff6e6e;
                 }
 
                 h2 {
