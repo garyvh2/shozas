@@ -75,21 +75,21 @@ export class SearchResultsComponent implements OnInit {
         if (ceil || ceil === 0) {
             switch (this.selectedIndex) {
                 case 0:
-                    if (ceil && this.homeFilters[name].high === 0) {
+                    if (ceil && this.homeFilters[name].high === 1) {
                         this.homeFilters[name].high = ceil;
                         this.homeFilters[name].low = 0;
                     }
                     this.homeFilters[name] = { ...this.homeFilters[name] };
                     break;
                 case 1:
-                    if (ceil && this.appartmentFilters[name].high === 0) {
+                    if (ceil && this.appartmentFilters[name].high === 1) {
                         this.appartmentFilters[name].high = ceil;
                         this.appartmentFilters[name].low = 0;
                     }
                     this.appartmentFilters[name] = { ...this.appartmentFilters[name] };
                     break;
                 case 2:
-                    if (ceil && this.lotFilters[name].high === 0) {
+                    if (ceil && this.lotFilters[name].high === 1) {
                         this.lotFilters[name].high = ceil;
                         this.lotFilters[name].low = 0;
                     }
