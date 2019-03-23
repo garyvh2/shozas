@@ -2,6 +2,9 @@
     align-self: center;
 
     mat-icon {
+        width: 35px;
+        height: 35px;
+
         ::ng-deep svg path {
             stroke-width: 4px;
         }
