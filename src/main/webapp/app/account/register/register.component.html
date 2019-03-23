@@ -1,12 +1,12 @@
 <div class="register__container justify-content-center">
-    <h1 *ngIf="!success" >Registrarse</h1>
+    <h1 *ngIf="!success">Registrarse</h1>
 
     <div class="alert alert-success" *ngIf="success">
-        <strong>Se ha creado el Usuario</strong> Se le ha enviado un correo de confirmacion.
+        <strong>Se ha creado el Usuario</strong> Se le ha enviado un correo de confirmación.
     </div>
 
     <div class="alert alert-danger" *ngIf="error">
-        <strong>No hemos podido registrar el usuario!</strong> Intentelo de nuevo.
+        <strong>No hemos podido registrar el usuario!</strong> Intente de nuevo.
     </div>
 
     <div class="alert alert-danger" *ngIf="errorUserExists">
@@ -17,26 +17,28 @@
         <strong>Esa cedula ya esta en uso!</strong> Por favor use otra.
     </div>
 
-    <form *ngIf="!success"  [formGroup]="registerForm" (submit)="register()">
+    <form *ngIf="!success" [formGroup]="registerForm" (submit)="register()">
         <mat-label class="radio__label">Tipo de Usuario</mat-label>
         <mat-radio-group formControlName="userType">
             <mat-radio-button color="warn" value="{{userType.Personal}}">Personal</mat-radio-button>
-            <mat-radio-button color="warn" value="{{userType.Company}}">Juridico</mat-radio-button>
+            <mat-radio-button color="warn" value="{{userType.Company}}">Jurídico</mat-radio-button>
         </mat-radio-group>
 
         <mat-form-field color="accent" appearance="outline">
             <mat-label>{{ getUserIdentifierText() }}</mat-label>
-            <input formControlName="userId" mask="{{getIdentifierMask()}}" matInput placeholder="{{ getUserIdentifierText() }}" />
+            <input formControlName="userId" mask="{{getIdentifierMask()}}" matInput
+                placeholder="{{ getUserIdentifierText() }}" />
             <mat-hint>Formato: {{getIdentifierMask()}}</mat-hint>
             <mat-error *ngIf="registerForm.get('userId').hasError('required')">Este campo es requerido</mat-error>
-            <mat-error *ngIf="registerForm.get('userId').hasError('Mask error')">No cumple con el formato requerido {{getIdentifierMask()}}</mat-error>
+            <mat-error *ngIf="registerForm.get('userId').hasError('Mask error')">No cumple con el formato requerido
+                {{getIdentifierMask()}}</mat-error>
         </mat-form-field>
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Nombre</mat-label>
             <input formControlName="firstName" matInput placeholder="Nombre" />
             <mat-error *ngIf="registerForm.get('firstName').hasError('required')">Este campo es requerido</mat-error>
         </mat-form-field>
-        <mat-form-field *ngIf="registerForm.get('userType').value === 'P'"  color="accent" appearance="outline">
+        <mat-form-field *ngIf="registerForm.get('userType').value === 'P'" color="accent" appearance="outline">
             <mat-label>Apellidos</mat-label>
             <input formControlName="lastName" matInput placeholder="Apellidos" />
             <mat-error *ngIf="registerForm.get('lastName').hasError('required')">Este campo es requerido</mat-error>
@@ -45,39 +47,36 @@
             <mat-label>Correo</mat-label>
             <input formControlName="email" matInput placeholder="Correo" />
             <mat-error *ngIf="registerForm.get('email').hasError('required')">Este campo es requerido</mat-error>
-            <mat-error *ngIf="registerForm.get('email').hasError('email')">Por favor digite un correo valido</mat-error>
+            <mat-error *ngIf="registerForm.get('email').hasError('email')">Por favor ingrese un correo valido
+            </mat-error>
         </mat-form-field>
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Contraseña</mat-label>
             <input matInput formControlName="password" placeholder="Contraseña" type="password" />
-            <mat-hint>Minimo de 8 caracteres</mat-hint>
+            <mat-hint>Mínimo de 8 caracteres</mat-hint>
             <mat-error *ngIf="registerForm.get('password').hasError('required')">Este campo es requerido</mat-error>
-            <mat-error *ngIf="registerForm.get('password').hasError('minlength')"
-                >La contraseña tiene que ser minimo de 8 caracteres</mat-error
-            >
+            <mat-error *ngIf="registerForm.get('password').hasError('minlength')">La contraseña tiene que ser mínimo de
+                8 caracteres</mat-error>
         </mat-form-field>
         <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password').value"></jhi-password-strength-bar>
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Confirmar contraseña</mat-label>
-            <input
-                matInput
-                placeholder="Confirmar contraseña"
-                formControlName="confirmPass"
-                type="password"
-                [errorStateMatcher]="passwordsMatcher"
-            />
+            <input matInput placeholder="Confirmar contraseña" formControlName="confirmPass" type="password"
+                [errorStateMatcher]="passwordsMatcher" />
             <mat-error *ngIf="registerForm.get('confirmPass').hasError('required')">Este campo es requerido</mat-error>
-            <mat-error *ngIf="registerForm.hasError('passwordsNotEqual')">Las contraseñas tiene que se iguales</mat-error>
+            <mat-error *ngIf="registerForm.hasError('passwordsNotEqual')">Las contraseñas tiene que se iguales
+            </mat-error>
         </mat-form-field>
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Teléfono</mat-label>
             <input mask="0000-0000" formControlName="phone" matInput placeholder="Teléfono" />
             <mat-hint>Formato: 0000-0000</mat-hint>
             <mat-error *ngIf="registerForm.get('phone').hasError('required')">Este campo es requerido</mat-error>
-            <mat-error *ngIf="registerForm.get('phone').hasError('Mask error')">No cumple con el formato requerido 0000-0000</mat-error>
+            <mat-error *ngIf="registerForm.get('phone').hasError('Mask error')">No cumple con el formato requerido
+                0000-0000</mat-error>
         </mat-form-field>
         <div class="submit__button">
-            <button type="submit" mat-raised-button >Registrar</button>
+            <button type="submit" mat-raised-button>Registrar</button>
         </div>
     </form>
 </div>
