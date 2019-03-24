@@ -17,7 +17,6 @@ export class ImageUploaderComponent implements OnInit {
 
     onFileSelected(event: any) {
         const files = event.target.files;
-        const reader = new FileReader();
         for (let index = 0; index < files.length; index++) {
             if (files[index].type.includes('image')) {
                 const reader = new FileReader();
