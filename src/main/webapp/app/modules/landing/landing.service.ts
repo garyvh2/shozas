@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IP_LOCATION_API_KEY } from 'app/app.constants';
 
@@ -13,7 +13,7 @@ export class LandingService {
         this.getIpAddress().subscribe(({ ip }) => {
             this.http
                 .get(`https://api.ipgeolocation.io/ipgeo?apiKey=${IP_LOCATION_API_KEY}&ip=${ip}`)
-                .subscribe(data => location.next(data));
+                .subscribe(data => location.next(data), () => location.error('Imposible encontrar la ubicación del usuario.'));
         });
         return location.asObservable();
     }

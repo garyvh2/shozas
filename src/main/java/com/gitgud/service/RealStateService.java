@@ -35,30 +35,31 @@ public class RealStateService {
     @Autowired
     private Datastore datastore;
 
-    public RealStateService(RealStateRepository realStateRepository, UserRepository userRepository, MongoTemplate mongoTemplate,
-            UserService userService) {
+    public RealStateService(RealStateRepository realStateRepository, UserRepository userRepository,
+            MongoTemplate mongoTemplate, UserService userService) {
         this.realStateRepository = realStateRepository;
         this.userRepository = userRepository;
         this.mongoTemplate = mongoTemplate;
         this.userService = userService;
     }
 
-    public RealState save (RealState realState) throws Exception, IOException {
+    public RealState save(RealState realState) throws Exception, IOException {
         Optional<User> userOwner = userService.getUserByEmail(realState.getOwner().getLogin());
-        if (!userOwner.isPresent()){
+        if (!userOwner.isPresent()) {
             throw new Exception("Usuario no existe");
         }
-        String realStateTitle = realState.getRealStateType().equals("H") ? "Casa en " : realState.getRealStateType().equals("D") ? "Departamento en " : "Lote en ";
+        String realStateTitle = realState.getRealStateType().equals("H") ? "Casa en "
+                : realState.getRealStateType().equals("D") ? "Departamento en " : "Lote en ";
         realStateTitle = realStateTitle.concat(realState.getProvince() + " ").concat(realState.getDistrict());
         realState.setTitle(realStateTitle);
 
-        if(realState.getImages() != null && !realState.getImages().isEmpty()){
+        if (realState.getImages() != null && !realState.getImages().isEmpty()) {
             Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
             realState.getImages().forEach(i -> {
                 String source = "";
                 String imageId = "";
                 try {
-                    Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(),ObjectUtils.emptyMap());
+                    Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
                     source = uploadResult.get("url").toString();
                     imageId = uploadResult.get("public_id").toString();
                 } catch (IOException e) {
@@ -70,7 +71,7 @@ public class RealStateService {
             });
         }
 
-        if(realState.getImages() == null || realState.getImages().isEmpty()){
+        if (realState.getImages() == null || realState.getImages().isEmpty()) {
             realState.setImages(getDefaults());
         }
 
@@ -80,12 +81,13 @@ public class RealStateService {
         return realStateRepository.save(realState);
     }
 
-    private HashSet<Image> getDefaults(){
+    private HashSet<Image> getDefaults() {
         HashSet<Image> result = new HashSet<Image>();
 
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             Image defaultImage = new Image();
-            defaultImage.setSource("http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
+            defaultImage.setSource(
+                    "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
             defaultImage.setImageId("0");
 
             if (i == 0)
@@ -131,7 +133,7 @@ public class RealStateService {
             realStates.and(realStates.criteria("province").endsWithIgnoreCase(parameters.getProvince()));
         }
 
-        if(resultType != ResultType.Lots){
+        if (resultType != ResultType.Lots) {
 
             if (parameters.getBaths() != 0) {
                 realStates.and(realStates.criteria("baths").greaterThanOrEq(parameters.getBaths()));
@@ -249,13 +251,12 @@ public class RealStateService {
         return result.get();
     }
 
-
     public User addFavorite(ApiFavorite favorite) {
         // Check if realState or user are present
         Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
         Optional<User> presentUser = userRepository.findById(favorite.getUserId());
 
-        if(presentRealState.isPresent() && presentUser.isPresent()) {
+        if (presentRealState.isPresent() && presentUser.isPresent()) {
             // Get the realState and user object
             RealState realState = presentRealState.get();
             User user = presentUser.get();
@@ -273,7 +274,7 @@ public class RealStateService {
         Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
         Optional<User> presentUser = userRepository.findById(favorite.getUserId());
 
-        if(presentRealState.isPresent() && presentUser.isPresent()) {
+        if (presentRealState.isPresent() && presentUser.isPresent()) {
             // Get the realState and user object
             RealState realState = presentRealState.get();
             User user = presentUser.get();
@@ -284,5 +285,65 @@ public class RealStateService {
             return userRepository.save(user);
         }
         return null;
+    }
+
+    public RealState update(RealState updateElement) throws Exception {
+        Optional<RealState> elementToUpdate = realStateRepository.findById(updateElement.getId());
+        if (!elementToUpdate.isPresent())
+            throw new Exception("El elemento a actualizar no existe");
+
+        RealState elementInDB = elementToUpdate.get();
+
+        if (updateElement.getProvince() != null || updateElement.getDistrict() != null) {
+            String realStateTitle = updateElement.getRealStateType().equals("H") ? "Casa en "
+                    : updateElement.getRealStateType().equals("D") ? "Departamento en " : "Lote en ";
+            realStateTitle = realStateTitle.concat(updateElement.getProvince() + " ")
+                    .concat(updateElement.getDistrict());
+            elementInDB.setTitle(realStateTitle);
+        }
+
+        elementInDB.setProvince(
+                updateElement.getProvince() == null ? elementInDB.getProvince() : updateElement.getProvince());
+        elementInDB.setCity(updateElement.getCity() == null ? elementInDB.getCity() : updateElement.getCity());
+        elementInDB.setDistrict(
+                updateElement.getDistrict() == null ? elementInDB.getDistrict() : updateElement.getDistrict());
+        elementInDB.setDescription(
+                updateElement.getDescription() == null ? elementInDB.getDescription() : updateElement.getDescription());
+        elementInDB.setBaths(updateElement.getBaths() == 0 ? elementInDB.getBaths() : updateElement.getBaths());
+        elementInDB.setRooms(updateElement.getRooms() == 0 ? elementInDB.getRooms() : updateElement.getRooms());
+        elementInDB.setPrice(updateElement.getPrice() == 0 ? elementInDB.getPrice() : updateElement.getPrice());
+        elementInDB.setGarage(updateElement.getGarage() == 0 ? elementInDB.getGarage() : updateElement.getGarage());
+        elementInDB.setHasElectricity(updateElement.isHasElectricity());
+        elementInDB.setHasHealthServices(updateElement.isHasHealthServices());
+        elementInDB.setHasPool(updateElement.isHasPool());
+        elementInDB.setHasPrivateSecurity(updateElement.isHasPrivateSecurity());
+        elementInDB.setHasWater(updateElement.isHasWater());
+        elementInDB.setLatitude(
+                updateElement.getLatitude() == 0.0d ? elementInDB.getLatitude() : updateElement.getLatitude());
+        elementInDB.setLongitude(
+                updateElement.getLongitude() == 0.0d ? elementInDB.getLongitude() : updateElement.getLongitude());
+        elementInDB.setPostalCode(
+                updateElement.getPostalCode() == 0 ? elementInDB.getPostalCode() : updateElement.getPostalCode());
+        elementInDB.setRealStateType(updateElement.getRealStateType() == null ? elementInDB.getRealStateType()
+                : updateElement.getRealStateType());
+        elementInDB.setSize(updateElement.getSize() == 0.0d ? elementInDB.getSize() : updateElement.getSize());
+        elementInDB.setStories(updateElement.getStories() == 0 ? elementInDB.getStories() : updateElement.getStories());
+        elementInDB.setSold(updateElement.isSold());
+        elementInDB.setServices(
+                updateElement.getServices() == null ? elementInDB.getServices() : updateElement.getServices());
+        elementInDB
+                .setSchools(updateElement.getSchools() == null ? elementInDB.getSchools() : updateElement.getSchools());
+        elementInDB.setCustomAmenities(updateElement.getCustomAmenities() == null ? elementInDB.getCustomAmenities()
+                : updateElement.getCustomAmenities());
+
+        elementInDB.setImages(updateElement.getImages() == null ? elementInDB.getImages()
+                : getUpdatedImage(updateElement.getImages(), elementInDB.getImages()));
+        return realStateRepository.save(elementInDB);
+    }
+
+    private HashSet<Image> getUpdatedImage(HashSet<Image> updatedImages, HashSet<Image> imagesOnDb) {
+        HashSet<Image> result = new HashSet<Image>();
+
+        return result;
     }
 }
