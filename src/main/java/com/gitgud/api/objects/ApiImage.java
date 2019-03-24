@@ -1,6 +1,9 @@
 package com.gitgud.api.objects;
 
 public class ApiImage {
+
+    private String Id;
+
     private boolean isPrimary;
 
     private boolean is360Image;
@@ -29,5 +32,13 @@ public class ApiImage {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 }

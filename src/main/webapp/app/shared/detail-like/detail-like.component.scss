@@ -1,18 +1,25 @@
 :host {
+    user-select: none;
     align-self: center;
 
     mat-icon {
+        width: 35px;
+        height: 35px;
+
         ::ng-deep svg path {
             stroke-width: 4px;
         }
     }
 }
 
-:host([liked]) {
-    mat-icon {
-        ::ng-deep svg path {
-            stroke: #fd6e6e;
-            fill: #fd6e6e;
-        }
+:host(:focus),
+*:focus {
+    outline: none;
+}
+
+.liked {
+    ::ng-deep svg path {
+        stroke: #fd6e6e;
+        fill: #fd6e6e;
     }
 }

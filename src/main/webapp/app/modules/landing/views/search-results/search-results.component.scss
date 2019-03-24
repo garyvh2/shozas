@@ -4,11 +4,29 @@
     height: calc(100vh - 60px);
     width: 100vw;
 
+    @media (max-width: 500px) {
+        mat-drawer-container ::ng-deep mat-drawer {
+            width: 100% !important;
+        }
+    }
+
     mat-drawer-container {
         flex: 1;
 
         .left {
+            width: 365px;
             padding: 10px;
+
+            .close {
+                display: block;
+                width: 100%;
+                text-align: right;
+            }
+
+            jhi-location-filters {
+                width: 100%;
+                margin-bottom: 10px;
+            }
 
             mat-tab-group {
                 ::ng-deep .mat-tab-label {
@@ -56,6 +74,15 @@
             display: flex;
             flex-direction: column;
 
+            .filter {
+                position: fixed;
+                right: 15px;
+                bottom: 15px;
+                background: #fd6666;
+                color: #fff;
+                box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+            }
+
             .header {
                 display: flex;
                 align-items: center;
@@ -81,10 +108,55 @@
                     width: 240px;
                 }
 
+                @media (max-width: 500px) {
+                    jhi-listing {
+                        flex: 1;
+
+                        ::ng-deep mat-card [mat-card-image] {
+                            height: 260px;
+                        }
+                    }
+                }
+
+                @media (min-width: 500px) and (max-width: 1100px) {
+                    jhi-listing {
+                        ::ng-deep mat-card [mat-card-image] {
+                            height: 160px;
+                        }
+                    }
+                }
+
+                mat-spinner {
+                    margin: auto;
+                }
+
+                .mat-spinner::ng-deep circle {
+                    stroke: #ff6e6e;
+                }
+
                 h2 {
                     color: rgba(0, 0, 0, 0.38);
                     margin: auto;
                     text-align: center;
+                }
+
+                .loadMore {
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                    align-items: center;
+                    display: flex;
+
+                    [mat-button] {
+                        background: #fd6666;
+                        color: #fff;
+                        font-weight: bold;
+                        width: 100%;
+                        align-self: flex-end;
+                        justify-content: center;
+                        margin: 30px auto;
+                        width: 300px;
+                    }
                 }
             }
         }

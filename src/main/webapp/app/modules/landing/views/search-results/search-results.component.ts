@@ -2,8 +2,9 @@ import { Options } from 'ng5-slider';
 import { SearchRealStateQuery } from './../../@akita/search/search.query';
 import { Observable, Subject } from 'rxjs';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RealState, RealStateService } from 'app/@akita/real-state';
+import { MatDrawer } from '@angular/material';
 
 @Component({
     selector: 'jhi-search-results',
@@ -14,6 +15,8 @@ export class SearchResultsComponent implements OnInit {
     selectedIndex = 0;
 
     /** Queries */
+    loading$: Observable<boolean>;
+    loadMore$: Observable<boolean>;
     elements$: Observable<RealState[]>;
     priceRange$: Observable<Options>;
     sizeRange$: Observable<Options>;
@@ -24,7 +27,10 @@ export class SearchResultsComponent implements OnInit {
     lotFilters: SearchFilter = new SearchFilter();
     homeFilters: SearchFilter = new SearchFilter();
 
+    @ViewChild('drawer') drawer: MatDrawer;
+
     /** Range */
+    mobile = window.innerWidth <= 550;
     priceRange: Options = {
         ceil: 0,
         floor: 0
@@ -56,6 +62,8 @@ export class SearchResultsComponent implements OnInit {
             }
             sizeRange$.next({ ...data, ...this.sizeRange } as Options);
         });
+        this.loading$ = this.searchRealStateQuery.selectLoading();
+        this.loadMore$ = this.searchRealStateQuery.loadMore$;
         this.sizeRange$ = sizeRange$.asObservable();
         this.elements$ = this.searchRealStateQuery.elements$;
         this.applyFilters();
@@ -65,21 +73,21 @@ export class SearchResultsComponent implements OnInit {
         if (ceil || ceil === 0) {
             switch (this.selectedIndex) {
                 case 0:
-                    if (ceil && this.homeFilters[name].high === 0) {
+                    if (ceil && this.homeFilters[name].high === 1) {
                         this.homeFilters[name].high = ceil;
                         this.homeFilters[name].low = 0;
                     }
                     this.homeFilters[name] = { ...this.homeFilters[name] };
                     break;
                 case 1:
-                    if (ceil && this.appartmentFilters[name].high === 0) {
+                    if (ceil && this.appartmentFilters[name].high === 1) {
                         this.appartmentFilters[name].high = ceil;
                         this.appartmentFilters[name].low = 0;
                     }
                     this.appartmentFilters[name] = { ...this.appartmentFilters[name] };
                     break;
                 case 2:
-                    if (ceil && this.lotFilters[name].high === 0) {
+                    if (ceil && this.lotFilters[name].high === 1) {
                         this.lotFilters[name].high = ceil;
                         this.lotFilters[name].low = 0;
                     }
@@ -100,6 +108,10 @@ export class SearchResultsComponent implements OnInit {
             case 2:
                 this.realStateService.searchLots(this.getFilters());
                 break;
+        }
+
+        if (this.mobile) {
+            this.drawer.close();
         }
     }
 
@@ -144,5 +156,9 @@ export class SearchResultsComponent implements OnInit {
 
     provinciaContext() {
         this.applyFilters();
+    }
+
+    loadMore() {
+        this.realStateService.loadMore();
     }
 }

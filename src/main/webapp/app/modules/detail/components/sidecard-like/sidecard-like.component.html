@@ -1,0 +1,4 @@
+<button mat-button [ngClass]="{'scl__btn--empty':!liked, 'scl__btn--full':liked}" (click)="toggleLike($event)">
+    <mat-icon>favorite</mat-icon>
+    {{liked ? 'Guardado': 'Guardar'}}
+</button>

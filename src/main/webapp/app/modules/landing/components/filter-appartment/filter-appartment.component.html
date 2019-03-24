@@ -1,11 +1,13 @@
 <form>
     <div class="filter">
         <label>Precio</label>
-        <jhi-range-component name="price" [(ngModel)]="searchFilters.rangePrice" [options]="priceConfig"></jhi-range-component>
+        <jhi-range-component name="price" [(ngModel)]="searchFilters.rangePrice" [options]="priceConfig"
+            *ngIf="priceConfig"></jhi-range-component>
     </div>
     <div class="filter">
         <label>Tamaño</label>
-        <jhi-range-component name="size" [(ngModel)]="searchFilters.rangeSize" [options]="sizeConfig"></jhi-range-component>
+        <jhi-range-component name="size" [(ngModel)]="searchFilters.rangeSize" [options]="sizeConfig"
+            *ngIf="sizeConfig"></jhi-range-component>
     </div>
     <div class="filter">
         <label>Calificación</label>
@@ -14,22 +16,22 @@
     <div class="filter">
         <label>Secciones</label>
         <div class="seccion">
-            <app-detail-spec src="../../../content/images/bed.png">Cuartos</app-detail-spec>
+            <jhi-detail-spec src="../../../content/images/bed.png">Cuartos</jhi-detail-spec>
             <jhi-filter-amount name="beds" [size]="5" [(ngModel)]="searchFilters.beds"></jhi-filter-amount>
         </div>
 
         <div class="seccion">
-            <app-detail-spec src="../../../content/images/bath.png">Baño</app-detail-spec>
+            <jhi-detail-spec src="../../../content/images/bath.png">Baño</jhi-detail-spec>
             <jhi-filter-amount name="baths" [size]="5" [(ngModel)]="searchFilters.baths"></jhi-filter-amount>
         </div>
 
         <div class="seccion">
-            <app-detail-spec src="../../../content/images/garage.png">Parqueo</app-detail-spec>
+            <jhi-detail-spec src="../../../content/images/garage.png">Parqueo</jhi-detail-spec>
             <jhi-filter-amount name="garages" [size]="5" [(ngModel)]="searchFilters.garages"></jhi-filter-amount>
         </div>
 
         <div class="seccion">
-            <app-detail-spec src="../../../content/images/house.png">Pisos</app-detail-spec>
+            <jhi-detail-spec src="../../../content/images/house.png">Pisos</jhi-detail-spec>
             <jhi-filter-amount name="stories" [size]="3" [(ngModel)]="searchFilters.stories"></jhi-filter-amount>
         </div>
     </div>

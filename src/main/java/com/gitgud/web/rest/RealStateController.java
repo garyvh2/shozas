@@ -1,9 +1,6 @@
 package com.gitgud.web.rest;
 
-import com.gitgud.api.objects.ApiRealState;
-import com.gitgud.api.objects.ApiResultModel;
-import com.gitgud.api.objects.ApiSearchParams;
-import com.gitgud.api.objects.ApiSearchResults;
+import com.gitgud.api.objects.*;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.service.RealStateService;
@@ -11,6 +8,7 @@ import com.gitgud.service.UserService;
 import com.gitgud.service.util.ResultType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +57,11 @@ public class RealStateController extends ApiBaseController {
         return GetApiResultModel(() ->  realStateService.save(realState));
     }
 
+    @PutMapping("/update")
+    public ApiResultModel<RealState> updateRealState(@RequestBody RealState realState) throws Exception {
+        return GetApiResultModel(() ->  realStateService.update(realState));
+    }
+
     @GetMapping("/detail")
     public ApiResultModel<RealState> detailRealState(@RequestParam String id) throws Exception {
         return GetApiResultModel(() ->  realStateService.getRealStateDetailElement(id));
@@ -71,6 +74,21 @@ public class RealStateController extends ApiBaseController {
         RealState tempRS = realStateService.getRealStateDetailElement(rs.getId());
 
         return userService.sendEmailToOwner(tempRS);
+    }
+
+    @GetMapping("/get-favorites/{userId}")
+    public ApiResultModel<HashSet<ApiRealState>> getFavorites(@PathVariable String userId) throws Exception {
+        return GetApiResultModel(() -> realStateService.getFavorites(userId));
+    }
+
+    @PostMapping("/add-favorite")
+    public ApiResultModel<User> addFavorite(@RequestBody ApiFavorite favorite) throws Exception {
+        return GetApiResultModel(() -> realStateService.addFavorite(favorite));
+    }
+
+    @PostMapping("/remove-favorite")
+    public ApiResultModel<User> removeFavorite(@RequestBody ApiFavorite favorite) throws Exception {
+        return GetApiResultModel(() -> realStateService.removeFavorite(favorite));
     }
 
 }
