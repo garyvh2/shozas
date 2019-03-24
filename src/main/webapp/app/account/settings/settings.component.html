@@ -4,7 +4,7 @@
     <div *ngIf="!success" class="row justify-content-center">
         <div class="col-12 profile-photo">
             <label for="inputProfileImage">
-                <img #profileImage src="{{settingsAccount.image.source || 'http://picsum.photos/200/200/?random'}}" alt="Imagen de Perfil">
+                <img #profileImage src="{{settingsAccount?.image?.source || 'http://picsum.photos/200/200/?random'}}" alt="Imagen de Perfil">
                 <div class="profile__background profile__photo--hover"></div>
                 <span class="profile__photo--hover"><mat-icon>edit</mat-icon></span>
             </label>
