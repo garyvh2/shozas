@@ -1,7 +1,14 @@
 <mat-drawer-container autosize>
-    <mat-drawer opened #drawer mode="side" class="left">
+    <mat-drawer [opened]="mobile ? null : true" #drawer mode="side" class="left">
+        <div class="close">
+            <button mat-icon-button *ngIf="mobile" (click)="drawer.close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <jhi-location-filters *ngIf="mobile" [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+        </jhi-location-filters>
         <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex"
-            (selectedIndexChange)="selectedIndexChange()">
+            (selectedIndexChange)="selectedIndexChange()" mat-align-tabs="center">
             <mat-tab label="Casas">
                 <jhi-filter-home [searchFilters]="homeFilters" *ngIf="homeFilters" [priceConfig]="priceRange$ | async"
                     [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
@@ -19,9 +26,9 @@
     </mat-drawer>
 
     <div class="right">
-        <div class="header">
+        <div class="header" *ngIf="!mobile">
             <button mat-icon-button (click)="drawer.toggle()">
-                <mat-icon aria-label="Example icon-button with a heart icon">filter_list</mat-icon>
+                <mat-icon>filter_list</mat-icon>
             </button>
             <jhi-location-filters [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
             </jhi-location-filters>
@@ -37,6 +44,9 @@
                 <button mat-button (click)="loadMore()" *ngIf="loadMore$ | async">Cargar Mas</button>
             </div>
         </div>
+        <button class="filter" mat-icon-button *ngIf="mobile" (click)="drawer.open()">
+            <mat-icon>filter_list</mat-icon>
+        </button>
     </div>
 
 </mat-drawer-container>
