@@ -2,8 +2,9 @@ import { Options } from 'ng5-slider';
 import { SearchRealStateQuery } from './../../@akita/search/search.query';
 import { Observable, Subject } from 'rxjs';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RealState, RealStateService } from 'app/@akita/real-state';
+import { MatDrawer } from '@angular/material';
 
 @Component({
     selector: 'jhi-search-results',
@@ -26,7 +27,10 @@ export class SearchResultsComponent implements OnInit {
     lotFilters: SearchFilter = new SearchFilter();
     homeFilters: SearchFilter = new SearchFilter();
 
+    @ViewChild('drawer') drawer: MatDrawer;
+
     /** Range */
+    mobile = window.innerWidth <= 550;
     priceRange: Options = {
         ceil: 0,
         floor: 0
@@ -104,6 +108,10 @@ export class SearchResultsComponent implements OnInit {
             case 2:
                 this.realStateService.searchLots(this.getFilters());
                 break;
+        }
+
+        if (this.mobile) {
+            this.drawer.close();
         }
     }
 
