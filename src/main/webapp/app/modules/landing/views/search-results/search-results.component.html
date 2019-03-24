@@ -1,126 +1,52 @@
-<div class="left">
-    <mat-tab-group animationDuration="0ms" color="#FD6666">
-        <mat-tab label="Casas">
-            <form>
-                <div class="filter">
-                    <label>Precio</label>
-                    <app-range-component [options]="precioOpciones" [max]="15000000"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Tamaño</label>
-                    <app-range-component [options]="tamanoOpciones" [max]="2500"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Calificación</label>
-                    <star-rating class="details__rating" [starType]="'svg'" [rating]="1"></star-rating>
-                </div>
-                <div class="filter">
-                    <h4>Secciones</h4>
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bed.png">Cuartos</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
+<mat-drawer-container autosize>
+    <mat-drawer [opened]="mobile ? null : true" #drawer mode="side" class="left">
+        <div class="close">
+            <button mat-icon-button *ngIf="mobile" (click)="drawer.close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <jhi-location-filters *ngIf="mobile" [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+        </jhi-location-filters>
+        <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex"
+            (selectedIndexChange)="selectedIndexChange()" mat-align-tabs="center">
+            <mat-tab label="Casas">
+                <jhi-filter-home [searchFilters]="homeFilters" *ngIf="homeFilters" [priceConfig]="priceRange$ | async"
+                    [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
+            </mat-tab>
+            <mat-tab label="Apartamentos">
+                <jhi-filter-appartment [searchFilters]="appartmentFilters" [priceConfig]="priceRange$ | async"
+                    [sizeConfig]="sizeRange$ | async"></jhi-filter-appartment>
+            </mat-tab>
+            <mat-tab label="Lotes">
+                <jhi-filter-lot [searchFilters]="lotFilters" [priceConfig]="priceRange$ | async"
+                    [sizeConfig]="sizeRange$ | async"></jhi-filter-lot>
+            </mat-tab>
+        </mat-tab-group>
+        <button mat-button (click)="applyFilters()">Aplicar</button>
+    </mat-drawer>
 
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bath.png">Baño</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/garage.png">Parqueo</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/house.png">Pisos</app-detail-spec>
-                        <app-filter-amount [size]="3"></app-filter-amount>
-                    </div>
-                </div>
-
-                <div class="filter">
-                    <label>Codigo Postal</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="ZIP">
-                    </mat-form-field>
-                </div>
-                <button mat-button>Aplicar</button>
-            </form>
-        </mat-tab>
-        <mat-tab label="Apartamentos">
-            <form>
-                <div class="filter">
-                    <label>Precio</label>
-                    <app-range-component [options]="precioOpciones" [max]="15000000"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Tamaño</label>
-                    <app-range-component [options]="tamanoOpciones" [max]="2500"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Calificación</label>
-                    <star-rating class="details__rating" [starType]="'svg'" [rating]="2.63"></star-rating>
-                </div>
-                <div class="filter">
-                    <h4>Secciones</h4>
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bed.png">Cuartos</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/bath.png">Baño</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/garage.png">Parqueo</app-detail-spec>
-                        <app-filter-amount [size]="5"></app-filter-amount>
-                    </div>
-
-                    <div class="seccion">
-                        <app-detail-spec src="../../../content/images/house.png">Pisos</app-detail-spec>
-                        <app-filter-amount [size]="3"></app-filter-amount>
-                    </div>
-                </div>
-
-                <div class="filter">
-                    <label>Codigo Postal</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="ZIP">
-                    </mat-form-field>
-                </div>
-                <button mat-button>Aplicar</button>
-            </form>
-        </mat-tab>
-        <mat-tab label="Lotes">
-            <form>
-                <div class="filter">
-                    <label>Precio</label>
-                    <app-range-component [options]="precioOpciones" [max]="15000000"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Tamaño</label>
-                    <app-range-component [options]="tamanoOpciones" [max]="2500"></app-range-component>
-                </div>
-                <div class="filter">
-                    <label>Calificación</label>
-                    <star-rating class="details__rating" [starType]="'svg'" [rating]="2.63"></star-rating>
-                </div>
-
-                <div class="filter">
-                    <label>Codigo Postal</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="ZIP">
-                    </mat-form-field>
-                </div>
-                <button mat-button>Aplicar</button>
-            </form>
-        </mat-tab>
-    </mat-tab-group>
-</div>
-<div class="right">
-    <app-location-filters></app-location-filters>
-    <div class="items">
-        <app-listing *ngFor="let home of homes" [listing]="home"></app-listing>
+    <div class="right">
+        <div class="header" *ngIf="!mobile">
+            <button mat-icon-button (click)="drawer.toggle()">
+                <mat-icon>filter_list</mat-icon>
+            </button>
+            <jhi-location-filters [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+            </jhi-location-filters>
+        </div>
+        <div class="items" *ngIf="(loading$ | async)">
+            <mat-spinner [diameter]="40"></mat-spinner>
+        </div>
+        <div class="items" *ngIf="!(loading$ | async)">
+            <h2 *ngIf="(elements$ | async).length <= 0"> No se han encontrado resultados.</h2>
+            <jhi-listing *ngFor="let realstate of (elements$ | async)" [listing]="realstate"
+                [routerLink]="['/detail/', realstate.id]"></jhi-listing>
+            <div class="loadMore">
+                <button mat-button (click)="loadMore()" *ngIf="loadMore$ | async">Cargar Mas</button>
+            </div>
+        </div>
+        <button class="filter" mat-icon-button *ngIf="mobile" (click)="drawer.open()">
+            <mat-icon>filter_list</mat-icon>
+        </button>
     </div>
-</div>
+
+</mat-drawer-container>

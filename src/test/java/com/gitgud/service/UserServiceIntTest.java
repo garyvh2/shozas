@@ -48,7 +48,6 @@ public class UserServiceIntTest {
         user.setLogin("johndoe");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
-        user.setEmail("johndoe@localhost");
         user.setFirstName("john");
         user.setLastName("doe");
         user.setImageUrl("http://placehold.it/50x50");
@@ -61,9 +60,8 @@ public class UserServiceIntTest {
         Optional<User> maybeUser = userService.requestPasswordReset("invalid.login@localhost");
         assertThat(maybeUser).isNotPresent();
 
-        maybeUser = userService.requestPasswordReset(user.getEmail());
+        maybeUser = userService.requestPasswordReset(user.getLogin());
         assertThat(maybeUser).isPresent();
-        assertThat(maybeUser.orElse(null).getEmail()).isEqualTo(user.getEmail());
         assertThat(maybeUser.orElse(null).getResetDate()).isNotNull();
         assertThat(maybeUser.orElse(null).getResetKey()).isNotNull();
     }

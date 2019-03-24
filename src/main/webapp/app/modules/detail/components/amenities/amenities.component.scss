@@ -11,5 +11,12 @@
     .rsd__amenity {
         display: flex;
         align-items: center;
+
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        span {
+            padding-left: 8px;
+        }
     }
 }

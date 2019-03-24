@@ -3,7 +3,7 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-    selector: 'app-detail-like',
+    selector: 'jhi-detail-like',
     templateUrl: './detail-like.component.html',
     styleUrls: ['./detail-like.component.scss']
 })

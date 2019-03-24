@@ -1,0 +1,48 @@
+.flex-space-between {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.mat-card-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .mat-card-header-text {
+        width: 100%;
+    }
+}
+
+.mat-card-title {
+    font-weight: bold;
+    font-size: 24px;
+
+    img {
+        max-width: 221px;
+        max-height: 45px;
+    }
+}
+
+.mat-card-content {
+    span {
+        width: 50%;
+    }
+
+    .financeCard__feeHolder {
+        font-weight: bold;
+        span {
+            font-size: 20px;
+        }
+    }
+}
+
+.width-50 {
+    width: 50%;
+}
+
+.mat-input-element {
+    caret-color: #ff6666;
+}

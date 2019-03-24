@@ -13,20 +13,28 @@
 
     <div class="content">
         <div class="row">
-            <div class="col-md-8 col-sm-12 noPadding rsd__content--padding-r">
+            <div class="col-lg-8 col-md-7 col-sm-12 noPadding rsd__content--padding-r">
                 <jhi-title [detail]="detail"></jhi-title>
                 <jhi-features [detail]="detail"></jhi-features>
                 <mat-divider></mat-divider>
                 <jhi-amenities [detail]="detail"></jhi-amenities>
             </div>
-            <div class="col-md-4 col-sm-12  noPadding">
+            <div class="col-lg-4 col-md-5 col-sm-12  noPadding">
                 <jhi-sidecard [detail]="detail"></jhi-sidecard>
             </div>
             <div class="col-12 noPadding rds__description">
                 <mat-divider></mat-divider>
                 <p class="rds__description-content">{{ detail.description }}</p>
+                <mat-divider></mat-divider>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 noPadding detail__ips-title">
+                <h3>Indice de Progreso Social</h3>
+                <jhi-ips-data [rs] = "detail"></jhi-ips-data>
+            </div>
+        </div>
+
         <jhi-comment-section [realStateId]="detail.id"></jhi-comment-section>
     </div>
 </div>

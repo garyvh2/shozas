@@ -1,15 +1,11 @@
 <mat-card class="rsd__sidecard">
     <mat-card-header>
         <img mat-card-avatar src="http://picsum.photos/50/50/?random" />
-        <mat-card-title>{{detail.user.name}}</mat-card-title>
+        <mat-card-title>{{detail.owner.firstName}} {{detail.owner.lastName}}</mat-card-title>
         <mat-card-subtitle>
-            <span>4</span>
             <div>
-                <mat-icon class="paint">star</mat-icon>
-                <mat-icon class="paint">star</mat-icon>
-                <mat-icon class="paint">star</mat-icon>
-                <mat-icon class="paint">star</mat-icon>
-                <mat-icon>star_border</mat-icon>
+                <star-rating class="details__rating" size="medium" [showHalfStars]="true" [starType]="'svg'"
+                    [rating]="detail.owner.raiting || 1" [readOnly]="true"></star-rating>
             </div>
         </mat-card-subtitle>
     </mat-card-header>
@@ -20,30 +16,37 @@
                 <span>Precio:</span>
             </div>
             <div class="col-12 noPadding rsd__price">
-                <span>₡{{detail.price}}</span>
+                <span>{{detail.price | currency: 'CRC':'¢'}}</span>
             </div>
         </div>
         <div class="row">
             <div class="col-12 noPadding rsd__financing">
-                <a href="">Financiamiento disponible</a>
+                <a (click)="openDialog()">Financiamiento disponible</a>
             </div>
         </div>
     </mat-card-content>
     <mat-card-actions align="start">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <button mat-button class="rsd__btn--empty">
                     <mat-icon>favorite</mat-icon>
                     Guardar
                 </button>
             </div>
-            <div class="col-6 flex-row-reverse">
+            <!-- <div class="col-6 flex-row-reverse">
                 <button mat-button class="rsd__btn--empty">Compartir</button>
-            </div>
+
+                <share-buttons [theme]="'modern-dark'"
+                [include]="['facebook','twitter','linkedin','google','pinterest','reddit','tumblr','mix','vk','telegram','messenger','whatsapp','xing','line','sms','email','print','copy']"
+                [show]="5"
+                [url]="'https://twitter.com/'"
+                [autoSetMeta]="false"
+                ></share-buttons>
+            </div> -->
         </div>
         <div class="row rsd__contact-seller">
             <div class="col-12">
-                <button mat-button class="rsd__btn--full">Contactar al vendedor</button>
+                <button mat-button class="rsd__btn--full" (click)="contactOwner()">Contactar al vendedor</button>
             </div>
         </div>
     </mat-card-actions>

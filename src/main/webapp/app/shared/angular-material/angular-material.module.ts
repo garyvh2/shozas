@@ -9,13 +9,17 @@ import {
     MatGridListModule,
     MatDividerModule,
     MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatSidenavModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 @NgModule({
     imports: [
         MatButtonModule,
         MatFormFieldModule,
+        MatSidenavModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,
@@ -24,11 +28,14 @@ import { NgModule } from '@angular/core';
         MatRadioModule,
         MatTabsModule,
         MatGridListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatSnackBarModule
     ],
     exports: [
         MatButtonModule,
         MatFormFieldModule,
+        MatSidenavModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,
@@ -37,7 +44,8 @@ import { NgModule } from '@angular/core';
         MatRadioModule,
         MatTabsModule,
         MatGridListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatDialogModule
     ]
 })
 export class AngularMaterialModule {}

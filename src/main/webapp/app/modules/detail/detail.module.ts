@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { SearchRealStateStore } from './../landing/@akita/search/search.store';
 import { ReviewService } from './../../@akita/review/review.service';
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
@@ -23,6 +25,11 @@ import { CommentComponent } from './components/comment/comment.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 import { SidecardComponent } from './components/sidecard/sidecard.component';
+import { IpsDataComponent } from './components/ips-data/ips-data.component';
+
+import { FinanceModalComponent } from './components/finance-modal/finance-modal.component';
+import { MatDialogModule } from '@angular/material';
+import { FinanceCardComponent } from './components/finance-card/finance-card.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +41,10 @@ import { SidecardComponent } from './components/sidecard/sidecard.component';
         TitleComponent,
         SidecardComponent,
         AmenitiesComponent,
-        FeaturesComponent
+        FeaturesComponent,
+        IpsDataComponent,
+        FinanceModalComponent,
+        FinanceCardComponent
     ],
     imports: [
         DetailRoutingModule,
@@ -42,10 +52,13 @@ import { SidecardComponent } from './components/sidecard/sidecard.component';
         CommonModule,
         AngularMaterialModule,
         StarRatingModule,
+        MatDialogModule,
+        FormsModule,
         AgmCoreModule.forRoot({
             apiKey: MAPS_API_KEY
         })
     ],
-    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore]
+    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, SearchRealStateStore],
+    entryComponents: [FinanceModalComponent]
 })
 export class DetailModule {}
