@@ -29,6 +29,9 @@
 
     .rsd__content--padding-r {
         padding-right: 32px;
+        @media (max-width: 575px) {
+            padding-right: 0;
+        }
     }
 
     .rds__description {
