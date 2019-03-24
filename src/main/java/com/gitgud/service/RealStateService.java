@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class RealStateService {
@@ -251,42 +252,6 @@ public class RealStateService {
         return result.get();
     }
 
-    public User addFavorite(ApiFavorite favorite) {
-        // Check if realState or user are present
-        Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
-        Optional<User> presentUser = userRepository.findById(favorite.getUserId());
-
-        if (presentRealState.isPresent() && presentUser.isPresent()) {
-            // Get the realState and user object
-            RealState realState = presentRealState.get();
-            User user = presentUser.get();
-
-            // Add the favorite
-            user.addFavorite(realState);
-
-            return userRepository.save(user);
-        }
-        return null;
-    }
-
-    public User removeFavorite(ApiFavorite favorite) {
-        // Check if realState or user are present
-        Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
-        Optional<User> presentUser = userRepository.findById(favorite.getUserId());
-
-        if (presentRealState.isPresent() && presentUser.isPresent()) {
-            // Get the realState and user object
-            RealState realState = presentRealState.get();
-            User user = presentUser.get();
-
-            // Add the favorite
-            user.removeFavorite(realState);
-
-            return userRepository.save(user);
-        }
-        return null;
-    }
-
     public RealState update(RealState updateElement) throws Exception {
         Optional<RealState> elementToUpdate = realStateRepository.findById(updateElement.getId());
         if (!elementToUpdate.isPresent())
@@ -345,5 +310,50 @@ public class RealStateService {
         HashSet<Image> result = new HashSet<Image>();
 
         return result;
+    }
+
+    public User addFavorite(ApiFavorite favorite) {
+        // Check if realState or user are present
+        Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
+        Optional<User> presentUser = userRepository.findById(favorite.getUserId());
+
+        if (presentRealState.isPresent() && presentUser.isPresent()) {
+            // Get the realState and user object
+            RealState realState = presentRealState.get();
+            User user = presentUser.get();
+
+            // Add the favorite
+            user.addFavorite(realState);
+
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    public User removeFavorite(ApiFavorite favorite) {
+        // Check if realState or user are present
+        Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
+        Optional<User> presentUser = userRepository.findById(favorite.getUserId());
+
+        if (presentRealState.isPresent() && presentUser.isPresent()) {
+            // Get the realState and user object
+            RealState realState = presentRealState.get();
+            User user = presentUser.get();
+
+            // Add the favorite
+            user.removeFavorite(realState);
+
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    public HashSet<ApiRealState> getFavorites(String userId) {
+        Optional<User> presentUser = userRepository.findById(userId);
+        if (presentUser.isPresent()) {
+            User user = presentUser.get();
+            return user.getFavorites().stream().map(favorite -> toApiRealState(favorite)).collect(Collectors.toCollection(HashSet::new));
+        }
+        return null;
     }
 }

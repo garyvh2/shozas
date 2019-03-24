@@ -8,6 +8,7 @@ import com.gitgud.service.UserService;
 import com.gitgud.service.util.ResultType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,6 +74,11 @@ public class RealStateController extends ApiBaseController {
         RealState tempRS = realStateService.getRealStateDetailElement(rs.getId());
 
         return userService.sendEmailToOwner(tempRS);
+    }
+
+    @GetMapping("/get-favorites/{userId}")
+    public ApiResultModel<HashSet<ApiRealState>> getFavorites(@PathVariable String userId) throws Exception {
+        return GetApiResultModel(() -> realStateService.getFavorites(userId));
     }
 
     @PostMapping("/add-favorite")
