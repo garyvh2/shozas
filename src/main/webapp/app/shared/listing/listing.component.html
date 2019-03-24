@@ -10,14 +10,14 @@
                 </span>
             </mat-card-subtitle>
         </div>
-        <jhi-detail-like></jhi-detail-like>
+        <jhi-detail-like [realState]="listing"></jhi-detail-like>
     </mat-card-header>
     <mat-card-content>
         <div class="specs">
-            <app-detail-spec src="../../../content/images/bed.png">{{ listing.beds }}</app-detail-spec>
-            <app-detail-spec src="../../../content/images/bath.png">{{ listing.baths }}</app-detail-spec>
-            <app-detail-spec src="../../../content/images/garage.png">{{ listing.gar }}</app-detail-spec>
-            <app-detail-spec src="../../../content/images/ruler.png">{{ listing.size }}mt<sup>2</sup></app-detail-spec>
+            <jhi-detail-spec src="../../../content/images/bed.png">{{ listing.beds }}</jhi-detail-spec>
+            <jhi-detail-spec src="../../../content/images/bath.png">{{ listing.baths }}</jhi-detail-spec>
+            <jhi-detail-spec src="../../../content/images/garage.png">{{ listing.gar }}</jhi-detail-spec>
+            <jhi-detail-spec src="../../../content/images/ruler.png">{{ listing.size }}mt<sup>2</sup></jhi-detail-spec>
         </div>
         <div class="details">
             <jhi-user-rating class="details__user" [user]="listing.user"></jhi-user-rating>

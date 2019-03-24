@@ -1,6 +1,5 @@
 package com.gitgud.domain;
 
-import com.gitgud.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.morphia.annotations.Embedded;
@@ -14,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -269,6 +267,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setDisplayPhone(boolean displayPhone) {
         this.displayPhone = displayPhone;
     }
+
+    public void addFavorite(RealState realStateId) { this.favorites.add(realStateId); }
+    public void removeFavorite(RealState realStateId) { this.favorites.remove(realStateId); }
 
     @Override
     public boolean equals(Object o) {
