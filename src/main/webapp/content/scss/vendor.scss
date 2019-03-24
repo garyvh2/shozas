@@ -4,9 +4,9 @@
 put Sass variables here:
 eg $input-color: red;
 ****************************/
+
 // Override Boostrap variables
 @import url('https://fonts.googleapis.com/css?family=Muli');
-
 @import 'bootstrap-variables';
 // Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap';
@@ -18,7 +18,7 @@ eg $input-color: red;
 body {
     $my-app-primary: mat-palette($mat-grey, 100);
     $my-app-accent: mat-palette($mat-grey, 800);
-    $my-app-warn: mat-palette($mat-red, A400);
+    $my-app-warn: mat-palette($mat-red, A200);
     $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
     @include angular-material-theme($my-app-theme);
 }

@@ -3,6 +3,8 @@ import { ID } from '@datorama/akita';
 import { RealStateImage } from 'app/@akita/external-models/real-state-image.model';
 import { TempUser } from '../external-models/tempUser';
 import RealStateType from '../external-models/real-state-type';
+import CustomAmenitie from '../external-models/custom-amenitie';
+import { User } from '../user';
 
 export interface RealState {
     id?: ID;
@@ -34,9 +36,9 @@ export interface RealState {
     addr?: string;
     images?: RealStateImage;
     isSold?: boolean;
-    customAmenities: string[];
-    user: TempUser;
-    owner: TempUser;
+    customAmenities: CustomAmenitie[];
+    user: User;
+    owner: User;
     dateCreated: Date;
 }
 

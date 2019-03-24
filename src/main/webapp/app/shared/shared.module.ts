@@ -4,7 +4,7 @@ import { DetailSpecComponent } from './detail-spec/detail-spec.component';
 import { DetailLikeComponent } from './detail-like/detail-like.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { NgxMaskModule } from 'ngx-mask';
+import { AgmCoreModule } from '@agm/core';
 
 import { NgbDateMomentAdapter } from './util/datepicker-adapter';
 import { ShozasSharedLibsModule, ShozasSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';

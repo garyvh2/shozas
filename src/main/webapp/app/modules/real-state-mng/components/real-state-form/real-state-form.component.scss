@@ -1,5 +1,20 @@
 .real__state {
     display: block;
+    .custom__icon {
+        display: flex !important;
+        margin-right: 5px;
+        margin-bottom: 2px;
+        font-weight: bold;
+    }
+    .checkbox {
+        padding: 5px;
+        mat-checkbox {
+            margin-right: 10px;
+        }
+    }
+}
+mat-error {
+    font-size: 12px;
 }
 .radio__label {
     display: block;
@@ -7,12 +22,12 @@
     font-size: 18px;
     font-weight: 400;
 }
+
 .amenities {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: stretch;
-
     mat-form-field {
         flex: 1;
     }
@@ -25,10 +40,31 @@
 mat-form-field {
     display: block;
     margin: 5px;
-    height: 45px;
-    font-size: 0.75em;
-
-    ::ng-deep .mat-form-field-wrapper {
-        padding: 0;
+    font-size: 0.9em;
+}
+.custom__container {
+    margin: 20px 0;
+}
+.custom__amenities {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    > div {
+        flex: 3;
+        padding: 0 10px;
+        width: fit-content;
+        mat-form-field {
+            width: 100%;
+        }
+    }
+    .remove__btn {
+        mat-icon {
+            cursor: pointer;
+            margin: auto;
+            font-weight: bold;
+        }
+        flex: 1;
+        display: flex;
     }
 }

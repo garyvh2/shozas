@@ -1,19 +1,31 @@
 <mat-horizontal-stepper [linear]="true" #stepper>
-    <mat-step color="warn" [stepControl]="firstFormGroup">
+    <!-- <mat-step color="warn" [stepControl]="firstFormGroup">
         <ng-template matStepLabel>Llene la Información</ng-template>
-        <jhi-real-state-form></jhi-real-state-form>
+        <jhi-real-state-form [realStateForm]="firstFormGroup"></jhi-real-state-form>
+        <div>
+            <button (click)="onFirstStepClick()" mat-raised-button matStepperNext>Siguiente</button>
+        </div>
     </mat-step>
+    <mat-step [stepControl]="firstFormGroup">
+        <ng-template matStepLabel>Danos mejor tu ubicacion</ng-template>
+        <h3>Usa el mapa para darnos una ubicación más exacta, con solo un click</h3>
+        <jhi-real-state-map [province]="getFormControlValue('province')" [city]="getFormControlValue('city')"
+            [district]="getFormControlValue('district')" [latitude]="firstFormGroup.get('latitude')" 
+            [longitude]="firstFormGroup.get('longitude')"">
+        </jhi-real-state-map>
+        <div>
+            <button mat-raised-button matStepperPrevious>Atrás</button>
+            <button mat-raised-button matStepperNext>Siguiente</button>
+        </div>
+    </mat-step> -->
     <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Sube tus fotos</ng-template>
-            <mat-form-field>
-                <input matInput placeholder="Address" formControlName="secondCtrl" required />
-            </mat-form-field>
-            <div>
-                <button mat-raised-button matStepperPrevious>Atrás</button>
-                <button mat-raised-button matStepperNext>Siguiente</button>
-            </div>
-        </form>
+        <ng-template matStepLabel>Suba sus fotos</ng-template>
+        <h2>Suba sus Fotos (Máximo 5)</h2>
+        <jhi-image-uploader [imageArray]="imageArray"></jhi-image-uploader>
+        <div>
+            <button mat-raised-button matStepperPrevious>Atrás</button>
+            <button mat-raised-button matStepperNext>Siguiente</button>
+        </div>
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Listo!</ng-template>

@@ -25,7 +25,11 @@ export class LocationFiltersComponent implements OnInit {
     label: boolean;
 
     @Input()
-    formControl: FormControl;
+    provinciaControl: FormControl;
+    @Input()
+    cantonControl: FormControl;
+    @Input()
+    distritoControl: FormControl;
 
     /** Selected */
     @Input()
@@ -61,16 +65,25 @@ export class LocationFiltersComponent implements OnInit {
         this.canton = this.searchFilters.city = undefined;
         this.distrito = this.searchFilters.district = undefined;
         this.searchFilters.province = value;
+        if (this.provinciaControl) {
+            this.provinciaControl.setValue(value);
+        }
         this.locationFiltersService.getGetCantones(key).subscribe(cantones => (this.cantones = cantones));
     }
 
     selectedCanton({ value: { key, value } }) {
         this.distrito = this.searchFilters.district = undefined;
         this.searchFilters.city = value;
+        if (this.cantonControl) {
+            this.cantonControl.setValue(value);
+        }
         this.locationFiltersService.getGetDistritos(this.provincia.key, key).subscribe(distritos => (this.distritos = distritos));
     }
 
     selectedDistrito({ value: { value } }) {
         this.searchFilters.district = value;
+        if (this.distritoControl) {
+            this.distritoControl.setValue(value);
+        }
     }
 }

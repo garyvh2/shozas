@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import RealStateType from 'app/@akita/external-models/real-state-type';
+import { FormGroup } from '@angular/forms';
+import CustomAmenitie from 'app/@akita/external-models/custom-amenitie';
 
 @Component({
     selector: 'jhi-real-state-form',
@@ -8,8 +10,40 @@ import RealStateType from 'app/@akita/external-models/real-state-type';
 })
 export class RealStateFormComponent implements OnInit {
     realStateType = RealStateType;
+    @Input()
+    realStateForm: FormGroup;
+    customAmenities: CustomAmenitie[] = [];
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.log(this.realStateForm);
+    }
+
+    isDirectionValid() {
+        const valid =
+            this.realStateForm.get('province').valid && this.realStateForm.get('city').valid && this.realStateForm.get('district').valid;
+        const isTouched =
+            this.realStateForm.get('province').touched &&
+            this.realStateForm.get('city').touched &&
+            this.realStateForm.get('district').touched;
+        return isTouched ? valid : true;
+    }
+    onAddCustomAmenitie(amenitie: CustomAmenitie) {
+        console.log('hii', amenitie);
+        this.customAmenities.push(amenitie);
+        this.realStateForm.get('customAmenities').setValue(this.customAmenities);
+    }
+
+    onDeleteAmenities(index: number) {
+        this.customAmenities.splice(index, 1);
+        this.realStateForm.get('customAmenities').setValue(this.customAmenities);
+    }
+
+    isApartment() {
+        return this.realStateForm.get('realStateType').value === this.realStateType.DEPARTMENT;
+    }
+    isLot() {
+        return this.realStateForm.get('realStateType').value === this.realStateType.LOT;
+    }
 }
