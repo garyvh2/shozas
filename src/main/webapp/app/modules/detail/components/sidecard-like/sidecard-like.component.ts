@@ -1,35 +1,26 @@
-import { DetailLikeService, Favorite } from './detail-like.service';
-import { AccountService } from 'app/core/auth/account.service';
+import { Favorite } from './../../../../shared/detail-like/detail-like.service';
+import { AccountService, LoginModalService } from 'app/core';
 import { Component, OnInit, Input } from '@angular/core';
-import { MatIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DetailLikeService } from 'app/shared/detail-like/detail-like.service';
 import { RealState } from 'app/@akita/real-state';
-import { LoginModalService } from 'app/core';
 
 @Component({
-    selector: 'jhi-detail-like',
-    templateUrl: './detail-like.component.html',
-    styleUrls: ['./detail-like.component.scss'],
+    selector: 'jhi-sidecard-like',
+    templateUrl: './sidecard-like.component.html',
+    styleUrls: ['./sidecard-like.component.scss'],
     providers: [DetailLikeService]
 })
-export class DetailLikeComponent implements OnInit {
+export class SidecardLikeComponent implements OnInit {
     @Input()
     liked: boolean;
     @Input()
     realState: RealState;
 
     constructor(
-        private matIconRegistry: MatIconRegistry,
-        private domSanitizer: DomSanitizer,
         private accountService: AccountService,
         private detailLikeService: DetailLikeService,
         private loginModalService: LoginModalService
-    ) {
-        this.matIconRegistry.addSvgIcon(
-            `shozas_like`,
-            this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/like.svg')
-        );
-    }
+    ) {}
 
     ngOnInit() {
         this.accountService.identity().then(user => {

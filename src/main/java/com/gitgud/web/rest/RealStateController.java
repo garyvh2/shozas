@@ -1,9 +1,6 @@
 package com.gitgud.web.rest;
 
-import com.gitgud.api.objects.ApiRealState;
-import com.gitgud.api.objects.ApiResultModel;
-import com.gitgud.api.objects.ApiSearchParams;
-import com.gitgud.api.objects.ApiSearchResults;
+import com.gitgud.api.objects.*;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.service.RealStateService;
@@ -71,6 +68,16 @@ public class RealStateController extends ApiBaseController {
         RealState tempRS = realStateService.getRealStateDetailElement(rs.getId());
 
         return userService.sendEmailToOwner(tempRS);
+    }
+
+    @PostMapping("/add-favorite")
+    public ApiResultModel<User> addFavorite(@RequestBody ApiFavorite favorite) throws Exception {
+        return GetApiResultModel(() -> realStateService.addFavorite(favorite));
+    }
+
+    @PostMapping("/remove-favorite")
+    public ApiResultModel<User> removeFavorite(@RequestBody ApiFavorite favorite) throws Exception {
+        return GetApiResultModel(() -> realStateService.removeFavorite(favorite));
     }
 
 }

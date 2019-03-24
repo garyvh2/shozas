@@ -1,6 +1,5 @@
 package com.gitgud.service;
 
-import com.cloudinary.Api;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.gitgud.api.objects.*;
@@ -8,11 +7,11 @@ import com.gitgud.domain.Image;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
+import com.gitgud.repository.UserRepository;
 import com.gitgud.service.util.CloudinaryUtil;
 import com.gitgud.service.util.ResultType;
 import com.mongodb.DBRef;
 import dev.morphia.Datastore;
-import dev.morphia.Key;
 import dev.morphia.query.Criteria;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
@@ -29,15 +28,17 @@ import java.util.*;
 public class RealStateService {
 
     private RealStateRepository realStateRepository;
+    private UserRepository userRepository;
     private MongoTemplate mongoTemplate;
     private UserService userService;
 
     @Autowired
     private Datastore datastore;
 
-    public RealStateService(RealStateRepository realStateRepository, MongoTemplate mongoTemplate,
+    public RealStateService(RealStateRepository realStateRepository, UserRepository userRepository, MongoTemplate mongoTemplate,
             UserService userService) {
         this.realStateRepository = realStateRepository;
+        this.userRepository = userRepository;
         this.mongoTemplate = mongoTemplate;
         this.userService = userService;
     }
@@ -248,4 +249,40 @@ public class RealStateService {
         return result.get();
     }
 
+
+    public User addFavorite(ApiFavorite favorite) {
+        // Check if realState or user are present
+        Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
+        Optional<User> presentUser = userRepository.findById(favorite.getUserId());
+
+        if(presentRealState.isPresent() && presentUser.isPresent()) {
+            // Get the realState and user object
+            RealState realState = presentRealState.get();
+            User user = presentUser.get();
+
+            // Add the favorite
+            user.addFavorite(realState);
+
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    public User removeFavorite(ApiFavorite favorite) {
+        // Check if realState or user are present
+        Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
+        Optional<User> presentUser = userRepository.findById(favorite.getUserId());
+
+        if(presentRealState.isPresent() && presentUser.isPresent()) {
+            // Get the realState and user object
+            RealState realState = presentRealState.get();
+            User user = presentUser.get();
+
+            // Add the favorite
+            user.removeFavorite(realState);
+
+            return userRepository.save(user);
+        }
+        return null;
+    }
 }
