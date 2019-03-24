@@ -4,6 +4,7 @@ import com.gitgud.config.Constants;
 
 import com.gitgud.domain.Authority;
 import com.gitgud.domain.Image;
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 
 import javax.validation.constraints.Email;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.*;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,6 +58,8 @@ public class UserDTO {
 
     private String userId;
 
+    private HashSet<String> favorites = new HashSet<>();
+
     private int phone;
 
     private double raiting;
@@ -84,6 +88,9 @@ public class UserDTO {
         this.phone = user.getPhone();
         this.displayPhone = user.isDisplayPhone();
         this.raiting = user.getRaiting();
+        this.favorites = user.getFavorites().stream()
+            .map(RealState::getId)
+            .collect(Collectors.toCollection(HashSet::new));
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -231,6 +238,14 @@ public class UserDTO {
 
     public void setDisplayPhone(boolean displayPhone) {
         this.displayPhone = displayPhone;
+    }
+
+    public HashSet<String> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(HashSet<String> favorites) {
+        this.favorites = favorites;
     }
 
     @Override

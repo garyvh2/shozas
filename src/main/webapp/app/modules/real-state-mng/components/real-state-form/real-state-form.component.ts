@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import RealStateType from 'app/@akita/external-models/real-state-type';
 import { FormGroup } from '@angular/forms';
-import CustomAmenitie from 'app/@akita/external-models/custom-amenitie';
+import { RSAmenity } from 'app/@akita/external-models/rs-amenity';
 
 @Component({
     selector: 'jhi-real-state-form',
@@ -12,7 +12,7 @@ export class RealStateFormComponent implements OnInit {
     realStateType = RealStateType;
     @Input()
     realStateForm: FormGroup;
-    customAmenities: CustomAmenitie[] = [];
+    customAmenities: RSAmenity[] = [];
 
     constructor() {}
 
@@ -29,8 +29,7 @@ export class RealStateFormComponent implements OnInit {
             this.realStateForm.get('district').touched;
         return isTouched ? valid : true;
     }
-    onAddCustomAmenitie(amenitie: CustomAmenitie) {
-        console.log('hii', amenitie);
+    onAddCustomAmenitie(amenitie: RSAmenity) {
         this.customAmenities.push(amenitie);
         this.realStateForm.get('customAmenities').setValue(this.customAmenities);
     }

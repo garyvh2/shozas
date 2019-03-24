@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import CustomAmenitie from 'app/@akita/external-models/custom-amenitie';
+import { RSAmenity } from 'app/@akita/external-models/rs-amenity';
 
 @Component({
     selector: 'jhi-custom-amenitites-input',
@@ -12,7 +12,7 @@ export class CustomAmenititesInputComponent implements OnInit {
     description = new FormControl();
 
     @Output()
-    onNewCustomAmenities: EventEmitter<CustomAmenitie> = new EventEmitter<CustomAmenitie>();
+    onNewCustomAmenities: EventEmitter<RSAmenity> = new EventEmitter<RSAmenity>();
     constructor() {}
 
     ngOnInit() {}
@@ -37,7 +37,7 @@ export class CustomAmenititesInputComponent implements OnInit {
         const descriptionValid = this.validation(this.description);
         const isValid = nameValid && descriptionValid;
         if (isValid) {
-            const amenitie: CustomAmenitie = {
+            const amenitie: RSAmenity = {
                 name: this.name.value,
                 description: this.description.value
             };

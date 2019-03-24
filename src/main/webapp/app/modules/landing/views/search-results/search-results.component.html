@@ -1,31 +1,52 @@
 <mat-drawer-container autosize>
-    <mat-drawer opened #drawer mode="side" class="left">
-        <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex" (selectedIndexChange)="selectedIndexChange()">
+    <mat-drawer [opened]="mobile ? null : true" #drawer mode="side" class="left">
+        <div class="close">
+            <button mat-icon-button *ngIf="mobile" (click)="drawer.close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <jhi-location-filters *ngIf="mobile" [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+        </jhi-location-filters>
+        <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex"
+            (selectedIndexChange)="selectedIndexChange()" mat-align-tabs="center">
             <mat-tab label="Casas">
-                <jhi-filter-home [searchFilters]="homeFilters" [priceConfig]="priceRange$ | async" [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
+                <jhi-filter-home [searchFilters]="homeFilters" *ngIf="homeFilters" [priceConfig]="priceRange$ | async"
+                    [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
             </mat-tab>
             <mat-tab label="Apartamentos">
                 <jhi-filter-appartment [searchFilters]="appartmentFilters" [priceConfig]="priceRange$ | async"
                     [sizeConfig]="sizeRange$ | async"></jhi-filter-appartment>
             </mat-tab>
             <mat-tab label="Lotes">
-                <jhi-filter-lot [searchFilters]="lotFilters" [priceConfig]="priceRange$ | async" [sizeConfig]="sizeRange$ | async"></jhi-filter-lot>
+                <jhi-filter-lot [searchFilters]="lotFilters" [priceConfig]="priceRange$ | async"
+                    [sizeConfig]="sizeRange$ | async"></jhi-filter-lot>
             </mat-tab>
         </mat-tab-group>
         <button mat-button (click)="applyFilters()">Aplicar</button>
     </mat-drawer>
 
     <div class="right">
-        <div class="header">
+        <div class="header" *ngIf="!mobile">
             <button mat-icon-button (click)="drawer.toggle()">
-                <mat-icon aria-label="Example icon-button with a heart icon">filter_list</mat-icon>
+                <mat-icon>filter_list</mat-icon>
             </button>
-            <jhi-location-filters [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()"></jhi-location-filters>
+            <jhi-location-filters [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+            </jhi-location-filters>
         </div>
-        <div class="items">
+        <div class="items" *ngIf="(loading$ | async)">
+            <mat-spinner [diameter]="40"></mat-spinner>
+        </div>
+        <div class="items" *ngIf="!(loading$ | async)">
             <h2 *ngIf="(elements$ | async).length <= 0"> No se han encontrado resultados.</h2>
-            <jhi-listing *ngFor="let realstate of (elements$ | async)" [listing]="realstate" [routerLink]="['/detail/', realstate.id]"></jhi-listing>
+            <jhi-listing *ngFor="let realstate of (elements$ | async)" [listing]="realstate"
+                [routerLink]="['/detail/', realstate.id]"></jhi-listing>
+            <div class="loadMore">
+                <button mat-button (click)="loadMore()" *ngIf="loadMore$ | async">Cargar Mas</button>
+            </div>
         </div>
+        <button class="filter" mat-icon-button *ngIf="mobile" (click)="drawer.open()">
+            <mat-icon>filter_list</mat-icon>
+        </button>
     </div>
 
 </mat-drawer-container>

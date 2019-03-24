@@ -115,8 +115,7 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new InternalServerErrorException("User could not be found");
         }
-        userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(),
-            userDTO.getLangKey(), userDTO.getImageUrl());
+        userService.updateMongoUser(userDTO);
     }
 
     /**

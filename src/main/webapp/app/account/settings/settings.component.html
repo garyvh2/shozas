@@ -1,80 +1,60 @@
-<div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 *ngIf="settingsAccount">User settings for [<b>{{settingsAccount.login}}</b>]</h2>
+<div class="register__container justify-content-center">
+    <h1 *ngIf="!success">Editar Perfil</h1>
 
-            <div class="alert alert-success" *ngIf="success">
-                <strong>Settings saved!</strong>
-            </div>
-
-            <jhi-alert-error></jhi-alert-error>
-
-            <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" *ngIf="settingsAccount" novalidate>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="firstName">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Your first name"
-                           [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
-                    <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
-                        <small class="form-text text-danger"
-                           *ngIf="firstNameInput.errors.required">
-                            Your first name is required.
-                        </small>
-                        <small class="form-text text-danger"
-                           *ngIf="firstNameInput.errors.minlength">
-                            Your first name is required to be at least 1 character.
-                        </small>
-                        <small class="form-text text-danger"
-                           *ngIf="firstNameInput.errors.maxlength">
-                            Your first name cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="lastName">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Your last name"
-                           [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
-                    <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
-                        <small class="form-text text-danger"
-                           *ngIf="lastNameInput.errors.required">
-                            Your last name is required.
-                        </small>
-                        <small class="form-text text-danger"
-                           *ngIf="lastNameInput.errors.minlength">
-                            Your last name is required to be at least 1 character.
-                        </small>
-                        <small class="form-text text-danger"
-                           *ngIf="lastNameInput.errors.maxlength">
-                            Your last name cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Your email"
-                           [(ngModel)]="settingsAccount.email" minlength="5" maxlength="254" #emailInput="ngModel" email required>
-                    <div *ngIf="emailInput.dirty && emailInput.invalid">
-                        <small class="form-text text-danger"
-                           *ngIf="emailInput.errors.required">
-                            Your email is required.
-                        </small>
-                        <small class="form-text text-danger"
-                           *ngIf="emailInput.errors.email">
-                            Your email is invalid.
-                        </small>
-                        <small class="form-text text-danger"
-                           *ngIf="emailInput.errors.minlength">
-                            Your email is required to be at least 5 characters.
-                        </small>
-                        <small class="form-text text-danger"
-                           *ngIf="emailInput.errors.maxlength">
-                            Your email cannot be longer than 100 characters.
-                        </small>
-                    </div>
-                </div>
-                <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary">Save</button>
-            </form>
+    <div *ngIf="!success" class="row justify-content-center">
+        <div class="col-12 profile-photo">
+            <label for="inputProfileImage">
+                <img #profileImage src="{{settingsAccount?.image?.source || 'http://picsum.photos/200/200/?random'}}" alt="Imagen de Perfil">
+                <div class="profile__background profile__photo--hover"></div>
+                <span class="profile__photo--hover"><mat-icon>edit</mat-icon></span>
+            </label>
+            <input id="inputProfileImage" type="file" accept="image/*" mat-input (change)="processFile($event, profileImage)" [hidden]="true">
         </div>
     </div>
 
+    <div class="alert alert-success" *ngIf="success">
+        <strong>Se han guardado los cambios</strong>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="error">
+        <strong>No hemos podido guardar los cambios</strong> Por favor intentelo de nuevo.
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorUserIdExists">
+        <strong>Esa cedula ya esta en uso!</strong> Por favor use otra.
+    </div>
+
+    <form *ngIf="!success" [formGroup]="settingsForm" (submit)="save()">
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>{{ getUserIdentifierText() }}</mat-label>
+            <input formControlName="userId" mask="{{getIdentifierMask()}}" matInput
+                placeholder="{{ getUserIdentifierText() }}" />
+            <mat-hint>Formato: {{getIdentifierMask()}}</mat-hint>
+            <mat-error *ngIf="settingsForm.get('userId').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="settingsForm.get('userId').hasError('Mask error')">No cumple con el formato requerido
+                {{getIdentifierMask()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="firstName" matInput placeholder="Nombre" />
+            <mat-error *ngIf="settingsForm.get('firstName').hasError('required')">Este campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="settingsForm.get('userType').value === 'P'" color="accent" appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input formControlName="lastName" matInput placeholder="Apellidos" />
+            <mat-error *ngIf="settingsForm.get('lastName').hasError('required')">Este campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input mask="0000-0000" formControlName="phone" matInput placeholder="Teléfono" />
+            <mat-hint>Formato: 0000-0000</mat-hint>
+            <mat-error *ngIf="settingsForm.get('phone').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="settingsForm.get('phone').hasError('Mask error')">No cumple con el formato requerido
+                0000-0000</mat-error>
+        </mat-form-field>
+            <mat-slide-toggle color="warn" [checked]="settingsAccount.displayPhone" (change)="onChange($event)">Mostrar Teléfono</mat-slide-toggle>
+        <div class="submit__button">
+            <button type="submit" mat-raised-button>Guardar</button>
+        </div>
+    </form>
 </div>

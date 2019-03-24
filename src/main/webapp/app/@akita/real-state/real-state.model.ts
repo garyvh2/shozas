@@ -1,10 +1,10 @@
 import { ApiResponse } from './../external-models/apiResponse.model';
 import { ID } from '@datorama/akita';
 import { RealStateImage } from 'app/@akita/external-models/real-state-image.model';
-import { TempUser } from '../external-models/tempUser';
 import RealStateType from '../external-models/real-state-type';
-import CustomAmenitie from '../external-models/custom-amenitie';
 import { User } from '../user';
+import { RSAmenity } from '../external-models/rs-amenity';
+import { RSService } from '../external-models/rs-service';
 
 export interface RealState {
     id?: ID;
@@ -31,14 +31,14 @@ export interface RealState {
     title: string;
     schools?: string[];
     hasHealthServices?: boolean;
-    services?: string[];
+    services?: RSService[];
     image?: RealStateImage;
     addr?: string;
     images?: RealStateImage;
     isSold?: boolean;
-    customAmenities: CustomAmenitie[];
     user: User;
     owner: User;
+    customAmenities: RSAmenity[];
     dateCreated: Date;
 }
 

@@ -17,7 +17,6 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'admin',
                     loadChildren: './admin/admin.module#ShozasAdminModule'
                 },
-
                 {
                     path: 'detail',
                     loadChildren: './modules/detail/detail.module#DetailModule'
@@ -25,6 +24,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 {
                     path: 'real-state',
                     loadChildren: './modules/real-state-mng/real-state-mng.module#RealStateMngModule'
+                },
+                {
+                    path: 'listings',
+                    loadChildren: './modules/listings/listings.module#ListingsModule'
                 },
                 ...LAYOUT_ROUTES
             ],

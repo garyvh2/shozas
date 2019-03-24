@@ -13,15 +13,18 @@ export class LocationFiltersService {
 
     getProvincia() {
         const provincia = new Subject<number>();
-        this.landingService.getLocation().subscribe(data => {
-            this.getProvincias().subscribe(provincias => {
-                Object.keys(provincias).forEach(key => {
-                    if (data.city === provincias[key]) {
-                        provincia.next(Number(key));
-                    }
+        this.landingService.getLocation().subscribe(
+            data => {
+                this.getProvincias().subscribe(provincias => {
+                    Object.keys(provincias).forEach(key => {
+                        if (data.city === provincias[key]) {
+                            provincia.next(Number(key));
+                        }
+                    });
                 });
-            });
-        });
+            },
+            error => console.warn(error)
+        );
         return provincia.asObservable();
     }
 
