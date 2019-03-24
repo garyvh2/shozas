@@ -59,6 +59,11 @@ public class RealStateController extends ApiBaseController {
         return GetApiResultModel(() ->  realStateService.save(realState));
     }
 
+    @PutMapping("/update")
+    public ApiResultModel<RealState> updateRealState(@RequestBody RealState realState) throws Exception {
+        return GetApiResultModel(() ->  realStateService.update(realState));
+    }
+
     @GetMapping("/detail")
     public ApiResultModel<RealState> detailRealState(@RequestParam String id) throws Exception {
         return GetApiResultModel(() ->  realStateService.getRealStateDetailElement(id));
