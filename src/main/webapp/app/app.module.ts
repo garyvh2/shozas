@@ -1,5 +1,7 @@
 import './vendor.ts';
 
+import { DetailModule } from './modules/detail/detail.module';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,6 +22,9 @@ import { ShozasEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { AngularMaterialModule } from 'app/shared/angular-material/angular-material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LandingModule } from './modules/landing/landing.module';
 
 @NgModule({
     imports: [
@@ -32,11 +37,16 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         }),
         ShozasSharedModule.forRoot(),
         ShozasCoreModule,
+        LandingModule,
         ShozasHomeModule,
         ShozasAccountModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         ShozasEntityModule,
-        ShozasAppRoutingModule
+        ShozasAppRoutingModule,
+        /** SHOZAS CUSTOM */
+        BrowserAnimationsModule,
+        AngularMaterialModule
+        /** SHOZAS CUSTOM */
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [

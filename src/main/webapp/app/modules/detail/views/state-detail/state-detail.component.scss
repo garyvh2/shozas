@@ -1,0 +1,68 @@
+.cover {
+    position: relative;
+    margin-top: 10px;
+}
+.content {
+    margin: 0 auto;
+
+    padding: 20px 60px;
+    // Extra small devices (portrait phones, less than 576px)
+    @media (max-width: 575px) {
+        padding: 20px 10px;
+    }
+    // Small devices (landscape phones, less than 768px)
+    @media (max-width: 767px) {
+        padding: 20px 10px;
+    }
+    // Medium devices (tablets, less than 992px)
+    @media (max-width: 991px) {
+        padding: 20px 30px;
+    }
+    // Large devices (desktops, less than 1200px)
+    @media (max-width: 1199px) {
+    }
+
+    .row {
+        margin: 0;
+        padding: 0;
+    }
+
+    .rsd__content--padding-r {
+        padding-right: 32px;
+    }
+
+    .rds__description {
+        .mat-divider {
+            margin-top: 28px;
+        }
+
+        .rds__description-content {
+            margin-top: 16px;
+        }
+    }
+}
+.noPadding {
+    padding: 0;
+}
+
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.stateDetail {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+
+    .detail__ips-title {
+        margin-top: 16px;
+        h3 {
+            color: #999999;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: italic;
+        }
+    }
+}

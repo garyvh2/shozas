@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, async, inject, tick, fakeAsync } from '@angu
 import { Observable, of, throwError } from 'rxjs';
 
 import { ShozasTestModule } from '../../../test.module';
-import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared';
+import { LOGIN_ALREADY_USED_TYPE, USERID_ALREADY_USED_TYPE } from 'app/shared';
 import { Register } from 'app/account/register/register.service';
 import { RegisterComponent } from 'app/account/register/register.component';
 
@@ -51,7 +51,7 @@ describe('Component Tests', () => {
                 expect(comp.success).toEqual(true);
                 expect(comp.registerAccount.langKey).toEqual('en');
                 expect(comp.errorUserExists).toBeNull();
-                expect(comp.errorEmailExists).toBeNull();
+                expect(comp.errorUserIdExists).toBeNull();
                 expect(comp.error).toBeNull();
             })
         ));
@@ -71,7 +71,7 @@ describe('Component Tests', () => {
                 tick();
 
                 expect(comp.errorUserExists).toEqual('ERROR');
-                expect(comp.errorEmailExists).toBeNull();
+                expect(comp.errorUserIdExists).toBeNull();
                 expect(comp.error).toBeNull();
             })
         ));
@@ -82,7 +82,7 @@ describe('Component Tests', () => {
                 spyOn(service, 'save').and.returnValue(
                     throwError({
                         status: 400,
-                        error: { type: EMAIL_ALREADY_USED_TYPE }
+                        error: { type: USERID_ALREADY_USED_TYPE }
                     })
                 );
                 comp.registerAccount.password = comp.confirmPassword = 'password';
@@ -90,7 +90,7 @@ describe('Component Tests', () => {
                 comp.register();
                 tick();
 
-                expect(comp.errorEmailExists).toEqual('ERROR');
+                expect(comp.errorUserIdExists).toEqual('ERROR');
                 expect(comp.errorUserExists).toBeNull();
                 expect(comp.error).toBeNull();
             })
@@ -110,7 +110,7 @@ describe('Component Tests', () => {
                 tick();
 
                 expect(comp.errorUserExists).toBeNull();
-                expect(comp.errorEmailExists).toBeNull();
+                expect(comp.errorUserIdExists).toBeNull();
                 expect(comp.error).toEqual('ERROR');
             })
         ));

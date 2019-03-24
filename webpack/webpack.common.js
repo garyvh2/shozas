@@ -42,6 +42,15 @@ module.exports = (options) => ({
                 }
             },
             {
+                test: /\.(jpe?g|png|gif|svg|woff2?|ttf|eot)$/i,
+                loader: 'file-loader',
+                options: {
+                    digest: 'hex',
+                    hash: 'sha512',
+                    name: 'assets/[hash].[ext]'
+                }
+            },
+            {
                 test: /manifest.webapp$/,
                 loader: 'file-loader',
                 options: {
@@ -72,6 +81,7 @@ module.exports = (options) => ({
             { from: './node_modules/swagger-ui/dist/swagger-ui.min.js', to: 'swagger-ui/dist/swagger-ui.min.js' },
             { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
             { from: './src/main/webapp/content/', to: 'content' },
+            { from: './src/main/webapp/assets/', to: 'assets' },
             { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
             { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
             // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array

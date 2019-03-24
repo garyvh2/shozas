@@ -5,6 +5,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VERSION } from 'app/app.constants';
 import { AccountService, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { User } from 'app/@akita/user';
 
 @Component({
     selector: 'jhi-navbar',
@@ -18,6 +19,7 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    accountInfo: User;
 
     constructor(
         private loginService: LoginService,
@@ -34,6 +36,15 @@ export class NavbarComponent implements OnInit {
         this.profileService.getProfileInfo().then(profileInfo => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
+        });
+        this.accountService
+            .identity()
+            .then(account => {
+                this.accountInfo = { ...account };
+            })
+            .catch(() => (this.accountInfo = undefined));
+        this.accountService.getAuthenticationState().subscribe(account => {
+            this.accountInfo = { ...account };
         });
     }
 
@@ -60,6 +71,14 @@ export class NavbarComponent implements OnInit {
     }
 
     getImageUrl() {
-        return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
+        if (this.isAuthenticated()) {
+            const image = this.accountService.getImageUrl();
+            return image ? image : 'assets/images/profile.png';
+        }
+        return 'assets/images/profile.png';
+    }
+
+    getUserName() {
+        return this.accountInfo && this.accountInfo.firstName ? `${this.accountInfo.firstName}  ${this.accountInfo.lastName}` : 'Cuenta';
     }
 }

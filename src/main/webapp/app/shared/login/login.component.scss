@@ -1,0 +1,21 @@
+.title {
+    background: #ff6666;
+    color: #fff;
+    mat-icon {
+        line-height: 35px;
+        cursor: pointer;
+    }
+}
+
+mat-form-field {
+    width: 100%;
+}
+.login__btn {
+    background: #00e676;
+    color: #fff;
+}
+
+.alert__custom {
+    background: #ffebee;
+    color: #ff6666;
+}

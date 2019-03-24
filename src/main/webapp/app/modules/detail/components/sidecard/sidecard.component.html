@@ -1,0 +1,57 @@
+<mat-card class="rsd__sidecard">
+    <mat-card-header>
+        <img mat-card-avatar src="http://picsum.photos/50/50/?random" />
+        <mat-card-title>{{detail.owner.firstName}} {{detail.owner.lastName}}</mat-card-title>
+        <mat-card-subtitle>
+            <div>
+                <star-rating class="details__rating" size="medium" [showHalfStars]="true" [starType]="'svg'"
+                    [rating]="detail.owner.raiting || 1" [readOnly]="true"></star-rating>
+            </div>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-12 noPadding">
+                <span>Precio:</span>
+            </div>
+            <div class="col-12 noPadding rsd__price">
+                <span>{{detail.price | currency: 'CRC':'¢'}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 noPadding rsd__financing">
+                <a (click)="openDialog()">Financiamiento disponible</a>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="start">
+        <div class="row">
+            <div class="col-12">
+                <button mat-button class="rsd__btn--empty">
+                    <mat-icon>favorite</mat-icon>
+                    Guardar
+                </button>
+            </div>
+            <!-- <div class="col-6 flex-row-reverse">
+                <button mat-button class="rsd__btn--empty">Compartir</button>
+
+                <share-buttons [theme]="'modern-dark'"
+                [include]="['facebook','twitter','linkedin','google','pinterest','reddit','tumblr','mix','vk','telegram','messenger','whatsapp','xing','line','sms','email','print','copy']"
+                [show]="5"
+                [url]="'https://twitter.com/'"
+                [autoSetMeta]="false"
+                ></share-buttons>
+            </div> -->
+        </div>
+        <div class="row rsd__contact-seller">
+            <div class="col-12">
+                <button mat-button class="rsd__btn--full" (click)="contactOwner()">Contactar al vendedor</button>
+            </div>
+        </div>
+    </mat-card-actions>
+    <mat-card-footer>
+        <a>4 personas</a>
+        <span>más están interesadas</span>
+    </mat-card-footer>
+</mat-card>

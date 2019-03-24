@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { ShozasSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent } from './';
 
 @NgModule({
-    imports: [ShozasSharedLibsModule],
+    imports: [CommonModule, ShozasSharedLibsModule],
     declarations: [JhiAlertComponent, JhiAlertErrorComponent],
     exports: [ShozasSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent]
 })

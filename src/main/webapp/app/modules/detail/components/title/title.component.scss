@@ -1,0 +1,38 @@
+.rsd__super-title {
+    font-style: italic;
+    font-weight: bold;
+    color: #9a9a9a;
+
+    .rsd__type {
+        color: #9a9a9a;
+        span {
+            color: #9a9a9a;
+        }
+    }
+
+    .rsd__date {
+        display: flex;
+        flex-direction: row-reverse;
+        color: #e4e4e4;
+    }
+}
+
+.rsd__title {
+    font-weight: bold;
+    div {
+        h1 {
+            font-weight: bold;
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .rsd__subtitle {
+            color: #e0e0e0;
+            font-style: italic;
+        }
+        .rsd__subtitle-icon {
+            height: 16px;
+            width: 16px;
+        }
+    }
+}

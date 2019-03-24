@@ -63,7 +63,6 @@ public class UserJWTControllerIntTest {
     public void testAuthorize() throws Exception {
         User user = new User();
         user.setLogin("user-jwt-controller");
-        user.setEmail("user-jwt-controller@example.com");
         user.setActivated(true);
         user.setPassword(passwordEncoder.encode("test"));
 
@@ -86,7 +85,6 @@ public class UserJWTControllerIntTest {
     public void testAuthorizeWithRememberMe() throws Exception {
         User user = new User();
         user.setLogin("user-jwt-controller-remember-me");
-        user.setEmail("user-jwt-controller-remember-me@example.com");
         user.setActivated(true);
         user.setPassword(passwordEncoder.encode("test"));
 
