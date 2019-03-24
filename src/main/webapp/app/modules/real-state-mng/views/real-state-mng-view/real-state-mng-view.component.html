@@ -1,5 +1,5 @@
 <mat-horizontal-stepper [linear]="true" #stepper>
-    <!-- <mat-step color="warn" [stepControl]="firstFormGroup">
+    <mat-step color="warn" [stepControl]="firstFormGroup">
         <ng-template matStepLabel>Llene la Información</ng-template>
         <jhi-real-state-form [realStateForm]="firstFormGroup"></jhi-real-state-form>
         <div>
@@ -17,7 +17,7 @@
             <button mat-raised-button matStepperPrevious>Atrás</button>
             <button mat-raised-button matStepperNext>Siguiente</button>
         </div>
-    </mat-step> -->
+    </mat-step>
     <mat-step [stepControl]="secondFormGroup">
         <ng-template matStepLabel>Suba sus fotos</ng-template>
         <h2>Suba sus Fotos (Máximo 5)</h2>
