@@ -14,7 +14,7 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
                 (event: HttpEvent<any>) => {},
                 (err: any) => {
                     if (err instanceof HttpErrorResponse) {
-                        if (err.status === 401) {
+                        if (err.status === 401 && !err.url.includes('ipgeolocation')) {
                             this.loginService.logout();
                         }
                     }

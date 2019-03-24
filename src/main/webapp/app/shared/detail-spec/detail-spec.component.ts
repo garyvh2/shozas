@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-detail-spec',
+    selector: 'jhi-detail-spec',
     templateUrl: './detail-spec.component.html',
     styleUrls: ['./detail-spec.component.scss']
 })

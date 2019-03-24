@@ -14,6 +14,7 @@ export interface User {
     userId: string;
     userType: UserType;
     activated: boolean;
+    favorites: string[];
 }
 
 export function createUser(params: Partial<User>) {

@@ -2,11 +2,60 @@
     <div class="col-lg-12 noPadding">
         <h3>Amenidades</h3>
         <div class="row">
-            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngFor="let amenity of detail.customAmenities">
-                <mat-icon>stars</mat-icon>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngIf="detail.hasPool">
+                <mat-icon>pool</mat-icon>
                 <span>
+                    Piscina
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngIf="detail.hasWater">
+                <mat-icon>local_drink</mat-icon>
+                <span>
+                    Agua Potable
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngIf="detail.hasElectricity">
+                <mat-icon>power</mat-icon>
+                <span>
+                    Electricidad
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngIf="detail.hasPrivateSecurity">
+                <mat-icon>security</mat-icon>
+                <span>
+                    Seguridad Privada
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngIf="detail.hasHealthServices">
+                <mat-icon>local_hospital</mat-icon>
+                <span>
+                    Servicios de Salud
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngFor="let service of detail.services"
+                [ngClass]="{'rsd__amenity--hidden': !showMore}">
+                <mat-icon>
+                    {{service.type === 'Salud'? 'local_hospital':(service.type === 'Negocio'? 'business' :'stars')}}
+                </mat-icon>
+                <span>
+                    {{service.name}}
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngFor="let amenity of detail.customAmenities"
+                [ngClass]="{'rsd__amenity--hidden': !showMore}">
+                <mat-icon matTooltip="{{amenity.description || 'No especificado'}}">stars</mat-icon>
+                <span matTooltip="{{amenity.description || 'No especificado'}}">
                     {{amenity.name}}
                 </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 noPadding amenities__button-holder">
+                <button class="amenities__button" mat-button (click)="toggleAmenities()">
+                    {{showMore? 'Mostrar Menos' : 'Mostrar Más'}}
+                    <mat-icon *ngIf="!showMore">arrow_downward</mat-icon>
+                    <mat-icon *ngIf="showMore">arrow_upward</mat-icon>
+                </button>
             </div>
         </div>
     </div>
