@@ -30,6 +30,7 @@ import { IpsDataComponent } from './components/ips-data/ips-data.component';
 import { FinanceModalComponent } from './components/finance-modal/finance-modal.component';
 import { MatDialogModule } from '@angular/material';
 import { FinanceCardComponent } from './components/finance-card/finance-card.component';
+import { SidecardLikeComponent } from './components/sidecard-like/sidecard-like.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { FinanceCardComponent } from './components/finance-card/finance-card.com
         FeaturesComponent,
         IpsDataComponent,
         FinanceModalComponent,
-        FinanceCardComponent
+        FinanceCardComponent,
+        SidecardLikeComponent
     ],
     imports: [
         DetailRoutingModule,

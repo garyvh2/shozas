@@ -1,27 +1,47 @@
 import { RealState } from './real-state.model';
-import { SearchRealStateStore } from './../../modules/landing/@akita/search/search.store';
 import { ApiResponse } from './../external-models/apiResponse.model';
 import { RealStateStore } from './real-state.store';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MOCK_SERVER_API_URL, SERVER_API_URL } from 'app/app.constants';
-import { ID, Store } from '@datorama/akita';
-import { SearchRealState } from 'app/modules/landing/@akita/search';
+import { SERVER_API_URL } from 'app/app.constants';
+import { ID } from '@datorama/akita';
+import { SearchRealState, SearchRealStateStore } from 'app/modules/landing/@akita/search';
 import { SearchFilter } from '../external-models/searchFilter';
+import { FavoriteStateStore } from 'app/modules/listings/@akita/favorite';
 
 @Injectable()
 export class RealStateService {
     params: SearchFilter;
     currentUrl: string;
 
-    constructor(private detailStore: RealStateStore, private searchRealStateStore: SearchRealStateStore, private http: HttpClient) {}
+    constructor(
+        private detailStore: RealStateStore,
+        private favoriteStateStore: FavoriteStateStore,
+        private searchRealStateStore: SearchRealStateStore,
+        private http: HttpClient
+    ) {}
 
     get(id: ID) {
         const url = `${SERVER_API_URL}/api/realstate/detail?id=${id}`;
         return this.http.get(url).subscribe((response: any) => {
             console.log('Service GET response is: ', response);
             this.detailStore.upsert(response.result.id, response.result);
+        });
+    }
+
+    getFavorites(userId) {
+        const url = `${SERVER_API_URL}/api/realstate/get-favorites/${userId}`;
+        this.favoriteStateStore.setLoading(true);
+        return this.http.get(url).subscribe((response: ApiResponse<RealState[]>) => {
+            const data = response.result;
+            data.forEach((item: RealState) => {
+                this.detailStore.upsert(item.id, item);
+            });
+            this.favoriteStateStore.update({
+                favorites: data
+            });
+            this.favoriteStateStore.setLoading(false);
         });
     }
 

@@ -1,6 +1,6 @@
+import { FavoriteStateQuery } from './modules/listings/@akita/favorite/favorite.query';
+import { FavoriteStateStore } from './modules/listings/@akita/favorite/favorite.store';
 import './vendor.ts';
-
-import { DetailModule } from './modules/detail/detail.module';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,6 +25,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
 import { AngularMaterialModule } from 'app/shared/angular-material/angular-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingModule } from './modules/landing/landing.module';
+import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@akita/search';
 
 @NgModule({
     imports: [
@@ -69,7 +70,11 @@ import { LandingModule } from './modules/landing/landing.module';
             provide: HTTP_INTERCEPTORS,
             useClass: NotificationInterceptor,
             multi: true
-        }
+        },
+        SearchRealStateStore,
+        FavoriteStateStore,
+        FavoriteStateQuery,
+        SearchRealStateQuery
     ],
     bootstrap: [JhiMainComponent]
 })
