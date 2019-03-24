@@ -188,6 +188,7 @@ public class UserService {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
+                user.setUserId(userToUpdate.getUserId());
                 user.setFirstName(userToUpdate.getFirstName());
                 user.setLastName(userToUpdate.getLastName());
                 user.setLangKey(userToUpdate.getLangKey());

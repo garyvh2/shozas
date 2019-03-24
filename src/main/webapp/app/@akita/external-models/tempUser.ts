@@ -1,4 +1,5 @@
 import { ID } from '@datorama/akita';
+import { RealStateImage } from './real-state-image.model';
 export interface TempUser {
     id?: ID;
     login: string;
@@ -11,4 +12,5 @@ export interface TempUser {
     owner: string;
     phone: number;
     email: string;
+    image: RealStateImage;
 }

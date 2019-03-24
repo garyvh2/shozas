@@ -22,7 +22,7 @@
 
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                     <span>
-                        <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
+                        <img [src]="accountInfo.image.source || getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
                         {{getUserName()}}
                     </span>
                 </a>
