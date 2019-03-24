@@ -10,21 +10,24 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         RouterModule.forRoot(
             [
                 {
-                    path: '',
+                    path: 'landing',
                     loadChildren: './modules/landing/landing.module#LandingModule'
                 },
                 {
                     path: 'admin',
                     loadChildren: './admin/admin.module#ShozasAdminModule'
                 },
-
                 {
                     path: 'detail',
                     loadChildren: './modules/detail/detail.module#DetailModule'
                 },
+                {
+                    path: 'listings',
+                    loadChildren: './modules/listings/listings.module#ListingsModule'
+                },
                 ...LAYOUT_ROUTES
             ],
-            { useHash: true, enableTracing: DEBUG_INFO_ENABLED }
+            { useHash: true, enableTracing: false }
         )
     ],
     exports: [RouterModule]

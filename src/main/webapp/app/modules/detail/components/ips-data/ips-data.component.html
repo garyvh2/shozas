@@ -1,0 +1,95 @@
+<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData">
+    <mat-card-header>
+        <mat-card-title>Necesidades Humanas Básicas</mat-card-title>
+        <mat-card-subtitle>Puntuacion IPS: {{dataCRP.dimensiones.NHB.score}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-12 flex-space-between">
+                <span>Nutrición y Asistencia Médica Básica</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.NHB.componentes.NAMB.score < 60? 'red' : (dataCRP.dimensiones.NHB.componentes.NAMB.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.NHB.componentes.NAMB.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Agua y Saneamiento</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.NHB.componentes.AS.score < 60? 'red' : (dataCRP.dimensiones.NHB.componentes.AS.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.NHB.componentes.AS.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Vivienda</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.NHB.componentes.V.score < 60? 'red' : (dataCRP.dimensiones.NHB.componentes.V.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.NHB.componentes.V.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Seguridad Personal</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.NHB.componentes.SP.score < 60? 'red' : (dataCRP.dimensiones.NHB.componentes.SP.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.NHB.componentes.SP.score}}</span>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer></mat-card-footer>
+</mat-card>
+
+<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData">
+    <mat-card-header>
+        <mat-card-title>Fundamentos del Bienestar</mat-card-title>
+        <mat-card-subtitle>Puntuacion IPS: {{dataCRP.dimensiones.FB.score}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-12 flex-space-between">
+                <span>Acceso a Conocimientos Básicos</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.FB.componentes.ACB.score < 60? 'red' : (dataCRP.dimensiones.FB.componentes.ACB.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.FB.componentes.ACB.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Acceso a Información y Comunicaciones</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.FB.componentes.AIC.score < 60? 'red' : (dataCRP.dimensiones.FB.componentes.AIC.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.FB.componentes.AIC.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Salud y Bienestar</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.FB.componentes.SB.score < 60? 'red' : (dataCRP.dimensiones.FB.componentes.SB.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.FB.componentes.SB.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Sustentabilidad del Ecosistema</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.FB.componentes.ES.score < 60? 'red' : (dataCRP.dimensiones.FB.componentes.ES.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.FB.componentes.ES.score}}</span>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer></mat-card-footer>
+</mat-card>
+
+<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData">
+    <mat-card-header>
+        <mat-card-title>Oportunidades</mat-card-title>
+        <mat-card-subtitle>Puntuacion IPS: {{dataCRP.dimensiones.OP.score}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-12 flex-space-between">
+                <span>Derechos Personales</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.OP.componentes.DP.score < 60? 'red' : (dataCRP.dimensiones.OP.componentes.DP.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.OP.componentes.DP.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Libertad Personal y de Elección</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.OP.componentes.LPE.score < 60? 'red' : (dataCRP.dimensiones.OP.componentes.LPE.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.OP.componentes.LPE.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Tolerancia e Inclusión</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.OP.componentes.TI.score < 60? 'red' : (dataCRP.dimensiones.OP.componentes.TI.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.OP.componentes.TI.score}}</span>
+            </div>
+            <div class="col-12 flex-space-between">
+                <span>Acceso a Educacion Superior</span>
+                <span
+                    [ngClass]="dataCRP.dimensiones.OP.componentes.AES.score < 60? 'red' : (dataCRP.dimensiones.OP.componentes.AES.score < 80? 'yellow' : 'green')">{{dataCRP.dimensiones.OP.componentes.AES.score}}</span>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer></mat-card-footer>
+</mat-card>

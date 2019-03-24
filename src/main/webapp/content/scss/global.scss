@@ -45,15 +45,6 @@ Generic styles
 ========================================================================== */
 
 /* Error highlight on input fields */
-.ng-valid[required],
-.ng-valid.required {
-    border-left: 5px solid green;
-}
-
-.ng-invalid:not(form) {
-    border-left: 5px solid red;
-}
-
 /* other generic styles */
 
 .jh-card {
@@ -239,3 +230,13 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-global JHipster will add new css style */
+.mat-snack-bar-container.snackbar-color {
+    color: #ff6666;
+    background-color: white;
+    .mat-simple-snackbar {
+        color: #ff6666;
+        span {
+            color: #ff6666;
+        }
+    }
+}

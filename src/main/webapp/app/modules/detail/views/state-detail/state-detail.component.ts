@@ -1,3 +1,4 @@
+import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ import { ReviewService } from '../../../../@akita/review/review.service';
     styleUrls: ['state-detail.component.scss']
 })
 export class StateDetailComponent implements OnInit {
-    id: number;
+    id: string;
     detail$: Observable<RealState>;
 
     constructor(
@@ -24,14 +25,13 @@ export class StateDetailComponent implements OnInit {
         private domSanitizer: DomSanitizer
     ) {}
     ngOnInit() {
-        console.log('Reached: state-detail-component!!!');
-        this.id = Number(this.route.snapshot.paramMap.get('id'));
+        this.id = this.route.snapshot.paramMap.get('id');
         this.detailService.get(this.id);
         this.detail$ = this.detailQuery.getDetail(this.id);
         this.detail$.subscribe(realState => {
             if (realState) {
                 console.log(realState);
-                this.reviewService.getReviews(realState.user.id!, realState.id!);
+                this.reviewService.getReviews(realState.owner.id!, realState.id!);
             }
         });
 

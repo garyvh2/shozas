@@ -1,0 +1,27 @@
+:host {
+    .filter {
+        display: flex;
+        flex-direction: column;
+        margin: 5px 10px;
+        justify-content: flex-start;
+
+        star-rating {
+            align-self: flex-start;
+            margin: 5px 0;
+        }
+
+        .seccion {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            jhi-detail-spec {
+                width: 120px;
+                height: 25px;
+            }
+        }
+        mat-form-field {
+            font-size: 0.75em;
+        }
+    }
+}

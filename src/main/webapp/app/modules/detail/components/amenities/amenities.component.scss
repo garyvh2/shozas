@@ -11,5 +11,25 @@
     .rsd__amenity {
         display: flex;
         align-items: center;
+
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        span {
+            padding-left: 8px;
+        }
+    }
+
+    .rsd__amenity--hidden:nth-child(n + 5) {
+        display: none;
+    }
+
+    .amenities__button-holder {
+        display: flex;
+        flex-direction: row-reverse;
+        .amenities__button {
+            color: #ff6666;
+            background-color: white;
+        }
     }
 }

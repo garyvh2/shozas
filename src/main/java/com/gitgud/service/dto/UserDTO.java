@@ -3,6 +3,8 @@ package com.gitgud.service.dto;
 import com.gitgud.config.Constants;
 
 import com.gitgud.domain.Authority;
+import com.gitgud.domain.Image;
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 
 import javax.validation.constraints.Email;
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.*;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,7 +24,7 @@ public class UserDTO {
     private String id;
 
     @NotBlank
-    @Pattern(regexp = Constants.LOGIN_REGEX)
+    @Email
     @Size(min = 1, max = 50)
     private String login;
 
@@ -30,10 +33,6 @@ public class UserDTO {
 
     @Size(max = 50)
     private String lastName;
-
-    @Email
-    @Size(min = 5, max = 254)
-    private String email;
 
     @Size(max = 256)
     private String imageUrl;
@@ -53,6 +52,20 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private String userType;
+
+    private Image image;
+
+    private String userId;
+
+    private HashSet<String> favorites = new HashSet<>();
+
+    private int phone;
+
+    private double raiting;
+
+    private boolean displayPhone;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -62,7 +75,6 @@ public class UserDTO {
         this.login = user.getLogin();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.email = user.getEmail();
         this.activated = user.getActivated();
         this.imageUrl = user.getImageUrl();
         this.langKey = user.getLangKey();
@@ -70,6 +82,15 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.userType = user.getUserType();
+        this.image = user.getImage();
+        this.userId = user.getUserId();
+        this.phone = user.getPhone();
+        this.displayPhone = user.isDisplayPhone();
+        this.raiting = user.getRaiting();
+        this.favorites = user.getFavorites().stream()
+            .map(RealState::getId)
+            .collect(Collectors.toCollection(HashSet::new));
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -105,14 +126,6 @@ public class UserDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getImageUrl() {
@@ -179,13 +192,68 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public double getRaiting() {
+        return raiting;
+    }
+
+    public void setRaiting(double raiting) {
+        this.raiting = raiting;
+    }
+
+    public boolean isDisplayPhone() {
+        return displayPhone;
+    }
+
+    public void setDisplayPhone(boolean displayPhone) {
+        this.displayPhone = displayPhone;
+    }
+
+    public HashSet<String> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(HashSet<String> favorites) {
+        this.favorites = favorites;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
             "login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
@@ -193,6 +261,7 @@ public class UserDTO {
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
+            ", userType=" + userType +
             ", authorities=" + authorities +
             "}";
     }

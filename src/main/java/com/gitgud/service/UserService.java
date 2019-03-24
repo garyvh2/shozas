@@ -1,13 +1,18 @@
 package com.gitgud.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.gitgud.config.Constants;
 import com.gitgud.domain.Authority;
+import com.gitgud.domain.Image;
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.AuthorityRepository;
 import com.gitgud.repository.UserRepository;
 import com.gitgud.security.AuthoritiesConstants;
 import com.gitgud.security.SecurityUtils;
 import com.gitgud.service.dto.UserDTO;
+import com.gitgud.service.util.CloudinaryUtil;
 import com.gitgud.service.util.RandomUtil;
 import com.gitgud.web.rest.errors.*;
 
@@ -19,6 +24,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -38,14 +44,17 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    private final MailService mailService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.mailService = mailService;
     }
 
     public Optional<User> getUserByEmail(String email){
-        return userRepository.findOneByEmailIgnoreCase(email);
+        return userRepository.findOneByLogin(email);
     }
 
     public List<User> getUsersByRaiting(double raiting){
@@ -83,7 +92,7 @@ public class UserService {
     }
 
     public Optional<User> requestPasswordReset(String mail) {
-        return userRepository.findOneByEmailIgnoreCase(mail)
+        return userRepository.findOneByLogin(mail)
             .filter(User::getActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
@@ -100,12 +109,13 @@ public class UserService {
                 throw new LoginAlreadyUsedException();
             }
         });
-        userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).ifPresent(existingUser -> {
+        userRepository.findByUserId(userDTO.getUserId()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
-                throw new EmailAlreadyUsedException();
+                throw new UserIdentifierAlreadyUsed();
             }
         });
+
         User newUser = new User();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(userDTO.getLogin().toLowerCase());
@@ -113,9 +123,12 @@ public class UserService {
         newUser.setPassword(encryptedPassword);
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
-        newUser.setEmail(userDTO.getEmail().toLowerCase());
         newUser.setImageUrl(userDTO.getImageUrl());
-        newUser.setLangKey(userDTO.getLangKey());
+        newUser.setUserId(userDTO.getUserId());
+        newUser.setDisplayPhone(userDTO.isDisplayPhone());
+        newUser.setUserType(userDTO.getUserType());
+        newUser.setLangKey("es_CR");
+        newUser.setPhone(userDTO.getPhone());
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
@@ -123,6 +136,7 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
+        newUser.setImage(getDefaultProfileImage());
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -141,7 +155,6 @@ public class UserService {
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail().toLowerCase());
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
             user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
@@ -169,24 +182,57 @@ public class UserService {
     /**
      * Update basic information (first name, last name, email, language) for the current user.
      *
-     * @param firstName first name of user
-     * @param lastName last name of user
-     * @param email email id of user
-     * @param langKey language key
-     * @param imageUrl image URL of user
+     *
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateMongoUser(UserDTO userToUpdate) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email.toLowerCase());
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
+                user.setUserId(userToUpdate.getUserId());
+                user.setFirstName(userToUpdate.getFirstName());
+                user.setLastName(userToUpdate.getLastName());
+                user.setLangKey(userToUpdate.getLangKey());
+                //user.setImageUrl(imageUrl);
+                user.setDisplayPhone(userToUpdate.isDisplayPhone());
+                user.setPhone(userToUpdate.getPhone());
+                user.setUserType(userToUpdate.getUserType());
+                user.setImage(getUserImage(user.getImage(), userToUpdate.getImage()));
                 userRepository.save(user);
                 log.debug("Changed Information for User: {}", user);
             });
+    }
+
+    private Image getUserImage(Image oldImage, Image newImage){
+        try {
+
+            if(oldImage == null)
+                oldImage = new Image();
+
+            if (oldImage.getSource().equalsIgnoreCase(newImage.getSource()))
+                return oldImage;
+
+            Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
+
+            if(oldImage.getImageId() != null && !oldImage.getImageId().equalsIgnoreCase("0") && !oldImage.getImageId().isEmpty())
+                cloudinaryUploader.uploader().destroy(oldImage.getImageId(), ObjectUtils.emptyMap());
+
+            Map uploadResult = cloudinaryUploader.uploader().upload(newImage.getSource(), ObjectUtils.emptyMap());
+            oldImage.setImageId(uploadResult.get("public_id").toString());
+            oldImage.setSource(uploadResult.get("url").toString());
+
+
+        }catch (Exception e){
+            oldImage = getDefaultProfileImage();
+        }
+        return oldImage;
+    }
+
+    private Image getDefaultProfileImage(){
+        Image defaultImage = new Image();
+        defaultImage.setSource("http://res.cloudinary.com/ucenfotec19/image/upload/v1553423246/i8zar8csi8ygnvkap7cs.png");
+        defaultImage.setImageId("0");
+        defaultImage.setIsPrimary(true);
+        return defaultImage;
     }
 
     /**
@@ -204,7 +250,6 @@ public class UserService {
                 user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
-                user.setEmail(userDTO.getEmail().toLowerCase());
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
@@ -280,5 +325,31 @@ public class UserService {
      */
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+
+    public User sendEmailToOwner(RealState tempRS) throws Exception{
+
+        User user = new User();
+        user.setFirstName("F U ANONYMOUS");
+
+        Optional<String> login = SecurityUtils.getCurrentUserLogin();
+
+        if (login.isPresent()) {
+
+            Optional<User> client = userRepository.findOneByLogin(login.get());
+
+            if (client.isPresent()) {
+                if (!client.get().getId().equals(tempRS.getOwner().getId())) {
+                    mailService.sendEmailToOwner(client.get(), tempRS);
+                }
+
+                return client.get();
+
+            } else {
+                throw new Exception("El Usuario solicitado no existe");
+            }
+        } else {
+            throw new Exception("El Login solicitado no existe");
+        }
     }
 }

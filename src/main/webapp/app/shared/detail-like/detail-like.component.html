@@ -1,1 +1,4 @@
-<mat-icon svgIcon="shozas_like" [class.liked]="liked"></mat-icon>
+<button mat-icon-button type="button">
+    <mat-icon svgIcon="shozas_like" [ngClass]="{'liked':liked}" (click)="toggleLike($event)">
+    </mat-icon>
+</button>

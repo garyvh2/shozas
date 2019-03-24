@@ -1,0 +1,6 @@
+<h1>Guardados</h1>
+<div class="list">
+    <mat-spinner *ngIf="(isLoading$ | async)" [diameter]="40"></mat-spinner>
+    <jhi-listing *ngFor="let realstate of (favorites$ | async)" [listing]="realstate"
+        [routerLink]="['/detail/', realstate.id]"></jhi-listing>
+</div>

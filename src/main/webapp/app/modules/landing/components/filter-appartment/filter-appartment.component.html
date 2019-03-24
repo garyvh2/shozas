@@ -1,0 +1,45 @@
+<form>
+    <div class="filter">
+        <label>Precio</label>
+        <jhi-range-component name="price" [(ngModel)]="searchFilters.rangePrice" [options]="priceConfig"
+            *ngIf="priceConfig"></jhi-range-component>
+    </div>
+    <div class="filter">
+        <label>Tamaño</label>
+        <jhi-range-component name="size" [(ngModel)]="searchFilters.rangeSize" [options]="sizeConfig"
+            *ngIf="sizeConfig"></jhi-range-component>
+    </div>
+    <div class="filter">
+        <label>Calificación</label>
+        <star-rating name="rating" class="details__rating" [starType]="'svg'" [rating]="1"></star-rating>
+    </div>
+    <div class="filter">
+        <label>Secciones</label>
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/bed.png">Cuartos</jhi-detail-spec>
+            <jhi-filter-amount name="beds" [size]="5" [(ngModel)]="searchFilters.beds"></jhi-filter-amount>
+        </div>
+
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/bath.png">Baño</jhi-detail-spec>
+            <jhi-filter-amount name="baths" [size]="5" [(ngModel)]="searchFilters.baths"></jhi-filter-amount>
+        </div>
+
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/garage.png">Parqueo</jhi-detail-spec>
+            <jhi-filter-amount name="garages" [size]="5" [(ngModel)]="searchFilters.garages"></jhi-filter-amount>
+        </div>
+
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/house.png">Pisos</jhi-detail-spec>
+            <jhi-filter-amount name="stories" [size]="3" [(ngModel)]="searchFilters.stories"></jhi-filter-amount>
+        </div>
+    </div>
+
+    <div class="filter">
+        <label>Codigo Postal</label>
+        <mat-form-field appearance="outline">
+            <input name="zipcode" matInput placeholder="ZIP" [(ngModel)]="searchFilters.zip" />
+        </mat-form-field>
+    </div>
+</form>
