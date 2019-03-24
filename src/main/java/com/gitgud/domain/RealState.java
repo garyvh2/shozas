@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Document
 @Entity("realState")
@@ -309,4 +310,23 @@ public class RealState {
     public void setDateCreated(Instant dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        RealState realState = (RealState) o;
+        return !(realState.getId() == null || getId() == null) && Objects.equals(getId(), realState.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
 }

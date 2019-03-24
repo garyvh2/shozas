@@ -10,7 +10,17 @@ export class AmenitiesComponent implements OnInit {
     @Input()
     detail: RealState;
 
+    showMore = false;
+
     constructor() {}
 
     ngOnInit() {}
+
+    toggleAmenities() {
+        if (this.showMore) {
+            this.showMore = false;
+        } else {
+            this.showMore = true;
+        }
+    }
 }
