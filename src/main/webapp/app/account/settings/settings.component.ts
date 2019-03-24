@@ -7,6 +7,7 @@ import { LoginModalService, AccountService } from 'app/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import UserType from 'app/@akita/external-models/user-type';
 import { SettingsService } from './settings.service';
+import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'jhi-settings',
@@ -27,11 +28,14 @@ export class SettingsComponent implements OnInit {
 
     imageDataURL: string;
 
+    successMessage = 'Se han guardado los cambios';
+
     constructor(
         private loginModalService: LoginModalService,
         private registerService: SettingsService,
         private fb: FormBuilder,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private snackBar: MatSnackBar
     ) {
         this.settingsForm = this.fb.group({
             firstName: new FormControl('', Validators.required),
@@ -48,8 +52,6 @@ export class SettingsComponent implements OnInit {
 
         this.accountService.identity().then(account => {
             this.settingsAccount = { ...account };
-            console.log('API ACCOUNT', account);
-            console.log('COPY ACCOUNT', this.settingsAccount);
             this.settingsForm.get('userId').setValue(this.settingsAccount.userId);
             this.settingsForm.get('firstName').setValue(this.settingsAccount.firstName);
             this.settingsForm.get('lastName').setValue(this.settingsAccount.lastName);
@@ -66,19 +68,26 @@ export class SettingsComponent implements OnInit {
         return this.settingsForm.get('userType').value === UserType.Personal ? 'Cedula' : 'Cedula Juridica';
     }
 
-    updateUser() {
+    save() {
         if (this.settingsForm.valid) {
-            const updatedUser = { ...this.settingsAccount, ...this.settingsForm.value, imageUrl: this.imageDataURL };
+            const updatedUser = { ...this.settingsAccount, ...this.settingsForm.value };
+
+            if (this.imageDataURL) {
+                updatedUser.image = { isPrimary: true, source: this.imageDataURL };
+            }
+
             console.log('Updated User: ', updatedUser);
             this.accountService.save(updatedUser).subscribe(
                 () => {
-                    this.success = true;
-                    this.settingsForm.reset({
-                        userType: UserType.Personal
-                    });
-                    this.settingsForm.markAsPristine();
-                    this.settingsForm.markAsUntouched();
-                    this.settingsForm.updateValueAndValidity();
+                    // this.success = true;
+                    this.openSnackBar(this.successMessage);
+                    // this.settingsForm.reset({
+                    //     userType: UserType.Personal
+                    // });
+                    // this.settingsForm.markAsPristine();
+                    // this.settingsForm.markAsUntouched();
+                    // this.settingsForm.updateValueAndValidity();
+                    this.accountService.identity(true);
                 },
                 response => this.processError(response)
             );
@@ -109,28 +118,27 @@ export class SettingsComponent implements OnInit {
             reader.readAsDataURL(file);
 
             reader.onload = () => {
-                console.log('File Reader Result: ', reader.result);
                 this.imageDataURL = reader.result.toString();
                 img.src = this.imageDataURL;
             };
         }
     }
 
-    save() {
-        // this.accountService.save(this.settingsAccount).subscribe(
-        //     () => {
-        //         this.error = null;
-        //         this.success = 'OK';
-        //         this.accountService.identity(true).then(account => {
-        //             this.settingsAccount = this.copyAccount(account);
-        //         });
-        //     },
-        //     () => {
-        //         this.success = null;
-        //         this.error = 'ERROR';
-        //     }
-        // );
-    }
+    // save() {
+    //     this.accountService.save(this.settingsAccount).subscribe(
+    //         () => {
+    //             this.error = null;
+    //             this.success = 'OK';
+    //             this.accountService.identity(true).then(account => {
+    //                 this.settingsAccount = this.copyAccount(account);
+    //             });
+    //         },
+    //         () => {
+    //             this.success = null;
+    //             this.error = 'ERROR';
+    //         }
+    //     );
+    // }
     copyAccount(account) {
         return {
             id: account.id,
@@ -144,5 +152,16 @@ export class SettingsComponent implements OnInit {
             phone: account.phone,
             userType: account.userType
         };
+    }
+
+    onChange(mst: MatSlideToggleChange) {
+        this.settingsAccount.displayPhone = mst.checked;
+    }
+
+    openSnackBar(message: string) {
+        this.snackBar.open(message, 'Cerrar', {
+            duration: 3000,
+            panelClass: ['snackbar-color']
+        });
     }
 }

@@ -1,10 +1,10 @@
 <div class="register__container justify-content-center">
     <h1 *ngIf="!success">Editar Perfil</h1>
 
-    <div class="row justify-content-center">
+    <div *ngIf="!success" class="row justify-content-center">
         <div class="col-12 profile-photo">
             <label for="inputProfileImage">
-                <img #profileImage src="{{settingsAccount.imageUrl || 'http://picsum.photos/200/200/?random'}}" alt="Imagen de Perfil">
+                <img #profileImage src="{{settingsAccount.image.source || 'http://picsum.photos/200/200/?random'}}" alt="Imagen de Perfil">
                 <div class="profile__background profile__photo--hover"></div>
                 <span class="profile__photo--hover"><mat-icon>edit</mat-icon></span>
             </label>
@@ -24,7 +24,7 @@
         <strong>Esa cedula ya esta en uso!</strong> Por favor use otra.
     </div>
 
-    <form *ngIf="!success" [formGroup]="settingsForm" (submit)="updateUser()">
+    <form *ngIf="!success" [formGroup]="settingsForm" (submit)="save()">
         <mat-form-field color="accent" appearance="outline">
             <mat-label>{{ getUserIdentifierText() }}</mat-label>
             <input formControlName="userId" mask="{{getIdentifierMask()}}" matInput
@@ -52,6 +52,7 @@
             <mat-error *ngIf="settingsForm.get('phone').hasError('Mask error')">No cumple con el formato requerido
                 0000-0000</mat-error>
         </mat-form-field>
+            <mat-slide-toggle color="warn" [checked]="settingsAccount.displayPhone" (change)="onChange($event)">Mostrar Teléfono</mat-slide-toggle>
         <div class="submit__button">
             <button type="submit" mat-raised-button>Guardar</button>
         </div>
