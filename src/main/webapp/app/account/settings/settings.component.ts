@@ -18,11 +18,10 @@ export class SettingsComponent implements OnInit {
     doNotMatch: string;
     error: string;
     errorUserIdExists: string;
-    errorUserExists: string;
     registerAccount: any;
     success: boolean;
     modalRef: NgbModalRef;
-    registerForm: FormGroup;
+    settingsForm: FormGroup;
     userType = UserType;
     settingsAccount: any;
 
@@ -34,7 +33,7 @@ export class SettingsComponent implements OnInit {
         private fb: FormBuilder,
         private accountService: AccountService
     ) {
-        this.registerForm = this.fb.group({
+        this.settingsForm = this.fb.group({
             firstName: new FormControl('', Validators.required),
             lastName: new FormControl('', Validators.required),
             userType: new FormControl(UserType.Personal, Validators.required),
@@ -48,53 +47,41 @@ export class SettingsComponent implements OnInit {
         this.registerAccount = {};
 
         this.accountService.identity().then(account => {
-            this.settingsAccount = this.copyAccount(account);
-            console.log('SETTINGS ACCOUNT', account);
-            this.registerForm.get('userId').setValue(account.userId);
-            this.registerForm.get('firstName').setValue(account.firstName);
-            this.registerForm.get('lastName').setValue(account.lastName);
-            this.registerForm.get('userType').setValue(account.userType);
-            this.registerForm.get('phone').setValue(account.phone.toString());
-            console.log('USERTYPE');
-            console.log(account.userType);
-            console.log(this.userType);
+            this.settingsAccount = { ...account };
+            console.log('API ACCOUNT', account);
+            console.log('COPY ACCOUNT', this.settingsAccount);
+            this.settingsForm.get('userId').setValue(this.settingsAccount.userId);
+            this.settingsForm.get('firstName').setValue(this.settingsAccount.firstName);
+            this.settingsForm.get('lastName').setValue(this.settingsAccount.lastName);
+            this.settingsForm.get('userType').setValue(this.settingsAccount.userType);
+            this.settingsForm.get('phone').setValue(this.settingsAccount.phone.toString());
         });
     }
 
     getIdentifierMask(): string {
-        return this.registerForm.get('userType').value === UserType.Personal ? '0-0000-0000' : '0-0000-00000';
+        return this.settingsForm.get('userType').value === UserType.Personal ? '0-0000-0000' : '0-0000-00000';
     }
 
     getUserIdentifierText(): string {
-        return this.registerForm.get('userType').value === UserType.Personal ? 'Cedula' : 'Cedula Juridica';
+        return this.settingsForm.get('userType').value === UserType.Personal ? 'Cedula' : 'Cedula Juridica';
     }
 
-    register() {
-        if (this.registerForm.get('userType').value === UserType.Company) {
-            this.registerForm.get('lastName').setValue(' ');
-        }
-
-        if (this.registerForm.valid) {
-            const newUser = {
-                ...this.registerForm.value,
-                phone: Number(this.registerForm.get('phone').value),
-                login: this.registerForm.get('email').value
-            };
-
-            // this.registerService.save(newUser).subscribe(
-            //     () => {
-            //         this.success = true;
-            //         this.registerForm.reset({
-            //             userType: UserType.Personal
-            //         });
-            //         this.registerForm.markAsPristine();
-            //         this.registerForm.markAsUntouched();
-            //         this.registerForm.get('confirmPass').markAsUntouched();
-            //         this.registerForm.get('confirmPass').markAsPristine();
-            //         this.registerForm.updateValueAndValidity();
-            //     },
-            //     response => this.processError(response)
-            // );
+    updateUser() {
+        if (this.settingsForm.valid) {
+            const updatedUser = { ...this.settingsAccount, ...this.settingsForm.value, imageUrl: this.imageDataURL };
+            console.log('Updated User: ', updatedUser);
+            this.accountService.save(updatedUser).subscribe(
+                () => {
+                    this.success = true;
+                    this.settingsForm.reset({
+                        userType: UserType.Personal
+                    });
+                    this.settingsForm.markAsPristine();
+                    this.settingsForm.markAsUntouched();
+                    this.settingsForm.updateValueAndValidity();
+                },
+                response => this.processError(response)
+            );
         }
     }
 
@@ -104,13 +91,8 @@ export class SettingsComponent implements OnInit {
 
     private processError(response: HttpErrorResponse) {
         this.success = null;
-        if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
-            this.errorUserExists = 'ERROR';
-            this.errorUserIdExists = null;
-            this.error = null;
-        } else if (response.status === 400 && response.error.type === USERID_ALREADY_USED_TYPE) {
+        if (response.status === 400 && response.error.type === USERID_ALREADY_USED_TYPE) {
             this.errorUserIdExists = 'ERROR';
-            this.errorUserExists = null;
             this.error = null;
         } else {
             this.error = 'ERROR';
@@ -128,7 +110,8 @@ export class SettingsComponent implements OnInit {
 
             reader.onload = () => {
                 console.log('File Reader Result: ', reader.result);
-                img.src = reader.result.toString();
+                this.imageDataURL = reader.result.toString();
+                img.src = this.imageDataURL;
             };
         }
     }
@@ -150,13 +133,16 @@ export class SettingsComponent implements OnInit {
     }
     copyAccount(account) {
         return {
-            activated: account.activated,
-            email: account.email,
-            firstName: account.firstName,
-            langKey: account.langKey,
-            lastName: account.lastName,
+            id: account.id,
             login: account.login,
-            imageUrl: account.imageUrl
+            activated: account.activated,
+            langKey: account.langKey,
+            userId: account.userId,
+            firstName: account.firstName,
+            lastName: account.lastName,
+            imageUrl: account.imageUrl,
+            phone: account.phone,
+            userType: account.userType
         };
     }
 }

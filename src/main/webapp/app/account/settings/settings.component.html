@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-12 profile-photo">
             <label for="inputProfileImage">
-                <img #profileImage src="http://picsum.photos/200/200/?random" alt="Imagen de Perfil">
+                <img #profileImage src="{{settingsAccount.imageUrl || 'http://picsum.photos/200/200/?random'}}" alt="Imagen de Perfil">
                 <div class="profile__background profile__photo--hover"></div>
                 <span class="profile__photo--hover"><mat-icon>edit</mat-icon></span>
             </label>
@@ -13,47 +13,43 @@
     </div>
 
     <div class="alert alert-success" *ngIf="success">
-        <strong>Se ha creado el Usuario</strong> Se le ha enviado un correo de confirmacion.
+        <strong>Se han guardado los cambios</strong>
     </div>
 
     <div class="alert alert-danger" *ngIf="error">
-        <strong>No hemos podido registrar el usuario!</strong> Intentelo de nuevo.
-    </div>
-
-    <div class="alert alert-danger" *ngIf="errorUserExists">
-        <strong>Ese correo ya esta en uso!</strong> Por favor use otro.
+        <strong>No hemos podido guardar los cambios</strong> Por favor intentelo de nuevo.
     </div>
 
     <div class="alert alert-danger" *ngIf="errorUserIdExists">
         <strong>Esa cedula ya esta en uso!</strong> Por favor use otra.
     </div>
 
-    <form *ngIf="!success" [formGroup]="registerForm" (submit)="register()">
+    <form *ngIf="!success" [formGroup]="settingsForm" (submit)="updateUser()">
         <mat-form-field color="accent" appearance="outline">
             <mat-label>{{ getUserIdentifierText() }}</mat-label>
             <input formControlName="userId" mask="{{getIdentifierMask()}}" matInput
                 placeholder="{{ getUserIdentifierText() }}" />
             <mat-hint>Formato: {{getIdentifierMask()}}</mat-hint>
-            <mat-error *ngIf="registerForm.get('userId').hasError('required')">Este campo es requerido</mat-error>
-            <mat-error *ngIf="registerForm.get('userId').hasError('Mask error')">No cumple con el formato requerido
+            <mat-error *ngIf="settingsForm.get('userId').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="settingsForm.get('userId').hasError('Mask error')">No cumple con el formato requerido
                 {{getIdentifierMask()}}</mat-error>
         </mat-form-field>
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Nombre</mat-label>
             <input formControlName="firstName" matInput placeholder="Nombre" />
-            <mat-error *ngIf="registerForm.get('firstName').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="settingsForm.get('firstName').hasError('required')">Este campo es requerido</mat-error>
         </mat-form-field>
-        <mat-form-field *ngIf="registerForm.get('userType').value === 'P'" color="accent" appearance="outline">
+        <mat-form-field *ngIf="settingsForm.get('userType').value === 'P'" color="accent" appearance="outline">
             <mat-label>Apellidos</mat-label>
             <input formControlName="lastName" matInput placeholder="Apellidos" />
-            <mat-error *ngIf="registerForm.get('lastName').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="settingsForm.get('lastName').hasError('required')">Este campo es requerido</mat-error>
         </mat-form-field>
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Teléfono</mat-label>
             <input mask="0000-0000" formControlName="phone" matInput placeholder="Teléfono" />
             <mat-hint>Formato: 0000-0000</mat-hint>
-            <mat-error *ngIf="registerForm.get('phone').hasError('required')">Este campo es requerido</mat-error>
-            <mat-error *ngIf="registerForm.get('phone').hasError('Mask error')">No cumple con el formato requerido
+            <mat-error *ngIf="settingsForm.get('phone').hasError('required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="settingsForm.get('phone').hasError('Mask error')">No cumple con el formato requerido
                 0000-0000</mat-error>
         </mat-form-field>
         <div class="submit__button">
