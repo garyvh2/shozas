@@ -1,7 +1,10 @@
 package com.gitgud.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.gitgud.config.Constants;
 import com.gitgud.domain.Authority;
+import com.gitgud.domain.Image;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.AuthorityRepository;
@@ -9,6 +12,7 @@ import com.gitgud.repository.UserRepository;
 import com.gitgud.security.AuthoritiesConstants;
 import com.gitgud.security.SecurityUtils;
 import com.gitgud.service.dto.UserDTO;
+import com.gitgud.service.util.CloudinaryUtil;
 import com.gitgud.service.util.RandomUtil;
 import com.gitgud.web.rest.errors.*;
 
@@ -121,7 +125,6 @@ public class UserService {
         newUser.setLastName(userDTO.getLastName());
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setUserId(userDTO.getUserId());
-        newUser.setImage(userDTO.getImage());
         newUser.setDisplayPhone(userDTO.isDisplayPhone());
         newUser.setUserType(userDTO.getUserType());
         newUser.setLangKey("es_CR");
@@ -133,6 +136,7 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
+        newUser.setImage(getDefaultProfileImage());
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -178,22 +182,56 @@ public class UserService {
     /**
      * Update basic information (first name, last name, email, language) for the current user.
      *
-     * @param firstName first name of user
-     * @param lastName last name of user
-     * @param langKey language key
-     * @param imageUrl image URL of user
+     *
      */
-    public void updateUser(String firstName, String lastName, String langKey, String imageUrl) {
+    public void updateMongoUser(UserDTO userToUpdate) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
+                user.setFirstName(userToUpdate.getFirstName());
+                user.setLastName(userToUpdate.getLastName());
+                user.setLangKey(userToUpdate.getLangKey());
+                //user.setImageUrl(imageUrl);
+                user.setDisplayPhone(userToUpdate.isDisplayPhone());
+                user.setPhone(userToUpdate.getPhone());
+                user.setUserType(userToUpdate.getUserType());
+                user.setImage(getUserImage(user.getImage(), userToUpdate.getImage()));
                 userRepository.save(user);
                 log.debug("Changed Information for User: {}", user);
             });
+    }
+
+    private Image getUserImage(Image oldImage, Image newImage){
+        try {
+
+            if(oldImage == null)
+                oldImage = new Image();
+
+            if (oldImage.getSource().equalsIgnoreCase(newImage.getSource()))
+                return oldImage;
+
+            Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
+
+            if(oldImage.getImageId() != null && !oldImage.getImageId().equalsIgnoreCase("0") && !oldImage.getImageId().isEmpty())
+                cloudinaryUploader.uploader().destroy(oldImage.getImageId(), ObjectUtils.emptyMap());
+
+            Map uploadResult = cloudinaryUploader.uploader().upload(newImage.getSource(), ObjectUtils.emptyMap());
+            oldImage.setImageId(uploadResult.get("public_id").toString());
+            oldImage.setSource(uploadResult.get("url").toString());
+
+
+        }catch (Exception e){
+            oldImage = getDefaultProfileImage();
+        }
+        return oldImage;
+    }
+
+    private Image getDefaultProfileImage(){
+        Image defaultImage = new Image();
+        defaultImage.setSource("http://res.cloudinary.com/ucenfotec19/image/upload/v1553423246/i8zar8csi8ygnvkap7cs.png");
+        defaultImage.setImageId("0");
+        defaultImage.setIsPrimary(true);
+        return defaultImage;
     }
 
     /**

@@ -292,8 +292,6 @@ public class RealStateService {
     private HashSet<Image> getUpdatedImage( HashSet<Image> updatedImages, HashSet<Image> imagesOnDb){
         HashSet<Image> result = new HashSet<Image>();
 
-        
-
 
         return result;
     }
