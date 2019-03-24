@@ -352,7 +352,8 @@ public class RealStateService {
         Optional<User> presentUser = userRepository.findById(userId);
         if (presentUser.isPresent()) {
             User user = presentUser.get();
-            return user.getFavorites().stream().map(favorite -> toApiRealState(favorite)).collect(Collectors.toCollection(HashSet::new));
+            return user.getFavorites().stream().map(favorite -> toApiRealState(favorite))
+                    .collect(Collectors.toCollection(HashSet::new));
         }
         return null;
     }

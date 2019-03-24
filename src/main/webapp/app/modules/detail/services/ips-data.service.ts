@@ -19,7 +19,11 @@ export class IpsDataService {
     constructor(private http: HttpClient) {}
 
     getCRPDataCanton(rs: RealState): Observable<DataCRP> {
-        return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.city));
+        if (rs.city.toLowerCase() === 'central') {
+            return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.province));
+        } else {
+            return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.city));
+        }
         // return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.city), this.options);
     }
 
