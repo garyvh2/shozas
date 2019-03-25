@@ -1,19 +1,16 @@
 <div>
     <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-fluid rounded"></span>
-        </div>
-        <div class="col-md-8">
-            <h1>Error Page!</h1>
+        <section>
+            <h1>Error!</h1>
 
             <div [hidden]="!errorMessage">
                 <div class="alert alert-danger">{{errorMessage}}
                 </div>
             </div>
-            <div [hidden]="!error403" class="alert alert-danger">You are not authorized to access this page.
+            <div [hidden]="!error403" class="alert alert-danger">No estas autorizado a visualizar esta pagina.
             </div>
-            <div [hidden]="!error404" class="alert alert-danger">The page asked was not found.
+            <div [hidden]="!error404" class="alert alert-danger">La pagina solicitada no pudo ser encontrada.
             </div>
-        </div>
+        </section>
     </div>
 </div>
