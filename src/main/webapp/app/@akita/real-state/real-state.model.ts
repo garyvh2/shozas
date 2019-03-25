@@ -1,7 +1,8 @@
 import { ApiResponse } from './../external-models/apiResponse.model';
 import { ID } from '@datorama/akita';
 import { RealStateImage } from 'app/@akita/external-models/real-state-image.model';
-import { TempUser } from '../external-models/tempUser';
+import RealStateType from '../external-models/real-state-type';
+import { User } from '../user';
 import { RSAmenity } from '../external-models/rs-amenity';
 import { RSService } from '../external-models/rs-service';
 
@@ -11,6 +12,7 @@ export interface RealState {
     longitude: number;
     province: string;
     city: string;
+    district: string;
     price: number;
     description: string;
     stories: number;
@@ -21,7 +23,7 @@ export interface RealState {
     size: number;
     garage: number;
     postalCode: string;
-    realStateType: 'H' | 'L' | 'D';
+    realStateType: RealStateType;
     hasPool?: boolean;
     hasWater?: boolean;
     hasElectricity?: boolean;
@@ -32,11 +34,11 @@ export interface RealState {
     services?: RSService[];
     image?: RealStateImage;
     addr?: string;
-    images?: RealStateImage;
+    images?: RealStateImage[];
     isSold?: boolean;
+    user: User;
+    owner: User;
     customAmenities: RSAmenity[];
-    user: TempUser;
-    owner: TempUser;
     dateCreated: Date;
 }
 

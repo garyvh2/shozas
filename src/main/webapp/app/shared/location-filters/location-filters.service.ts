@@ -1,4 +1,4 @@
-import { LandingService } from './../../landing.service';
+import { LandingService } from './../../modules/landing/landing.service';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';

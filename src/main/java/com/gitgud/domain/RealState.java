@@ -324,9 +324,5 @@ public class RealState {
         return !(realState.getId() == null || getId() == null) && Objects.equals(getId(), realState.getId());
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 
 }
