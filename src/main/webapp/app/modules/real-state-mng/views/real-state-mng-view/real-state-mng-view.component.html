@@ -4,7 +4,7 @@
 
 <ng-template #render_form>
     <mat-horizontal-stepper [linear]="true" #stepper>
-        <mat-step color="warn" [stepControl]="firstFormGroup">
+        <mat-step color="warn" [stepControl]="firstStepValidation()">
             <ng-template matStepLabel>Llene la Información</ng-template>
             <jhi-real-state-form [isEditable]="editableMode" [realStateForm]="firstFormGroup"></jhi-real-state-form>
             <div>

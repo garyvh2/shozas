@@ -85,16 +85,19 @@ export class RealStateMngViewComponent implements OnInit {
         this.$error = this.realStateQuery.selectError();
         this.isEditing();
     }
-    onFirstStepClick() {
-        this.firstFormGroup.get('province').markAsTouched();
-        this.firstFormGroup.get('city').markAsTouched();
-        this.firstFormGroup.get('district').markAsTouched();
+    firstStepValidation() {
         if (this.firstFormGroup.get('realStateType').value === RealStateType.LOT) {
             this.firstFormGroup.get('rooms').setValue(0);
             this.firstFormGroup.get('garage').setValue(0);
             this.firstFormGroup.get('stories').setValue(0);
             this.firstFormGroup.get('baths').setValue(0);
         }
+        return this.firstFormGroup;
+    }
+    onFirstStepClick() {
+        this.firstFormGroup.get('province').markAsTouched();
+        this.firstFormGroup.get('city').markAsTouched();
+        this.firstFormGroup.get('district').markAsTouched();
     }
 
     isEditing() {
