@@ -113,7 +113,7 @@
                         flex: 1;
 
                         ::ng-deep mat-card [mat-card-image] {
-                            height: 260px;
+                            height: initial;
                         }
                     }
                 }
