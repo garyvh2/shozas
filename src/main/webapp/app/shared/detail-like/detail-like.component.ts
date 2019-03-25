@@ -35,11 +35,15 @@ export class DetailLikeComponent implements OnInit {
         this.accountService.identity().then(user => {
             if (user) {
                 this.liked = user.favorites.includes(this.realState.id);
+            } else {
+                this.liked = false;
             }
         });
         this.accountService.getAuthenticationState().subscribe(user => {
             if (user) {
                 this.liked = user.favorites.includes(this.realState.id);
+            } else {
+                this.liked = false;
             }
         });
     }
