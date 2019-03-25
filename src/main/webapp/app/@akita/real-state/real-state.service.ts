@@ -111,14 +111,29 @@ export class RealStateService {
 
     createRealState(realState: RealState) {
         const url = `${SERVER_API_URL}/api/realstate/create`;
+        this.detailStore.setLoading(true);
         return this.http.post(url, realState).subscribe(
             (response: ApiResponse<RealState>) => {
-                console.log(response);
+                this.detailStore.setLoading(false);
                 this.detailStore.add(response.result);
                 return response.result;
             },
-            () => {
-                return undefined;
+            (error: any) => {
+                this.detailStore.setError(error);
+            }
+        );
+    }
+    updateRealState(realState: RealState) {
+        const url = `${SERVER_API_URL}/api/realstate/update`;
+        this.detailStore.setLoading(true);
+        return this.http.put(url, realState).subscribe(
+            (response: ApiResponse<RealState>) => {
+                this.detailStore.setLoading(false);
+                this.detailStore.update(response.result.id, response.result);
+                return response.result;
+            },
+            (error: any) => {
+                this.detailStore.setError(error);
             }
         );
     }

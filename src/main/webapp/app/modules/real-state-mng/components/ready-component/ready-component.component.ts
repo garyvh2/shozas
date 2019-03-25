@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,11 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ReadyComponentComponent implements OnInit {
     @Input()
-    IsLoading: boolean;
+    IsLoading: Observable<boolean>;
     @Input()
-    IsError: boolean;
+    IsError: Observable<boolean>;
     @Input()
-    IsSuccess: boolean;
+    isEditable: boolean;
+
     constructor() {}
 
     ngOnInit() {}

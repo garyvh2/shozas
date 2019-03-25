@@ -25,7 +25,6 @@ export class RealStateMapComponent implements OnChanges {
         const { province, city, district } = this;
         if (province && city && district) {
             this.service.findLocation(province, city, district).subscribe((data: any) => {
-                console.log(data, district, province, city);
                 const { lat, lng } = data.results[0].geometry.location;
                 this.latitude.setValue(lat);
                 this.longitude.setValue(lng);

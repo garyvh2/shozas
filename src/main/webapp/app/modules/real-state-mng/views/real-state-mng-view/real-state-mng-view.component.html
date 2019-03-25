@@ -1,37 +1,47 @@
-<mat-horizontal-stepper [linear]="true" #stepper>
-    <mat-step color="warn" [stepControl]="firstFormGroup">
-        <ng-template matStepLabel>Llene la Información</ng-template>
-        <jhi-real-state-form [realStateForm]="firstFormGroup"></jhi-real-state-form>
-        <div>
-            <button (click)="onFirstStepClick()" mat-raised-button matStepperNext>Siguiente</button>
-        </div>
-    </mat-step>
-    <mat-step [stepControl]="firstFormGroup">
-        <ng-template matStepLabel>Danos mejor tu ubicacion</ng-template>
-        <h3>Usa el mapa para darnos una ubicación más exacta, con solo un click</h3>
-        <jhi-real-state-map [province]="getFormControlValue('province')" [city]="getFormControlValue('city')"
-            [district]="getFormControlValue('district')" [latitude]="firstFormGroup.get('latitude')" 
-            [longitude]="firstFormGroup.get('longitude')"">
-        </jhi-real-state-map>
-        <div>
-            <button mat-raised-button matStepperPrevious>Atrás</button>
-            <button mat-raised-button matStepperNext>Siguiente</button>
-        </div>
-    </mat-step>
-    <mat-step [stepControl]="firstFormGroup">
-        <ng-template matStepLabel>Suba sus fotos</ng-template>
-        <h2>Suba sus Fotos (Máximo 5)</h2>
-        <jhi-image-uploader [imageArray]="imageArray"></jhi-image-uploader>
-        <div>
-            <button mat-raised-button matStepperPrevious>Atrás</button>
-            <button mat-raised-button (click)="sendRealState()" matStepperNext>Siguiente</button>
-        </div>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Listo!</ng-template>
-        <jhi-ready-component [IsLoading]="isLoading" [IsError]="isError" [IsSuccess]="isSuccess"></jhi-ready-component>
-        <div class="final">
-            <button mat-raised-button (click)="goHome(stepper)">Salir</button>
-        </div>
-    </mat-step>
-</mat-horizontal-stepper>
+<div *ngIf="editableMode && ($loading | async) && !($realState | async); else render_form">
+    <jhi-ready-component [IsLoading]="$loading" [IsError]="$realState"></jhi-ready-component>
+</div>
+
+<ng-template #render_form>
+    <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step color="warn" [stepControl]="firstFormGroup">
+            <ng-template matStepLabel>Llene la Información</ng-template>
+            <jhi-real-state-form [isEditable]="editableMode" [realStateForm]="firstFormGroup"></jhi-real-state-form>
+            <div>
+                <button (click)="onFirstStepClick()" mat-raised-button matStepperNext>Siguiente</button>
+            </div>
+        </mat-step>
+        <mat-step [stepControl]="firstFormGroup">
+            <ng-template matStepLabel>Danos mejor tu ubicacion</ng-template>
+            <h3>Usa el mapa para darnos una ubicación más exacta, con solo un click</h3>
+            <jhi-real-state-map
+                [province]="getFormControlValue('province')"
+                [city]="getFormControlValue('city')"
+                [district]="getFormControlValue('district')"
+                [latitude]="firstFormGroup.get('latitude')"
+                [longitude]="firstFormGroup.get('longitude')"
+            >
+            </jhi-real-state-map>
+            <div>
+                <button mat-raised-button matStepperPrevious>Atrás</button>
+                <button mat-raised-button matStepperNext>Siguiente</button>
+            </div>
+        </mat-step>
+        <mat-step [stepControl]="firstFormGroup">
+            <ng-template matStepLabel>Suba sus fotos</ng-template>
+            <h2>Suba sus Fotos (Máximo 5)</h2>
+            <jhi-image-uploader [imageArray]="imageArray"></jhi-image-uploader>
+            <div>
+                <button mat-raised-button matStepperPrevious>Atrás</button>
+                <button mat-raised-button (click)="sendRealState()" matStepperNext>Siguiente</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Listo!</ng-template>
+            <jhi-ready-component [IsLoading]="$loading" [IsError]="$error" [isEditable]="editableMode"></jhi-ready-component>
+            <div *ngIf="!($loading | async)" class="final">
+                <button mat-raised-button (click)="goHome(stepper)">Salir</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</ng-template>

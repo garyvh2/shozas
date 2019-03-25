@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LocationFiltersService } from './location-filters.service';
-import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output, OnChanges } from '@angular/core';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
 import { KeyValue } from '@angular/common';
 import { MatSelect } from '@angular/material';

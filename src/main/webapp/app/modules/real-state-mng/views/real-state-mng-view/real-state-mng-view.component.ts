@@ -5,9 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import RealStateType from 'app/@akita/external-models/real-state-type';
 import { RealStateImage } from 'app/@akita/external-models/real-state-image.model';
 import { AccountService, User } from 'app/core';
-import { RealStateService, RealState } from 'app/@akita/real-state';
-import { Subject } from 'rxjs';
-import { Route, Router } from '@angular/router';
+import { RealStateService, RealState, RealStateQuery } from 'app/@akita/real-state';
+import { Subject, Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'jhi-real-state-mng-view',
@@ -22,9 +22,10 @@ export class RealStateMngViewComponent implements OnInit {
     longitude = 0;
     userAccount: User;
     observable: Subject<RealState> = new Subject();
-    isLoading = true;
-    isError = false;
-    isSuccess = false;
+    $loading: Observable<boolean>;
+    $error: Observable<boolean>;
+    $realState: Observable<RealState>;
+    editableMode = false;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -32,7 +33,9 @@ export class RealStateMngViewComponent implements OnInit {
         private domSanitizer: DomSanitizer,
         private account: AccountService,
         private realStateService: RealStateService,
-        private router: Router
+        private realStateQuery: RealStateQuery,
+        private router: Router,
+        private activeRoute: ActivatedRoute
     ) {
         this.firstFormGroup = this._formBuilder.group({
             realStateType: new FormControl(RealStateType.HOUSE, Validators.required),
@@ -44,7 +47,7 @@ export class RealStateMngViewComponent implements OnInit {
             price: new FormControl('', Validators.required),
             description: new FormControl('', Validators.required),
             rooms: new FormControl('', Validators.required),
-            gar: new FormControl('', Validators.required),
+            garage: new FormControl('', Validators.required),
             stories: new FormControl('', Validators.required),
             baths: new FormControl('', Validators.required),
             size: new FormControl('', Validators.required),
@@ -72,6 +75,9 @@ export class RealStateMngViewComponent implements OnInit {
 
         this.matIconRegistry.addSvgIcon(`rsd_up`, this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/up.svg'));
         this.account.getAuthenticationState().subscribe(user => (this.userAccount = user));
+        this.$loading = this.realStateQuery.selectLoading();
+        this.$error = this.realStateQuery.selectError();
+        this.isEditing();
     }
     onFirstStepClick() {
         this.firstFormGroup.get('province').markAsTouched();
@@ -79,10 +85,53 @@ export class RealStateMngViewComponent implements OnInit {
         this.firstFormGroup.get('district').markAsTouched();
         if (this.firstFormGroup.get('realStateType').value === RealStateType.LOT) {
             this.firstFormGroup.get('rooms').setValue(0);
-            this.firstFormGroup.get('gar').setValue(0);
+            this.firstFormGroup.get('garage').setValue(0);
             this.firstFormGroup.get('stories').setValue(0);
             this.firstFormGroup.get('baths').setValue(0);
         }
+    }
+
+    isEditing() {
+        const id = this.activeRoute.snapshot.paramMap.get('id');
+        if (id) {
+            this.realStateService.get(id);
+            this.$realState = this.realStateQuery.getDetail(id);
+            this.editableMode = true;
+            this.setForm();
+        }
+    }
+
+    setForm() {
+        this.$realState.subscribe(realState => {
+            if (realState) {
+                this.firstFormGroup = this._formBuilder.group({
+                    id: new FormControl(realState.id),
+                    realStateType: new FormControl(realState.realStateType, Validators.required),
+                    province: new FormControl(realState.province, Validators.required),
+                    latitude: new FormControl(realState.latitude),
+                    longitude: new FormControl(realState.longitude),
+                    city: new FormControl(realState.city, Validators.required),
+                    district: new FormControl(realState.district, Validators.required),
+                    price: new FormControl(realState.price, Validators.required),
+                    description: new FormControl(realState.description, Validators.required),
+                    rooms: new FormControl(realState.rooms.toString(), Validators.required),
+                    garage: new FormControl(realState.garage.toString(), Validators.required),
+                    stories: new FormControl(realState.stories.toString(), Validators.required),
+                    baths: new FormControl(realState.baths.toString(), Validators.required),
+                    size: new FormControl(realState.size, Validators.required),
+                    postalCode: new FormControl(realState.postalCode || ''),
+                    hasPool: new FormControl(realState.hasPool),
+                    hasWater: new FormControl(realState.hasWater),
+                    hasElectricity: new FormControl(realState.hasElectricity),
+                    hasPrivateSecurity: new FormControl(realState.hasPrivateSecurity),
+                    customAmenities: new FormControl(realState.customAmenities)
+                });
+                this.imageArray = realState.images.map(image => ({
+                    ...image,
+                    isPrimary: image.primary
+                }));
+            }
+        });
     }
 
     getFormControlValue(name: string) {
@@ -95,19 +144,14 @@ export class RealStateMngViewComponent implements OnInit {
             images: this.imageArray,
             owner: this.userAccount
         };
-        this.realStateService.createRealState(newRealState).add(response => {
-            this.isLoading = false;
-            console.log('test', response);
-            if (response) {
-                this.isSuccess = true;
-            } else {
-                this.isError = false;
-            }
-        });
+        if (this.editableMode) {
+            this.realStateService.updateRealState(newRealState);
+        } else {
+            this.realStateService.createRealState(newRealState);
+        }
     }
 
-    goHome(stepper: MatStepper) {
-        stepper.reset();
+    goHome() {
         this.router.navigate(['']);
     }
 }

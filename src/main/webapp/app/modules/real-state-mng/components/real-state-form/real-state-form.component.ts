@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import RealStateType from 'app/@akita/external-models/real-state-type';
 import { FormGroup } from '@angular/forms';
 import { RSAmenity } from 'app/@akita/external-models/rs-amenity';
@@ -8,16 +8,22 @@ import { RSAmenity } from 'app/@akita/external-models/rs-amenity';
     templateUrl: './real-state-form.component.html',
     styleUrls: ['real-state-form.component.scss']
 })
-export class RealStateFormComponent implements OnInit {
+export class RealStateFormComponent implements OnInit, OnChanges {
     realStateType = RealStateType;
     @Input()
     realStateForm: FormGroup;
+    @Input()
+    isEditable: boolean;
     customAmenities: RSAmenity[] = [];
 
     constructor() {}
 
-    ngOnInit() {
-        console.log(this.realStateForm);
+    ngOnInit() {}
+
+    ngOnChanges() {
+        if (this.realStateForm) {
+            this.customAmenities = Array.from(this.realStateForm.get('customAmenities').value);
+        }
     }
 
     isDirectionValid() {
@@ -37,6 +43,19 @@ export class RealStateFormComponent implements OnInit {
     onDeleteAmenities(index: number) {
         this.customAmenities.splice(index, 1);
         this.realStateForm.get('customAmenities').setValue(this.customAmenities);
+    }
+
+    getRealStateName() {
+        const type = this.realStateForm.get('realStateType').value;
+        if (type === RealStateType.HOUSE) {
+            return 'Casa';
+        }
+        if (type === RealStateType.DEPARTMENT) {
+            return 'Apartamento';
+        }
+        if (type === RealStateType.LOT) {
+            return 'Lote';
+        }
     }
 
     isApartment() {

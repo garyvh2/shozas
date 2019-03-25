@@ -34,7 +34,7 @@ export interface RealState {
     services?: RSService[];
     image?: RealStateImage;
     addr?: string;
-    images?: RealStateImage;
+    images?: RealStateImage[];
     isSold?: boolean;
     user: User;
     owner: User;
