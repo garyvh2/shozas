@@ -37,7 +37,6 @@ export class ImageUploaderComponent implements OnInit {
     }
     setPrimary(selected: number) {
         const message = 'Se ha puesto la imagen como primaria';
-
         for (let index = 0; index < this.imageArray.length; index++) {
             if (index === selected) {
                 this.imageArray[index].isPrimary = true;
@@ -46,7 +45,7 @@ export class ImageUploaderComponent implements OnInit {
             }
         }
         this.snackBar.open(message, 'cerrar', {
-            duration: 20000,
+            duration: 2000,
             panelClass: 'snackbar'
         });
     }

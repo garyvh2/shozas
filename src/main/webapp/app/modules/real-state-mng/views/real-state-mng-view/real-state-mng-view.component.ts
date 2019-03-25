@@ -74,6 +74,12 @@ export class RealStateMngViewComponent implements OnInit {
         this.matIconRegistry.addSvgIcon(`rsd_bath`, this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/bath.svg'));
 
         this.matIconRegistry.addSvgIcon(`rsd_up`, this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/up.svg'));
+        this.account
+            .identity()
+            .then(account => {
+                this.userAccount = { ...account };
+            })
+            .catch(() => (this.userAccount = undefined));
         this.account.getAuthenticationState().subscribe(user => (this.userAccount = user));
         this.$loading = this.realStateQuery.selectLoading();
         this.$error = this.realStateQuery.selectError();

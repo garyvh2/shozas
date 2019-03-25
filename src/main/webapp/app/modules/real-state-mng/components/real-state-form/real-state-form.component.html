@@ -51,7 +51,7 @@
     </div>
     <mat-form-field color="accent" appearance="outline" matAutosize="true">
         <mat-label>Precio</mat-label>
-        <input formControlName="price" matInput prefix="₡" type="text" mask="dot_separator" placeholder="Precio" />
+        <input formControlName="price" maxlength="12" matInput prefix="₡" type="text" mask="dot_separator" placeholder="Precio" />
         <mat-error>Este campo es requerido</mat-error>
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline" matAutosize="true">
@@ -69,7 +69,7 @@
         <mat-error>Este campo es requerido</mat-error>
     </mat-form-field>
     <mat-label class="radio__label">Otras Características</mat-label>
-    <div class="custom__container" *ngFor="let amenitie of customAmenities; index as i">
+    <div class="custom__container" *ngFor="let amenitie of customAmenities; let i = index">
         <div class="custom__amenities">
             <div>{{ amenitie.name }}</div>
             <div>{{ amenitie.description }}</div>
