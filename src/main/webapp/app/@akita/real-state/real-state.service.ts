@@ -108,4 +108,18 @@ export class RealStateService {
             this.searchRealStateStore.setLoading(false);
         });
     }
+
+    createRealState(realState: RealState) {
+        const url = `${SERVER_API_URL}/api/realstate/create`;
+        return this.http.post(url, realState).subscribe(
+            (response: ApiResponse<RealState>) => {
+                console.log(response);
+                this.detailStore.add(response.result);
+                return response.result;
+            },
+            () => {
+                return undefined;
+            }
+        );
+    }
 }

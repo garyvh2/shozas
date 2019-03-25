@@ -9,6 +9,20 @@ button {
     background-color: #ff6666;
     color: #fff;
 }
+
 mat-horizontal-stepper {
     height: 100vh;
+}
+
+.stepper__btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.final {
+    margin: 10px auto;
+    button {
+        width: 100%;
+        font-size: 16;
+    }
 }

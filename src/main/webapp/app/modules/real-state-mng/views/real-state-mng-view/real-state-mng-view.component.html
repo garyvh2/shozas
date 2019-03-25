@@ -18,20 +18,20 @@
             <button mat-raised-button matStepperNext>Siguiente</button>
         </div>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
+    <mat-step [stepControl]="firstFormGroup">
         <ng-template matStepLabel>Suba sus fotos</ng-template>
         <h2>Suba sus Fotos (Máximo 5)</h2>
         <jhi-image-uploader [imageArray]="imageArray"></jhi-image-uploader>
         <div>
             <button mat-raised-button matStepperPrevious>Atrás</button>
-            <button mat-raised-button matStepperNext>Siguiente</button>
+            <button mat-raised-button (click)="sendRealState()" matStepperNext>Siguiente</button>
         </div>
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Listo!</ng-template>
-        You are now done.
-        <div>
-            <button mat-raised-button (click)="stepper.reset()">Salir</button>
+        <jhi-ready-component [IsLoading]="isLoading" [IsError]="isError" [IsSuccess]="isSuccess"></jhi-ready-component>
+        <div class="final">
+            <button mat-raised-button (click)="goHome(stepper)">Salir</button>
         </div>
     </mat-step>
 </mat-horizontal-stepper>

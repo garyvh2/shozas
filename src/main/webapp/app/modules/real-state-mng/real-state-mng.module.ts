@@ -12,6 +12,7 @@ import { RealStateMapComponent } from './components/real-state-map/real-state-ma
 import { MAPS_API_KEY } from 'app/app.constants';
 import { GeolocationService } from './services/geolocation.service';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
+import { ReadyComponentComponent } from './components/ready-component/ready-component.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
         RealStateFormComponent,
         CustomAmenititesInputComponent,
         RealStateMapComponent,
-        ImageUploaderComponent
+        ImageUploaderComponent,
+        ReadyComponentComponent
     ],
     imports: [
         CommonModule,

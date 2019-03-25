@@ -1,0 +1,26 @@
+.loading {
+    text-align: center;
+    mat-spinner {
+        margin: auto;
+    }
+}
+
+div {
+    text-align: center;
+    mat-icon {
+        margin: auto;
+        height: fit-content;
+        width: fit-content;
+        font-size: 150px;
+    }
+}
+
+.completed {
+    mat-icon {
+        color: #69f0ae;
+    }
+}
+
+.api__error {
+    color: #ff6666;
+}

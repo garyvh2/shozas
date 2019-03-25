@@ -1,0 +1,14 @@
+<div *ngIf="IsLoading" class="loading">
+    <mat-spinner color="warn"></mat-spinner>
+    <h3>Procesando...</h3>
+</div>
+
+<div *ngIf="IsSuccess" class="completed">
+    <mat-icon>check_circle</mat-icon>
+    <h3>Se ha creado tu casa exitosamente</h3>
+</div>
+
+<div *ngIf="IsError" class="api__error">
+    <mat-icon>close</mat-icon>
+    <h3>Algo ha salido mal intentelo de nuevo</h3>
+</div>
