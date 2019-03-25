@@ -1,5 +1,5 @@
 <div *ngIf="editableMode && ($loading | async) && !($realState | async); else render_form">
-    <jhi-ready-component [IsLoading]="$loading" [IsError]="$realState"></jhi-ready-component>
+    <jhi-ready-component [IsLoading]="$loading" [IsError]="$realState" [isEditable]="editableMode"></jhi-ready-component>
 </div>
 
 <ng-template #render_form>
@@ -40,7 +40,7 @@
             <ng-template matStepLabel>Listo!</ng-template>
             <jhi-ready-component [IsLoading]="$loading" [IsError]="$error" [isEditable]="editableMode"></jhi-ready-component>
             <div *ngIf="!($loading | async)" class="final">
-                <button mat-raised-button (click)="goHome(stepper)">Salir</button>
+                <button mat-raised-button (click)="goHome()">Salir</button>
             </div>
         </mat-step>
     </mat-horizontal-stepper>
