@@ -29,6 +29,12 @@
             width: 240px;
         }
 
+        h2 {
+            color: rgba(0, 0, 0, 0.38);
+            margin: auto;
+            text-align: center;
+        }
+
         @media (max-width: 500px) {
             jhi-listing {
                 flex: 1;
