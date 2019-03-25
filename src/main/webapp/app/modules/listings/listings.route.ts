@@ -7,6 +7,10 @@ const routes: Routes = [
     {
         path: 'favorites',
         component: FavoritesComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Settings'
+        },
         canActivate: [UserRouteAccessService]
     }
 ];
