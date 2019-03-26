@@ -11,10 +11,12 @@
     flex-direction: row;
     flex-flow: row wrap;
     justify-content: space-evenly;
+
     .image {
         position: relative;
         height: fit-content;
-        mat-icon {
+
+        .close__icon {
             position: absolute;
             right: 0;
             top: 0;
@@ -23,18 +25,23 @@
             border-radius: 15px;
             color: #fff;
         }
-        span {
+
+        .primary__icon {
             position: absolute;
             cursor: pointer;
-            left: 50%;
-            bottom: 0;
+            left: 0;
+            top: 0;
             cursor: pointer;
             font-weight: bold;
-            background: #69f0ae;
             padding: 5px;
             color: #37474f;
         }
     }
+
+    .isPrimary {
+        color: #69f0ae;
+    }
+
     .background__image {
         position: absolute;
         z-index: 0;
@@ -45,6 +52,7 @@
         top: 50%;
         transform: translate(-50%, -50%);
     }
+
     img {
         margin-top: 10px;
         max-height: 200px;
@@ -64,8 +72,10 @@ h3 {
     margin: auto;
     min-height: 300px;
     text-align: center;
+
     p {
         text-align: left;
+        font-weight: bold;
     }
 }
 
