@@ -13,6 +13,8 @@ import {
     MatDialogModule,
     MatSnackBarModule,
     MatSidenavModule,
+    MatStepperModule,
+    MatCheckboxModule,
     MatTooltipModule,
     MatExpansionModule,
     MatSlideToggleModule
@@ -34,6 +36,8 @@ import { NgModule } from '@angular/core';
         MatProgressSpinnerModule,
         MatDialogModule,
         MatSnackBarModule,
+        MatStepperModule,
+        MatCheckboxModule,
         MatTooltipModule,
         MatExpansionModule,
         MatSlideToggleModule
@@ -52,6 +56,9 @@ import { NgModule } from '@angular/core';
         MatGridListModule,
         MatProgressSpinnerModule,
         MatDialogModule,
+        MatStepperModule,
+        MatStepperModule,
+        MatCheckboxModule,
         MatTooltipModule,
         MatExpansionModule,
         MatSlideToggleModule

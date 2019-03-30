@@ -1,6 +1,10 @@
 <h1>Guardados</h1>
-<div class="list">
-    <mat-spinner *ngIf="(isLoading$ | async)" [diameter]="40"></mat-spinner>
+<div class="list" *ngIf="(isLoading$ | async)">
+    <mat-spinner [diameter]="40"></mat-spinner>
+
+</div>
+<div class="list" *ngIf="!(isLoading$ | async)">
+    <h2 *ngIf="(favorites$ | async).length <= 0"> No posee elementos guardados.</h2>
     <jhi-listing *ngFor="let realstate of (favorites$ | async)" [listing]="realstate"
         [routerLink]="['/detail/', realstate.id]"></jhi-listing>
 </div>
