@@ -22,7 +22,7 @@
 
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                     <span>
-                        <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
+                        <img [src]="accountInfo?.image?.source || getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
                         {{getUserName()}}
                     </span>
                 </a>
@@ -41,6 +41,13 @@
                             <span>Cambiar contraseña</span>
                         </a>
                     </li>
+                    <li *ngSwitchCase="true">
+                            <a class="dropdown-item" routerLink="real-state/create" routerLinkActive="active"
+                                (click)="collapseNavbar()">
+                                <fa-icon icon="home" fixedWidth="true"></fa-icon>
+                                <span>Crear Inmueble</span>
+                            </a>
+                        </li>
                     <li *ngSwitchCase="true">
                         <a class="dropdown-item" (click)="logout()" id="logout">
                             <fa-icon icon="sign-out-alt" fixedWidth="true"></fa-icon>

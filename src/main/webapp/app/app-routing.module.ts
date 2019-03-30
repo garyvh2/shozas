@@ -22,6 +22,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     loadChildren: './modules/detail/detail.module#DetailModule'
                 },
                 {
+                    path: 'real-state',
+                    loadChildren: './modules/real-state-mng/real-state-mng.module#RealStateMngModule'
+                },
+                {
                     path: 'listings',
                     loadChildren: './modules/listings/listings.module#ListingsModule'
                 },

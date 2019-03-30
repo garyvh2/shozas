@@ -1,0 +1,14 @@
+<div *ngIf="(IsLoading | async)" class="loading">
+    <mat-spinner color="warn"></mat-spinner>
+    <h3>Procesando...</h3>
+</div>
+
+<div *ngIf="!(IsError | async) && !(IsLoading | async)" class="completed">
+    <mat-icon>check_circle</mat-icon>
+    <h3>Se ha {{isEditable ? 'actualizado' : 'creado'}} su inmueble exitosamente</h3>
+</div>
+
+<div *ngIf="(IsError | async) && !(IsLoading | async)" class="api__error">
+    <mat-icon>close</mat-icon>
+    <h3>Algo ha salido mal intentelo de nuevo</h3>
+</div>

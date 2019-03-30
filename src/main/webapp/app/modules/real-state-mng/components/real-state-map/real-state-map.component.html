@@ -1,0 +1,11 @@
+<div class="map">
+    <agm-map
+        (mapClick)="onMapClick($event)"
+        [streetViewControl]="false"
+        [latitude]="latitude.value"
+        [longitude]="longitude.value"
+        [zoom]="17"
+    >
+        <agm-marker [latitude]="latitude.value" [longitude]="longitude.value"></agm-marker>
+    </agm-map>
+</div>
