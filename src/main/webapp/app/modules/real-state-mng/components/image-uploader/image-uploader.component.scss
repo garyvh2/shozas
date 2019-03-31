@@ -15,31 +15,39 @@
     .image {
         position: relative;
         height: fit-content;
+        cursor: pointer;
 
         .close__icon {
             position: absolute;
+            z-index: 1;
             right: 0;
             top: 0;
-            cursor: pointer;
             background: #37474f;
             border-radius: 15px;
             color: #fff;
         }
 
         .primary__icon {
+            width: fit-content;
+            height: fit-content;
             position: absolute;
-            cursor: pointer;
             left: 0;
             top: 0;
-            cursor: pointer;
             font-weight: bold;
             padding: 5px;
-            color: #37474f;
+
+            mat-icon {
+                border-radius: 50%;
+                color: #37474f;
+                background: #fff;
+            }
         }
     }
 
     .isPrimary {
-        color: #69f0ae;
+        mat-icon {
+            color: #69f0ae !important;
+        }
     }
 
     .background__image {

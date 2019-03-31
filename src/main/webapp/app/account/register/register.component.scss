@@ -15,10 +15,21 @@
         margin-right: 10px;
     }
     .submit__button {
-        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        mat-spinner {
+            margin-left: 10px;
+        }
+
         button {
             background: #ff6666;
             color: #fff;
+        }
+    }
+    .disabled {
+        button {
+            background: #eee !important;
+            color: #b0bec5 !important;
         }
     }
 }
