@@ -12,7 +12,7 @@
             <label>Prima (₡): </label>
             <mat-form-field class="width-50">
                 <input
-                    type="number"
+                    mask="comma_separator.2"
                     [(ngModel)]="premium"
                     matInput
                     (keyup.enter)="calculateMonthlyFee()"
