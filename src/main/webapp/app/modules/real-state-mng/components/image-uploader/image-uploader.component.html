@@ -4,10 +4,12 @@
     </p>
     <div class="image__container">
         <mat-icon class="background__image" *ngIf="imageArray.length === 0" color="primary">landscape</mat-icon>
-        <div class="image" *ngFor="let image of imageArray;  let i = index;">
-            <mat-icon (click)="onRemove(i)">closed_rounded</mat-icon>
-            <img mat-card-image src="{{ image.source }}" alt="foto #{{ i }}" />
-            <span (click)="setPrimary(i)">Primaria</span>
+        <div class="image" *ngFor="let image of imageArray; let i = index">
+            <mat-icon class="close__icon" (click)="onRemove(i)">closed_rounded</mat-icon>
+            <img (click)="setPrimary(i)" mat-card-image src="{{ image.source }}" alt="foto #{{ i }}" />
+            <div class="primary__icon {{ image.isPrimary ? 'isPrimary' : '' }}">
+                <mat-icon >check_circle</mat-icon>
+            </div>
         </div>
     </div>
     <h3 *ngIf="imageArray.length === 0">No hay imagenes subidas</h3>
