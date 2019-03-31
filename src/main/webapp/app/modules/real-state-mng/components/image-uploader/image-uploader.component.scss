@@ -11,30 +11,45 @@
     flex-direction: row;
     flex-flow: row wrap;
     justify-content: space-evenly;
+
     .image {
         position: relative;
         height: fit-content;
-        mat-icon {
+        cursor: pointer;
+
+        .close__icon {
             position: absolute;
+            z-index: 1;
             right: 0;
             top: 0;
-            cursor: pointer;
             background: #37474f;
             border-radius: 15px;
             color: #fff;
         }
-        span {
+
+        .primary__icon {
+            width: fit-content;
+            height: fit-content;
             position: absolute;
-            cursor: pointer;
-            left: 50%;
-            bottom: 0;
-            cursor: pointer;
+            left: 0;
+            top: 0;
             font-weight: bold;
-            background: #69f0ae;
             padding: 5px;
-            color: #37474f;
+
+            mat-icon {
+                border-radius: 50%;
+                color: #37474f;
+                background: #fff;
+            }
         }
     }
+
+    .isPrimary {
+        mat-icon {
+            color: #69f0ae !important;
+        }
+    }
+
     .background__image {
         position: absolute;
         z-index: 0;
@@ -45,6 +60,7 @@
         top: 50%;
         transform: translate(-50%, -50%);
     }
+
     img {
         margin-top: 10px;
         max-height: 200px;
@@ -64,8 +80,10 @@ h3 {
     margin: auto;
     min-height: 300px;
     text-align: center;
+
     p {
         text-align: left;
+        font-weight: bold;
     }
 }
 

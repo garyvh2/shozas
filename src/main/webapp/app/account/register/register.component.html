@@ -2,7 +2,7 @@
     <h1 *ngIf="!success">Registrarse</h1>
 
     <div class="alert alert-success" *ngIf="success">
-        <strong>Se ha creado el Usuario</strong> Se le ha enviado un correo de confirmación.
+        <strong>Se ha creado el usuario</strong> Se le ha enviado un correo de confirmación.
     </div>
 
     <div class="alert alert-danger" *ngIf="error">
@@ -75,8 +75,9 @@
             <mat-error *ngIf="registerForm.get('phone').hasError('Mask error')">No cumple con el formato requerido
                 0000-0000</mat-error>
         </mat-form-field>
-        <div class="submit__button">
-            <button type="submit" mat-raised-button>Registrar</button>
+        <div class="submit__button {{isLoading ? 'disabled' : ''}}"  >
+            <button [disabled]="isLoading" type="submit" mat-raised-button>Registrar</button>
+            <mat-spinner *ngIf="isLoading" color="warn" [diameter]="40"></mat-spinner>
         </div>
     </form>
 </div>

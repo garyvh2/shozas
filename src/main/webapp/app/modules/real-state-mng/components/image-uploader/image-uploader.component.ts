@@ -33,6 +33,9 @@ export class ImageUploaderComponent implements OnInit {
     }
 
     onRemove(index: number) {
+        if (this.imageArray[index].isPrimary && this.imageArray.length > 0) {
+            this.imageArray[0].isPrimary = true;
+        }
         this.imageArray.splice(index, 1);
     }
     setPrimary(selected: number) {
