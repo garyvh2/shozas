@@ -1,43 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title th:text="#{email.contact.title}">JHipster activation</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
-    </head>
-    <body>
-        <p th:text="#{email.contact.greeting(${owner.firstName})}">
-            Dear
-        </p>
-        <p>
-            Un usuario está interesado en una de sus propiedades. Puede encontrar la información de contacto abajo:
-        </p>
-        <ul>
-            <li th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">
-                Name: Anonymous
-            </li>
-            <li th:text="#{email.contact.email(${client.login})}">
-                Email: anonymous@anonymous.com
-            </li>
-            <li th:text="#{email.contact.phone(${client.phone})}">
-                Phone: unavailable
-            </li>
-        </ul>
-        <p>
-            Información de la propiedad:
-        </p>
-        <ul>
-            <li th:text="#{email.contact.property1(${rs.id})}">
-                ID: Unavailable
-            </li>
-            <li th:text="#{email.contact.property2(${rs.title})}">
-                Title: unavailable
-            </li>
-        </ul>
-        <p>
-            <span th:text="#{email.contact.regards}">Regards, </span>
-            <br/>
-            <em th:text="#{email.signature}">JHipster.</em>
-        </p>
-    </body>
+
+<head>
+    <title th:text="#{email.contact.title}">JHipster activation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    <style>
+        body {
+            font-family: Lato, sans-serif;
+            background-color: #323232;
+            color: #ff6666;
+        }
+
+        ul {
+            list-style: none
+        }
+
+        .farewell em {
+            color: #ff6666;
+            font-weight: bold;
+        }
+
+        .imgHolder {
+            height: 48px;
+            border-bottom: 2px solid #ff6666;
+            padding-bottom: 16px;
+        }
+
+        .imgHolder img {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="imgHolder">
+        <img src="https://res.cloudinary.com/shozas/image/upload/v1553994848/shozas.png" alt="Logo de Shozas">
+    </div>
+    <p th:text="#{email.contact.greeting(${owner.firstName})}">
+        Dear
+    </p>
+    <p>
+        Un usuario está interesado en una de sus propiedades. Puede encontrar la información de contacto abajo:
+    </p>
+    <ul>
+        <li th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">
+            Name: Anonymous
+        </li>
+        <li th:text="#{email.contact.email(${client.login})}">
+            Email: anonymous@anonymous.com
+        </li>
+        <li th:if="${client.displayPhone}"
+            th:text="#{email.contact.phone(${client.phone} + '')}">
+            Phone: unavailable
+        </li>
+    </ul>
+    <p>
+        Información de la propiedad:
+    </p>
+    <ul>
+        <li th:text="#{email.contact.property1(${rs.id})}">
+            ID: Unavailable
+        </li>
+        <li th:text="#{email.contact.property2(${rs.title})}">
+            Title: unavailable
+        </li>
+        <li>
+            <a th:with="url=(@{|${baseUrl}/#/detail/${rs.id}|})" th:href="${url}"
+               th:text="${'Visitar pagina de la propiedad'}">Link to property detail</a>
+        </li>
+    </ul>
+    <p class="farewell">
+        <span th:text="#{email.contact.regards}">Regards, </span>
+        <br />
+        <em th:text="#{email.signature}">JHipster.</em>
+    </p>
+
+</body>
+
 </html>

@@ -31,6 +31,7 @@ import { FinanceModalComponent } from './components/finance-modal/finance-modal.
 import { MatDialogModule } from '@angular/material';
 import { FinanceCardComponent } from './components/finance-card/finance-card.component';
 import { SidecardLikeComponent } from './components/sidecard-like/sidecard-like.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import { SidecardLikeComponent } from './components/sidecard-like/sidecard-like.
         FormsModule,
         AgmCoreModule.forRoot({
             apiKey: MAPS_API_KEY
-        })
+        }),
+        NgxMaskModule.forRoot()
     ],
     providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, SearchRealStateStore],
     entryComponents: [FinanceModalComponent]
