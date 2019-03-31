@@ -20,6 +20,7 @@ import { ShozasHomeModule } from './home/home.module';
 import { ShozasAccountModule } from './account/account.module';
 import { ShozasEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
+import 'moment/locale/es';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
 import { AngularMaterialModule } from 'app/shared/angular-material/angular-material.module';
