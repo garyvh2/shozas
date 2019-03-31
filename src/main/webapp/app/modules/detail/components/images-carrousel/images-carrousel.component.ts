@@ -24,6 +24,8 @@ export class ImagesCarrouselComponent implements OnChanges {
     customDescription: Description = {
         strategy: DescriptionStrategy.ALWAYS_HIDDEN
     };
+    defaultImage = 'http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png';
+
     constructor() {}
 
     ngOnChanges() {
@@ -45,6 +47,10 @@ export class ImagesCarrouselComponent implements OnChanges {
         this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, {
             layout: new AdvancedLayout(index, true)
         });
+    }
+
+    getImage(image: any) {
+        return image ? image.modal.img : this.defaultImage;
     }
 
     private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
