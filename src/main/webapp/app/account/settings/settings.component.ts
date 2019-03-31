@@ -27,8 +27,8 @@ export class SettingsComponent implements OnInit {
     settingsAccount: any;
 
     imageDataURL: string;
-
     successMessage = 'Se han guardado los cambios';
+    isLoading = false;
 
     constructor(
         private loginModalService: LoginModalService,
@@ -70,15 +70,17 @@ export class SettingsComponent implements OnInit {
 
     save() {
         if (this.settingsForm.valid) {
+            this.isLoading = true;
+
             const updatedUser = { ...this.settingsAccount, ...this.settingsForm.value };
 
             if (this.imageDataURL) {
                 updatedUser.image = { isPrimary: true, source: this.imageDataURL };
             }
 
-            console.log('Updated User: ', updatedUser);
             this.accountService.save(updatedUser).subscribe(
                 () => {
+                    this.isLoading = false;
                     // this.success = true;
                     this.openSnackBar(this.successMessage);
                     // this.settingsForm.reset({
@@ -99,6 +101,7 @@ export class SettingsComponent implements OnInit {
     }
 
     private processError(response: HttpErrorResponse) {
+        this.isLoading = false;
         this.success = null;
         if (response.status === 400 && response.error.type === USERID_ALREADY_USED_TYPE) {
             this.errorUserIdExists = 'ERROR';
