@@ -59,7 +59,7 @@ public class UserService {
 
     public List<User> getUsersByRaiting(double raiting){
         List<User> resultUser = new ArrayList<User>();
-        Optional<List<User>> dbResult = userRepository.findUsersByRaiting(raiting);
+        Optional<List<User>> dbResult = userRepository.findByRaitingGreaterThan(raiting);
         if(dbResult.isPresent()){
             resultUser = dbResult.get();
         }

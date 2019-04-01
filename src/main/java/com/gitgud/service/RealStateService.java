@@ -301,15 +301,35 @@ public class RealStateService {
         elementInDB.setCustomAmenities(updateElement.getCustomAmenities() == null ? elementInDB.getCustomAmenities()
                 : updateElement.getCustomAmenities());
 
-        elementInDB.setImages(updateElement.getImages() == null ? elementInDB.getImages()
+        elementInDB.setImages(updateElement.getImages() == null || updateElement.getImages().isEmpty() ? elementInDB.getImages()
                 : getUpdatedImage(updateElement.getImages(), elementInDB.getImages()));
         return realStateRepository.save(elementInDB);
     }
 
     private HashSet<Image> getUpdatedImage(HashSet<Image> updatedImages, HashSet<Image> imagesOnDb) {
-        HashSet<Image> result = new HashSet<Image>();
+        Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
+        updatedImages.forEach(i ->{
+            imagesOnDb.forEach(im -> {
+                if(i.getImageId().equalsIgnoreCase(im.getImageId())){
+                    if (!i.getSource().equalsIgnoreCase(im.getSource())){
+                        try {
+                            if (!i.getImageId().equals("0"))
+                                cloudinaryUploader.uploader().destroy(i.getImageId(), ObjectUtils.emptyMap());
 
-        return result;
+                            Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
+                            i.setImageId(uploadResult.get("public_id").toString());
+                            i.setSource(uploadResult.get("url").toString());
+                        } catch (IOException e) {
+                            i.setSource(
+                                "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
+                            i.setImageId("0");
+                        }
+                    }
+                }
+            });
+        });
+
+        return updatedImages;
     }
 
     public User addFavorite(ApiFavorite favorite) {

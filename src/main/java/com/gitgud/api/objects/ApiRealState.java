@@ -9,7 +9,7 @@ public class ApiRealState{
     private int baths;
     private int gar;
     private double size;
-    private int price;
+    private long price;
     private ApiUser user;
 
     public String getId() {
@@ -76,11 +76,11 @@ public class ApiRealState{
         this.size = size;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
