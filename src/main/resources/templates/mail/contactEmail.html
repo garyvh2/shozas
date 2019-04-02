@@ -4,79 +4,94 @@
 <head>
     <title th:text="#{email.contact.title}">JHipster activation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
     <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
-    <style>
-        body {
-            font-family: Lato, sans-serif;
-            background-color: #323232;
-            color: #ff6666;
-        }
-
-        ul {
-            list-style: none
-        }
-
-        .farewell em {
-            color: #ff6666;
-            font-weight: bold;
-        }
-
-        .imgHolder {
-            height: 48px;
-            border-bottom: 2px solid #ff6666;
-            padding-bottom: 16px;
-        }
-
-        .imgHolder img {
-            height: 100%;
+    <style type="text/css" media="screen">
+        * {
+            font-family: 'Lato', Arial, sans-serif !important;
         }
     </style>
 </head>
 
-<body>
-    <div class="imgHolder">
-        <img src="https://res.cloudinary.com/shozas/image/upload/v1553994848/shozas.png" alt="Logo de Shozas">
+<body style="background:#eee; padding: 20px 20px 60px 20px;font-size:16px;">
+    <div style="width:100%; text-align:center;">
+        <span style="color:#ff6666; font-size:30px;">Shozas</span>
     </div>
-    <p th:text="#{email.contact.greeting(${owner.firstName})}">
-        Dear
-    </p>
-    <p>
-        Un usuario está interesado en una de sus propiedades. Puede encontrar la información de contacto abajo:
-    </p>
-    <ul>
-        <li th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">
-            Name: Anonymous
-        </li>
-        <li th:text="#{email.contact.email(${client.login})}">
-            Email: anonymous@anonymous.com
-        </li>
-        <li th:if="${client.displayPhone}"
-            th:text="#{email.contact.phone(${client.phone} + '')}">
-            Phone: unavailable
-        </li>
-    </ul>
-    <p>
-        Información de la propiedad:
-    </p>
-    <ul>
-        <li th:text="#{email.contact.property1(${rs.id})}">
-            ID: Unavailable
-        </li>
-        <li th:text="#{email.contact.property2(${rs.title})}">
-            Title: unavailable
-        </li>
-        <li>
-            <a th:with="url=(@{|${baseUrl}/#/detail/${rs.id}|})" th:href="${url}"
-               th:text="${'Visitar pagina de la propiedad'}">Link to property detail</a>
-        </li>
-    </ul>
-    <p class="farewell">
-        <span th:text="#{email.contact.regards}">Regards, </span>
-        <br />
-        <em th:text="#{email.signature}">JHipster.</em>
-    </p>
+    <div
+        style="max-width:800px;margin:auto;background:#fff; padding: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);font-family: 'Lato', Arial, sans-serif !important;">
+        <h1 style="text-align:center">¡Encontramos un interesado!</h1>
 
+        <p th:text="#{email.contact.greeting(${owner.firstName})}">
+            Hola Señor/a,
+        </p>
+        <p>
+            Un usuario está interesado en una de sus propiedades. Puede encontrar la información de contacto abajo:
+        </p>
+        <div
+            style="display: flex; width: fit-content; margin: 20px auto; padding: 10px; background: #ff6666; color:#fff">
+            <img style="height:70px; width: auto;"
+                th:src="${client.imageUrl!= null && !#strings.isEmpty(client.imageUrl)) ? client.imageUrl : 'http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png'}"
+                alt="user-profile" src="http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" />
+            <ul style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 30px;line-height: 22px;">
+                <li>
+                    <b>Nombre: </b> <span
+                        th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">Anonymous</span>
+                </li>
+                <li>
+                    <b>Correo: </b> <span
+                        th:text="#{email.contact.email(${client.login})}">anonymous@anonymous.com</span>
+                </li>
+                <li th:if="${client.displayPhone}">
+                    <b>Telefono: </b> <span th:text="#{email.contact.phone(${client.phone} + '')}">unavailable</span>
+                </li>
+            </ul>
+        </div>
+        <h3 style="margin-bottom:0;">
+            Información de la propiedad
+        </h3>
+        <div style="display: flex;justify-content: space-between; padding: 10px;  background: transparent; color:#333">
+            <ul style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 0px;line-height: 30px;">
+                <li>
+                    <b>Titulo: </b>
+                </li>
+                <li>
+                    <b>Ubicación: </b>
+                </li>
+                <li>
+                    <b>Precio: </b>
+                </li>
+            </ul>
+            <ul
+                style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 0px;line-height: 30px; justify-content: flex-end">
+                <li>
+                    <span style="margin-left:10px" th:text="#{email.contact.property1(${rs.title})}">No
+                        Disponible</span>
+                </li>
+                <li>
+
+                    <span style="margin-left:10px"
+                        th:text="#{email.contact.property2(${rs.province} + ' '+ ${rs.city} + ' ' + ${rs.district})}">
+                        No Disponible
+                    </span>
+                </li>
+                <li>
+                    <span style="margin-left:10px" th:text="#{email.contact.property2($${#numbers.formatDecimal(rs.price, 0, 'DEFAULT', 3, 'DEFAULT')})}">₡21.000.000</span>
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin: 0 auto 20px auto; text-align: center;">
+            <a style="text-decoration:none;display: block; padding:10px; margin: 0 auto; max-width: 150px; background:#69f0ae; color:#fff;"
+                th:with="url=(@{|${baseUrl}/#/detail/${rs.id}|})" th:href="${url}">
+                Ver Propiedad
+            </a>
+        </div>
+        <div>
+            <span th:text="#{email.activation.text2}">Saludos, </span>
+            <br />
+            <em style="font-weight: bold;" th:text="#{email.signature}">Shozas Team.</em>
+        </div>
+    </div>
 </body>
 
 </html>
