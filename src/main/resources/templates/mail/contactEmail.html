@@ -30,7 +30,7 @@
         <div
             style="display: flex; width: fit-content; margin: 20px auto; padding: 10px; background: #ff6666; color:#fff">
             <img style="height:70px; width: auto;"
-                th:src="${client.imageUrl!= null && !#strings.isEmpty(client.imageUrl)) ? client.imageUrl : 'http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png'}"
+                th:src="${client.imageUrl!= null && !#strings.isEmpty(client.imageUrl) ? client.imageUrl : 'http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png'}"
                 alt="user-profile" src="http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" />
             <ul style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 30px;line-height: 22px;">
                 <li>
@@ -75,7 +75,7 @@
                     </span>
                 </li>
                 <li>
-                    <span style="margin-left:10px" th:text="#{email.contact.property2($${#numbers.formatDecimal(rs.price, 0, 'DEFAULT', 3, 'DEFAULT')})}">₡21.000.000</span>
+                    <span style="margin-left:10px" th:text="#{email.contact.property2(${#numbers.formatDecimal(rs.price, 0, 'DEFAULT', 3, 'DEFAULT')})}">₡21.000.000</span>
                 </li>
             </ul>
         </div>
