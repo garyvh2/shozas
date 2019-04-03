@@ -76,8 +76,10 @@ public class RealStateService {
             realState.setImages(getDefaults());
         }
 
+        User user = userOwner.get();
+        user.setFavorites(null);
         realState.setDateCreated(Instant.now());
-        realState.setOwner(userOwner.get());
+        realState.setOwner(user);
 
         return realStateRepository.save(realState);
     }
