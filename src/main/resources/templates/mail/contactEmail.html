@@ -43,7 +43,7 @@
         <div
             style="display: flex; width: fit-content; margin: 30px auto; padding: 10px; background: #ff6666; color:#fff; border-radius: 5px;">
             <img style="height:70px; width: auto; border-radius:100%;"
-                th:src="${client.imageUrl!= null && !#strings.isEmpty(client.imageUrl) ? client.imageUrl : 'https://res.cloudinary.com/ucenfotec19/image/upload/v1554338838/profile.jpg'}"
+                th:src="${client.image != null && !#strings.isEmpty(client.image.source) ? client.image.source : 'https://res.cloudinary.com/ucenfotec19/image/upload/v1554338838/profile.jpg'}"
                 alt="user-profile" src="https://res.cloudinary.com/ucenfotec19/image/upload/v1554338838/profile.jpg" />
             <ul style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 30px;line-height: 22px;">
                 <li>
