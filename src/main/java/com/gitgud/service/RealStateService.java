@@ -305,6 +305,7 @@ public class RealStateService {
 
         elementInDB.setImages(updateElement.getImages() == null || updateElement.getImages().isEmpty() ? elementInDB.getImages()
                 : getUpdatedImage(updateElement.getImages(), elementInDB.getImages()));
+        elementInDB.setRented(updateElement.isRented());
         return realStateRepository.save(elementInDB);
     }
 
