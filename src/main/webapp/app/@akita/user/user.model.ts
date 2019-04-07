@@ -14,6 +14,7 @@ export interface User {
     userId: string;
     userType: UserType;
     activated: boolean;
+    displayPhone: boolean;
     favorites: string[];
 }
 

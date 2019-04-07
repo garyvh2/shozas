@@ -29,6 +29,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'listings',
                     loadChildren: './modules/listings/listings.module#ListingsModule'
                 },
+                {
+                    path: 'profile',
+                    loadChildren: './modules/view-profile/view-profile.module#ViewProfileModule'
+                },
                 ...LAYOUT_ROUTES
             ],
             { useHash: true, enableTracing: false }
