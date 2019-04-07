@@ -11,6 +11,7 @@ public class ApiRealState{
     private double size;
     private long price;
     private ApiUser user;
+    private String type;
 
     public String getId() {
         return id;
@@ -90,5 +91,13 @@ public class ApiRealState{
 
     public void setUser(ApiUser user) {
         this.user = user;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
