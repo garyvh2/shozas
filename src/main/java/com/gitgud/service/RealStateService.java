@@ -122,6 +122,11 @@ public class RealStateService {
             break;
         }
 
+        realStates.and(realStates.criteria("isSold").equal(parameters.isSold()));
+
+        if (parameters.isRented())
+            realStates.and(realStates.criteria("isRented").equal(parameters.isRented()));
+
         if (parameters.getProvince() != null && !parameters.getProvince().isEmpty() && parameters.getCity() != null
                 && !parameters.getCity().isEmpty() && parameters.getDistrict() != null
                 && !parameters.getDistrict().isEmpty()) {

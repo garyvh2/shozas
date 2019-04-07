@@ -15,7 +15,9 @@ public class ApiSearchParams {
     private int stories;
     private int zip;
     private String user;
-    private String similarTo;
+    private boolean  similarTo;
+    private boolean isSold;
+    private boolean isRented;
     private int page;
     private int pageSize;
     private double raiting;
@@ -108,14 +110,6 @@ public class ApiSearchParams {
         this.user = user;
     }
 
-    public String getSimilarTo() {
-        return similarTo;
-    }
-
-    public void setSimilarTo(String similarTo) {
-        this.similarTo = similarTo;
-    }
-
     public int getSizeLow() {
         return sizeLow;
     }
@@ -154,5 +148,25 @@ public class ApiSearchParams {
 
     public void setRaiting(double raiting) {
         this.raiting = raiting;
+    }
+
+    public boolean isSimilarTo() {
+        return similarTo;
+    }
+
+    public boolean isSold() {
+        return isSold;
+    }
+
+    public void setSold(boolean sold) {
+        isSold = sold;
+    }
+
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
     }
 }
