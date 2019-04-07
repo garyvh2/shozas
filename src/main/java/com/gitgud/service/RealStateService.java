@@ -122,6 +122,17 @@ public class RealStateService {
             break;
         }
 
+        realStates.and(realStates.criteria("isSold").equal(parameters.isSold()));
+
+        if (parameters.isRented())
+            realStates.and(realStates.criteria("isRented").equal(parameters.isRented()));
+
+        if(parameters.isSimilarTo()){
+            List<RealState> realStateList = getSimilarElements(realStates, parameters);
+            results.setAveragePrice(realStateList.stream().mapToLong(RealState::getPrice).sum() / realStateList.size());
+            return realStateList.stream().limit(10).collect(Collectors.toList());
+        }
+
         if (parameters.getProvince() != null && !parameters.getProvince().isEmpty() && parameters.getCity() != null
                 && !parameters.getCity().isEmpty() && parameters.getDistrict() != null
                 && !parameters.getDistrict().isEmpty()) {
@@ -210,6 +221,19 @@ public class RealStateService {
         }
 
         return realStates.asList(new FindOptions().skip(page).limit(pageSize));
+    }
+
+    private List<RealState> getSimilarElements(Query<RealState> realStateQuery, ApiSearchParams searchParams){
+        Criteria[] criterias = new Criteria[5];
+
+        criterias[0] = realStateQuery.criteria("baths").equal(searchParams.getBaths());
+        criterias[1] = realStateQuery.criteria("rooms").equal(searchParams.getBeds());
+        criterias[2] = realStateQuery.criteria("size").greaterThanOrEq(searchParams.getSizeLow());
+        criterias[3] = realStateQuery.criteria("garage").equal(searchParams.getGarages());
+        criterias[4] = realStateQuery.criteria("stories").equal(searchParams.getStories());
+        realStateQuery.or(criterias);
+
+        return realStateQuery.asList();
     }
 
     public ApiRealState toApiRealState(RealState realState) {
@@ -305,6 +329,7 @@ public class RealStateService {
 
         elementInDB.setImages(updateElement.getImages() == null || updateElement.getImages().isEmpty() ? elementInDB.getImages()
                 : getUpdatedImage(updateElement.getImages(), elementInDB.getImages()));
+        elementInDB.setRented(updateElement.isRented());
         return realStateRepository.save(elementInDB);
     }
 
