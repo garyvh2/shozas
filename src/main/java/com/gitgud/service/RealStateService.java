@@ -250,6 +250,7 @@ public class RealStateService {
         result.setSize(realState.getSize());
         result.setGar(realState.getGarage());
         result.setTitle(realState.getTitle());
+        result.setType(realState.getRealStateType());
 
         user.setName(realState.getOwner().getFirstName() + " " + realState.getOwner().getLastName());
         user.setStars(realState.getOwner().getRaiting());

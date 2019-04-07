@@ -52,6 +52,15 @@ public class RealStateController extends ApiBaseController {
         } );
     }
 
+    @PostMapping("/search/all")
+    public ApiResultModel<ApiSearchResults> searchAllTypes(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
+        return GetApiResultModel(() ->{
+            ApiSearchResults results = new ApiSearchResults();
+            results.setElements(realStateService.getRealStateElements(ResultType.All, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+            return results;
+        } );
+    }
+
     @PostMapping("/create")
     public ApiResultModel<RealState> createRealState(@RequestBody RealState realState) throws Exception {
         return GetApiResultModel(() ->  realStateService.save(realState));
