@@ -64,6 +64,8 @@ public class RealState {
 
     private boolean isSold;
 
+    private boolean isRented;
+
     private Instant dateCreated;
 
     @Field
@@ -262,6 +264,10 @@ public class RealState {
     public void setSold(boolean sold) {
         isSold = sold;
     }
+
+    public boolean isRented() { return isRented;     }
+
+    public void setRented(boolean rented) { isRented = rented; }
 
     public HashSet<Image> getImages() {
         return images;

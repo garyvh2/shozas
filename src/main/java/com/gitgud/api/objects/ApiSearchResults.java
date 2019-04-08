@@ -8,6 +8,7 @@ public class ApiSearchResults {
     private long minPrice;
     private double maxSize;
     private double minSize;
+    private long averagePrice;
     private List<ApiRealState> elements;
 
     public long getMaxPrice() {
@@ -48,5 +49,13 @@ public class ApiSearchResults {
 
     public void setElements(List<ApiRealState> elements) {
         this.elements = elements;
+    }
+
+    public long getAveragePrice() {
+        return averagePrice;
+    }
+
+    public void setAveragePrice(long averagePrice) {
+        this.averagePrice = averagePrice;
     }
 }
