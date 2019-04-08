@@ -1,24 +1,25 @@
 <div class="containe-fluid pricing__container">
     <div class="row pricing__title">
-        <div class="col-12">
+        <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1">
             <h1>Cotizar Casa</h1>
         </div>
     </div>
     <div class="row pricing__content">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 ">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-4 offset-xl-2 offset-lg-1">
             <div class="pricing__controls">
                 <jhi-pricing-filter [searchFilters]="homeFilters" [sizeConfig]="sizeRange"></jhi-pricing-filter>
             </div>
             <button mat-button (click)="applyFilters()">Aplicar</button>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 pricing__illustration-container">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-4 pricing__illustration-container">
             <div class="pricing__illustration">
-
+                <jhi-pricing-illustration *ngIf="showCanvas"></jhi-pricing-illustration>
+                <img [src]="pricingIllustrationURL" alt="Imagen ilustrativa de casa cotizada">
             </div>
         </div>
     </div>
     <div class="row pricing__response">
-        <div class="col-12">
+        <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1">
             <h3>Precio estimado: ¢{{averagePrice}}</h3>
         </div>
     </div>

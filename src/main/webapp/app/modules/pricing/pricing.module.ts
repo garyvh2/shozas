@@ -7,9 +7,16 @@ import { PricingService } from './pricing.service';
 import { PricingFilterComponent } from './components/pricing-filter/pricing-filter.component';
 import { PricingAmountComponent } from './components/pricing-amount/pricing-amount.component';
 import { PricingRangeComponent } from './components/pricing-range/pricing-range.component';
+import { PricingIllustrationComponent } from './components/pricing-illustration/pricing-illustration.component';
 
 @NgModule({
-    declarations: [PricingViewComponent, PricingFilterComponent, PricingAmountComponent, PricingRangeComponent],
+    declarations: [
+        PricingViewComponent,
+        PricingFilterComponent,
+        PricingAmountComponent,
+        PricingRangeComponent,
+        PricingIllustrationComponent
+    ],
     imports: [ShozasSharedModule, PricingRoutingModule],
     exports: [],
     providers: [PricingService]

@@ -23,6 +23,9 @@ export class PricingViewComponent implements OnInit {
 
     averagePrice = 0;
 
+    showCanvas = false;
+    pricingIllustrationURL = 'https://res.cloudinary.com/shozas/image/upload/v1554718546/generichouse.jpg';
+
     constructor(private pricingService: PricingService) {}
 
     ngOnInit() {
@@ -36,9 +39,20 @@ export class PricingViewComponent implements OnInit {
 
     applyFilters() {
         console.log('SF: ', this.homeFilters);
-        this.pricingService.getPricing(this.homeFilters).subscribe(response => {
-            console.log(response);
-            this.averagePrice = response.result.averagePrice;
-        });
+        this.pricingService.getPricing(this.homeFilters).subscribe(
+            response => {
+                console.log(response);
+                this.averagePrice = response.result.averagePrice;
+                this.updateIllustration(response);
+            },
+            error => {}
+        );
+    }
+
+    updateIllustration(response) {
+        if (response.result.elements.length > 0) {
+            this.pricingIllustrationURL = response.result.elements[0].image.source;
+            this.showCanvas = false;
+        }
     }
 }

@@ -1,6 +1,6 @@
 <mat-card class="rsd__sidecard">
     <mat-card-header>
-        <img mat-card-avatar src="http://picsum.photos/50/50/?random" />
+        <img mat-card-avatar src="{{detail?.owner?.image?.source || 'http://picsum.photos/50/50/?random'}}" />
         <mat-card-title>{{detail.owner.firstName}} {{detail.owner.lastName}}</mat-card-title>
         <mat-card-subtitle>
             <div>
