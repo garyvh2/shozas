@@ -285,6 +285,7 @@ public class RealStateService {
             throw new Exception("El elemento a actualizar no existe");
 
         RealState elementInDB = elementToUpdate.get();
+        elementInDB.getOwner().setFavorites(null);
 
         if (updateElement.getProvince() != null || updateElement.getDistrict() != null) {
             String realStateTitle = updateElement.getRealStateType().equals("H") ? "Casa en "
