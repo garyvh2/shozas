@@ -1,0 +1,13 @@
+.pricing__canvas {
+    align-items: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    height: 345px;
+
+    canvas {
+        border-radius: 8px;
+        max-width: 400px;
+        max-height: 300px;
+    }
+}

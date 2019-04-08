@@ -17,7 +17,8 @@ import {
     MatCheckboxModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSliderModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 @NgModule({
@@ -40,7 +41,8 @@ import { NgModule } from '@angular/core';
         MatCheckboxModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatSliderModule
     ],
     exports: [
         MatButtonModule,
@@ -61,7 +63,8 @@ import { NgModule } from '@angular/core';
         MatCheckboxModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatSliderModule
     ]
 })
 export class AngularMaterialModule {}
