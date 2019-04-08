@@ -1,23 +1,26 @@
 <div class="user__info__container" *ngIf="user">
-    <div>
-        <h1>{{ user.firstName + ' ' + user.lastName }}</h1>
-        <star-rating class="details__rating" size="large" [starType]="'svg'" [rating]="user.raiting" [readOnly]="true"></star-rating>
-        <span class="reviews">Ver calificaciones</span>
-    </div>
-    <div class="user__image">
-        <img mat-card-avatar [src]="getImage()" />
-    </div>
-    <div>
-        <div class="icon__text">
-            <mat-icon>mail</mat-icon>
-            <div class="text">
-                <span>{{ user.login }}</span>
-            </div>
+    <div class="background__image"></div>
+    <div class="user__info__content">
+        <div>
+            <h2>{{ user.firstName + ' ' + user.lastName }}</h2>
+            <star-rating class="details__rating" size="large" [starType]="'svg'" [rating]="user.raiting" [readOnly]="true"></star-rating>
+            <span class="reviews">Ver calificaciones</span>
         </div>
-        <div class="icon__text" *ngIf="user.displayPhone">
-            <mat-icon>phone</mat-icon>
-            <div class="text">
-                <span>{{ getFormattedPhone() }}</span>
+        <div class="user__image">
+            <img mat-card-avatar [src]="getImage()" />
+        </div>
+        <div>
+            <div class="icon__text">
+                <mat-icon>mail</mat-icon>
+                <div class="text">
+                    <span>{{ user.login }}</span>
+                </div>
+            </div>
+            <div class="icon__text" *ngIf="user.displayPhone">
+                <mat-icon>phone</mat-icon>
+                <div class="text">
+                    <span>{{ getFormattedPhone() }}</span>
+                </div>
             </div>
         </div>
     </div>
