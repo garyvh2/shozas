@@ -16,6 +16,8 @@ export class RealStateListComponent implements OnChanges {
     loading: boolean;
     @Input()
     editable: boolean;
+    @Input()
+    linkable: boolean;
 
     currentIndex = 0;
 

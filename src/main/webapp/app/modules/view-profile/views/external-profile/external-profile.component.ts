@@ -1,9 +1,9 @@
+import { ActivatedRoute } from '@angular/router';
 import { RealStateQuery } from './../../../../@akita/real-state/real-state.query';
 import { Observable } from 'rxjs';
 import { RealState } from './../../../../@akita/real-state/real-state.model';
-import { AccountService, UserService } from '../../../../core';
 import { Component, OnInit } from '@angular/core';
-import { User } from './../../../../@akita/user';
+import { User, UserQuery, UserService } from './../../../../@akita/user';
 import { RealStateService } from 'app/@akita/real-state';
 
 @Component({
@@ -12,13 +12,31 @@ import { RealStateService } from 'app/@akita/real-state';
     styles: []
 })
 export class ExternalProfileComponent implements OnInit {
-    user: User;
+    user$: Observable<User>;
     realStates$: Observable<RealState[]>;
     isLoadingRealState$: Observable<boolean>;
-    constructor(private userService: UserService, private realStateService: RealStateService, private realStateQuery: RealStateQuery) {}
+    constructor(
+        private userService: UserService,
+        private userQuery: UserQuery,
+        private realStateService: RealStateService,
+        private realStateQuery: RealStateQuery,
+        private activeRoute: ActivatedRoute
+    ) {}
 
     async ngOnInit() {
-        this.getUserRealState(this.user);
+        this.getUser();
+    }
+    getUser() {
+        const id = this.activeRoute.snapshot.paramMap.get('id');
+        if (id) {
+            this.user$ = this.userQuery.selectEntity(id);
+            this.userService.get(id);
+            this.user$.subscribe(user => {
+                if (user) {
+                    this.getUserRealState(user);
+                }
+            });
+        }
     }
     getUserRealState(user: User) {
         this.realStates$ = this.realStateQuery.getUserRealState(user.login);

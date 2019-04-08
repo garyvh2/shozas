@@ -1,3 +1,4 @@
+import { UserService } from './../../@akita/user/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountService } from './../../core';
@@ -10,9 +11,10 @@ import { ViewProfileRoutingModule } from './view-profile.route';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { RealStateListComponent } from './components/real-state-list/real-state-list.component';
 import { StarRatingModule } from 'angular-star-rating';
+import { UserQuery } from './../../@akita/user/index';
 @NgModule({
     declarations: [OwnProfileComponent, ExternalProfileComponent, UserInfoComponent, RealStateListComponent],
     imports: [CommonModule, ViewProfileRoutingModule, ShozasSharedModule, StarRatingModule.forRoot()],
-    providers: [RealStateService, RealStateQuery, AccountService]
+    providers: [RealStateService, RealStateQuery, AccountService, UserService, UserQuery]
 })
 export class ViewProfileModule {}

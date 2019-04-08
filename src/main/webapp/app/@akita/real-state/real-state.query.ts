@@ -14,7 +14,7 @@ export class RealStateQuery extends QueryEntity<DetailState, RealState> {
     getUserRealState(login: string) {
         return this.selectAll({
             filterBy: entity => {
-                return entity.owner && entity.owner.login === login;
+                return (entity.owner && entity.owner.login === login) || (entity.user && entity.user.login === login);
             }
         });
     }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from './../../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { ID } from '@datorama/akita';
-import { UserStore, userStore } from './user.store';
+import { UserStore } from './user.store';
 
 @Injectable()
 export class UserService {
