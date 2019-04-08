@@ -18,7 +18,6 @@ export class ExternalProfileComponent implements OnInit {
     constructor(private userService: UserService, private realStateService: RealStateService, private realStateQuery: RealStateQuery) {}
 
     async ngOnInit() {
-        this.user = await this.account.identity();
         this.getUserRealState(this.user);
     }
     getUserRealState(user: User) {
