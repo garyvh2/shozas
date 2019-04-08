@@ -1,2 +1,5 @@
 <jhi-user-info [user]="user"></jhi-user-info>
-<jhi-real-state-list [title]="'En venta'"></jhi-real-state-list>
+
+<div class="profile__container">
+    <jhi-real-state-list [title]="'Guardados'" [stateList]="favorites$ | async" [loading]="isLoading$ | async" [editable]="true"></jhi-real-state-list>
+</div>

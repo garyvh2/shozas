@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { RealState } from './../../../../@akita/real-state/real-state.model';
 
@@ -11,8 +12,32 @@ export class RealStateListComponent implements OnInit {
     title: string;
     @Input()
     stateList: RealState[];
+    @Input()
+    loading: boolean;
+    @Input()
+    editable: boolean;
 
-    constructor() {}
+    currentIndex = 0;
+
+    constructor(private router: Router) {}
 
     ngOnInit() {}
+    onEdit(id: string) {
+        this.router.navigate([`real-state/edit/${id}`]);
+    }
+
+    getIndex(index: number) {
+        return (this.currentIndex + index) % this.stateList.length;
+    }
+
+    next() {
+        this.currentIndex += 1;
+    }
+    prev() {
+        if (this.currentIndex === 0) {
+            this.currentIndex = this.stateList.length - 1;
+        } else {
+            this.currentIndex -= 1;
+        }
+    }
 }

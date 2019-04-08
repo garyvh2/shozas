@@ -24,25 +24,32 @@ export class RealStateService {
 
     get(id: ID) {
         const url = `${SERVER_API_URL}/api/realstate/detail?id=${id}`;
-        return this.http.get(url).subscribe((response: any) => {
-            console.log('Service GET response is: ', response);
-            this.detailStore.upsert(response.result.id, response.result);
-        });
+        this.detailStore.setLoading(true);
+        return this.http.get(url).subscribe(
+            (response: any) => {
+                this.detailStore.setLoading(false);
+                this.detailStore.upsert(response.result.id, response.result);
+            },
+            () => this.detailStore.setLoading(false)
+        );
     }
 
     getFavorites(userId) {
         const url = `${SERVER_API_URL}/api/realstate/get-favorites/${userId}`;
         this.favoriteStateStore.setLoading(true);
-        return this.http.get(url).subscribe((response: ApiResponse<RealState[]>) => {
-            const data = response.result;
-            data.forEach((item: RealState) => {
-                this.detailStore.upsert(item.id, item);
-            });
-            this.favoriteStateStore.update({
-                favorites: data
-            });
-            this.favoriteStateStore.setLoading(false);
-        });
+        return this.http.get(url).subscribe(
+            (response: ApiResponse<RealState[]>) => {
+                const data = response.result;
+                data.forEach((item: RealState) => {
+                    this.detailStore.upsert(item.id, item);
+                });
+                this.favoriteStateStore.update({
+                    favorites: data
+                });
+                this.favoriteStateStore.setLoading(false);
+            },
+            () => this.favoriteStateStore.setLoading(false)
+        );
     }
 
     searchHomes(params) {
