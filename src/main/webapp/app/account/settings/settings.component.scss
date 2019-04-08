@@ -1,0 +1,87 @@
+.userSettings {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.profile-photo {
+    padding: 16px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    label {
+        position: relative;
+        align-items: center;
+        display: flex;
+        height: 200px;
+        justify-content: center;
+        width: 200px;
+
+        img {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            margin: auto;
+            z-index: 1;
+            border-radius: 100%;
+            border: 5px solid #ff6666;
+        }
+
+        .profile__background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            border-radius: 100%;
+            background-color: black;
+            opacity: 0.5;
+            visibility: hidden;
+        }
+
+        span {
+            position: absolute;
+            z-index: 3;
+            visibility: hidden;
+            color: #ff6666;
+            .mat-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 64px;
+            }
+        }
+
+        &:hover .profile__photo--hover {
+            visibility: visible;
+        }
+    }
+}
+
+.register__container {
+    h1 {
+        color: #ff6666;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    padding: 10px 70px;
+    display: block;
+    .radio__label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+    ::ng-deep .mat-radio-label {
+        margin-right: 10px;
+    }
+    .submit__button {
+        text-align: right;
+        button {
+            background: #ff6666;
+            color: #fff;
+        }
+    }
+}
+
+mat-form-field {
+    width: 100%;
+}

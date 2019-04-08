@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.morphia.annotations.Embedded;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Property;
+import dev.morphia.annotations.Reference;
 import org.apache.commons.lang3.StringUtils;
 import javax.validation.constraints.Email;
 import org.springframework.data.annotation.Id;
@@ -89,11 +90,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @DBRef
     @Field
-    private HashSet<Review> reviews = new HashSet<>();
+    private HashSet<Review> reviews = new HashSet<Review>();
 
     @DBRef
     @Field
-    private HashSet<RealState> favorites = new HashSet<>();
+    @Reference
+    private HashSet<RealState> favorites = new HashSet<RealState>();
 
     @Field
     @Embedded
