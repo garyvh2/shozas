@@ -1,0 +1,25 @@
+<div class="containe-fluid pricing__container">
+    <div class="row pricing__title">
+        <div class="col-12">
+            <h1>Cotizar Casa</h1>
+        </div>
+    </div>
+    <div class="row pricing__content">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 ">
+            <div class="pricing__controls">
+                <jhi-pricing-filter [searchFilters]="homeFilters" [sizeConfig]="sizeRange"></jhi-pricing-filter>
+            </div>
+            <button mat-button (click)="applyFilters()">Aplicar</button>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 pricing__illustration-container">
+            <div class="pricing__illustration">
+
+            </div>
+        </div>
+    </div>
+    <div class="row pricing__response">
+        <div class="col-12">
+            <h3>Precio estimado: ¢{{averagePrice}}</h3>
+        </div>
+    </div>
+</div>
