@@ -37,18 +37,16 @@ export class RealStateService {
     getUserRealState(login: string) {
         const param = { user: login };
         this.currentUrl = `${SERVER_API_URL}/api/realstate/search/all`;
-        this.searchRealStateStore.setLoading(true);
+        this.detailStore.setLoading(true);
         return this.http.post(this.currentUrl, param).subscribe(
             (response: ApiResponse<SearchRealState>) => {
                 const data = response.result.elements;
-                response.result.loadMore = data.length > 0;
-                this.searchRealStateStore.update(response.result);
                 data.forEach((item: RealState) => {
                     this.detailStore.upsert(item.id, item);
                 });
-                this.searchRealStateStore.setLoading(false);
+                this.detailStore.setLoading(false);
             },
-            () => this.searchRealStateStore.setLoading(false)
+            () => this.detailStore.setLoading(false)
         );
     }
 

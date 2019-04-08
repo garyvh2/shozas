@@ -1,3 +1,5 @@
-<p>
-  external-profile works!
-</p>
+<jhi-user-info [user]="user"></jhi-user-info>
+
+<div class="profile__container">
+    <jhi-real-state-list [title]="'En venta'" [stateList]="realStates$ | async" [loading]="isLoadingRealState$ | async" [editable]="false"></jhi-real-state-list>
+</div>

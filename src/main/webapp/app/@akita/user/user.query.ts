@@ -7,5 +7,3 @@ export class UserQuery extends QueryEntity<UserState, User> {
         super(store);
     }
 }
-
-export const userQuery = new UserQuery(userStore);

@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { RealState } from './../../../../@akita/real-state/real-state.model';
 
 @Component({
@@ -7,7 +7,7 @@ import { RealState } from './../../../../@akita/real-state/real-state.model';
     templateUrl: './real-state-list.component.html',
     styleUrls: ['real-state-list.component.scss']
 })
-export class RealStateListComponent implements OnInit {
+export class RealStateListComponent implements OnChanges {
     @Input()
     title: string;
     @Input()
@@ -21,7 +21,7 @@ export class RealStateListComponent implements OnInit {
 
     constructor(private router: Router) {}
 
-    ngOnInit() {}
+    ngOnChanges() {}
     onEdit(id: string) {
         this.router.navigate([`real-state/edit/${id}`]);
     }

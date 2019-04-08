@@ -2,6 +2,7 @@
     <div>
         <h1>{{ user.firstName + ' ' + user.lastName }}</h1>
         <star-rating class="details__rating" size="large" [starType]="'svg'" [rating]="user.raiting" [readOnly]="true"></star-rating>
+        <span class="reviews">Ver calificaciones</span>
     </div>
     <div class="user__image">
         <img mat-card-avatar [src]="getImage()" />

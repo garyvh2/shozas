@@ -1,7 +1,7 @@
 <div class="list__container">
     <h2>{{title}}</h2>
     <hr/>
-    <h3 *ngIf="!loading && stateList && stateList.length === 0" >No hay inmuebles {{title.toLowerCase()}}</h3>
+    <h3 *ngIf="!loading && (!stateList || stateList.length === 0)" >No hay inmuebles {{title.toLowerCase()}}</h3>
     <div class="state__container" *ngIf="stateList"  >
         <div *ngFor="let realState of stateList | slice:0:3; let i = index"  class="state__card">
             <div class="{{i !== 0 ? 'no__mobile' : ''}}">

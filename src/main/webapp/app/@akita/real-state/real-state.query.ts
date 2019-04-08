@@ -11,10 +11,10 @@ export class RealStateQuery extends QueryEntity<DetailState, RealState> {
         return this.selectEntity(id);
     }
 
-    getUserRealState(userId: string) {
+    getUserRealState(login: string) {
         return this.selectAll({
             filterBy: entity => {
-                return entity.owner.id === userId;
+                return entity.owner && entity.owner.login === login;
             }
         });
     }

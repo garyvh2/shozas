@@ -31,9 +31,9 @@ export class OwnProfileComponent implements OnInit {
         this.getFavorites(this.user);
     }
     getUserRealState(user: User) {
-        this.realStates$ = this.realStateQuery.getUserRealState(user.id.toString());
+        this.realStates$ = this.realStateQuery.getUserRealState(user.login);
         this.isLoadingRealState$ = this.realStateQuery.selectLoading();
-        this.realStateService.get(user.login);
+        this.realStateService.getUserRealState(user.login);
     }
     getFavorites(user: User) {
         this.favorites$ = this.favoriteQuery.favorites$;

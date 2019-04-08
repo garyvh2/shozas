@@ -151,7 +151,7 @@ export class RealStateMngViewComponent implements OnInit {
         const newRealState: RealState = {
             ...this.firstFormGroup.value,
             images: this.imageArray,
-            owner: this.userAccount
+            owner: { ...this.userAccount, favorites: undefined }
         };
         if (this.editableMode) {
             this.realStateService.updateRealState(newRealState);
