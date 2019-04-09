@@ -1,0 +1,83 @@
+.pricing__container {
+    padding: 16px;
+
+    .pricing__title {
+        h1 {
+            color: #ff6e6e;
+            font-family: Lato;
+            font-weight: bold;
+        }
+    }
+
+    .pricing__content {
+        [mat-button] {
+            background: #fd6666;
+            color: #fff;
+            font-weight: bold;
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .pricing__illustration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 343px;
+
+            img {
+                border-radius: 8px;
+                height: auto;
+                margin: auto;
+                width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .pricing__illustration {
+                height: 345px;
+                img {
+                    height: auto;
+                    max-height: 313px;
+                    width: 100%;
+                }
+            }
+        }
+        // Small devices (landscape phones, less than 768px)
+        @media (max-width: 767px) {
+            .pricing__illustration {
+                height: 345px;
+                img {
+                    height: auto;
+                    max-height: 313px;
+                    width: 100%;
+                }
+            }
+        }
+        // Medium devices (tablets, less than 992px)
+        @media (max-width: 991px) {
+            .pricing__illustration {
+                height: 345px;
+            }
+        }
+        // Large devices (desktops, less than 1200px)
+        @media (max-width: 1199px) {
+            .pricing__illustration {
+                height: 345px;
+            }
+        }
+    }
+
+    .pricing__response {
+        margin-top: 16px;
+        h3 {
+            padding: 8px;
+            border: 1px solid #ff6e6e;
+            border-radius: 8px;
+            color: #ff6e6e;
+            font-family: Lato;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+}

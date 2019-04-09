@@ -1,0 +1,30 @@
+<form>
+    <div class="filter">
+        <label>Tamaño</label>
+        <div class="custom-slider">
+            <ng5-slider [(value)]="searchFilters.sizeLow" [options]="options"></ng5-slider>
+        </div>
+    </div>
+    <div class="filter">
+        <label>Secciones</label>
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/bed.png">Cuartos</jhi-detail-spec>
+            <jhi-pricing-amount name="beds" [size]="5" [(ngModel)]="searchFilters.beds"></jhi-pricing-amount>
+        </div>
+
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/bath.png">Baño</jhi-detail-spec>
+            <jhi-pricing-amount name="baths" [size]="5" [(ngModel)]="searchFilters.baths"></jhi-pricing-amount>
+        </div>
+
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/garage.png">Parqueo</jhi-detail-spec>
+            <jhi-pricing-amount name="garages" [size]="5" [(ngModel)]="searchFilters.garages"></jhi-pricing-amount>
+        </div>
+
+        <div class="seccion">
+            <jhi-detail-spec src="../../../content/images/house.png">Pisos</jhi-detail-spec>
+            <jhi-pricing-amount name="stories" [size]="3" [(ngModel)]="searchFilters.stories"></jhi-pricing-amount>
+        </div>
+    </div>
+</form>

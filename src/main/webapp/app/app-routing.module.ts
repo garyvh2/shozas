@@ -33,6 +33,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'profile',
                     loadChildren: './modules/view-profile/view-profile.module#ViewProfileModule'
                 },
+                {
+                    path: 'pricing',
+                    loadChildren: './modules/pricing/pricing.module#PricingModule'
+                },
                 ...LAYOUT_ROUTES
             ],
             { useHash: true, enableTracing: false }

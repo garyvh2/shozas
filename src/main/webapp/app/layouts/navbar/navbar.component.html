@@ -56,6 +56,13 @@
                             </a>
                         </li>
                     <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="pricing" routerLinkActive="active"
+                            (click)="collapseNavbar()">
+                            <fa-icon icon="tags" fixedWidth="true"></fa-icon>
+                            <span>Cotizar Casa</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
                         <a class="dropdown-item" (click)="logout()" id="logout">
                             <fa-icon icon="sign-out-alt" fixedWidth="true"></fa-icon>
                             <span>Cerrar sesión</span>
