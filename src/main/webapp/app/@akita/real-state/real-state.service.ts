@@ -39,8 +39,8 @@ export class RealStateService {
         this.currentUrl = `${SERVER_API_URL}/api/realstate/search/all`;
         this.detailStore.setLoading(true);
         return this.http.post(this.currentUrl, param).subscribe(
-            (response: ApiResponse<SearchRealState>) => {
-                const data = response.result.elements;
+            (response: ApiResponse<RealState[]>) => {
+                const data = response.result;
                 data.forEach((item: RealState) => {
                     this.detailStore.upsert(item.id, item);
                 });
@@ -134,6 +134,7 @@ export class RealStateService {
 
     createRealState(realState: RealState) {
         const url = `${SERVER_API_URL}/api/realstate/create`;
+        this.detailStore.setError(undefined);
         this.detailStore.setLoading(true);
         return this.http.post(url, realState).subscribe(
             (response: ApiResponse<RealState>) => {
@@ -148,6 +149,7 @@ export class RealStateService {
     }
     updateRealState(realState: RealState) {
         const url = `${SERVER_API_URL}/api/realstate/update`;
+        this.detailStore.setError(undefined);
         this.detailStore.setLoading(true);
         return this.http.put(url, realState).subscribe(
             (response: ApiResponse<RealState>) => {

@@ -100,7 +100,8 @@ export class RealStateMngViewComponent implements OnInit {
         this.firstFormGroup.get('district').markAsTouched();
     }
 
-    async isEditing() {
+    isEditing() {
+        console.log('edit');
         const id = this.activeRoute.snapshot.paramMap.get('id');
         if (id) {
             this.editableMode = true;
@@ -112,7 +113,8 @@ export class RealStateMngViewComponent implements OnInit {
 
     setForm() {
         this.realState$.subscribe(realState => {
-            if (realState && realState.garage) {
+            console.log(realState);
+            if (realState && realState.id) {
                 this.firstFormGroup = this._formBuilder.group({
                     id: new FormControl(realState.id),
                     realStateType: new FormControl(realState.realStateType, Validators.required),

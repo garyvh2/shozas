@@ -1,5 +1,5 @@
 <img mat-card-avatar [src]="user.userImage ? user.userImage : 'http://picsum.photos/50/50/?random'" />
 <div class="details">
     <span class="details__name">{{ !user.firstName ? user.name : user.firstName }}</span>
-    <star-rating class="details__rating" size="small" [starType]="'svg'" [rating]="user.stars" [readOnly]="true"></star-rating>
+    <star-rating class="details__rating" size="small" [starType]="'svg'" [rating]="user.stars || user.raiting" [readOnly]="true"></star-rating>
 </div>
