@@ -143,6 +143,7 @@ export class RealStateService {
                 return response.result;
             },
             (error: any) => {
+                this.detailStore.setLoading(false);
                 this.detailStore.setError(error);
             }
         );
@@ -158,6 +159,7 @@ export class RealStateService {
                 return response.result;
             },
             (error: any) => {
+                this.detailStore.setLoading(false);
                 this.detailStore.setError(error);
             }
         );
