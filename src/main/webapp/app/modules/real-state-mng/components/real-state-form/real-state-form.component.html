@@ -51,12 +51,12 @@
     </div>
     <mat-form-field color="accent" appearance="outline" matAutosize="true">
         <mat-label>Precio</mat-label>
-        <input [formControl]="realStateForm.controls['price']" maxlength="12" matInput prefix="₡" type="text" mask="dot_separator" placeholder="Precio" />
+        <input [formControl]="realStateForm.controls['price']" maxlength="15" matInput prefix="₡" type="text" mask="dot_separator" placeholder="Precio" />
         <mat-error>Este campo es requerido</mat-error>
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline" matAutosize="true">
         <mat-label>Tamaño</mat-label>
-        <input [formControl]="realStateForm.controls['size']" matInput mask="0*" placeholder="Tamaño" />
+        <input [formControl]="realStateForm.controls['size']" maxlength="4" matInput mask="0*" placeholder="Tamaño" />
         <mat-error>Este campo es requerido</mat-error>
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline" matAutosize="true">

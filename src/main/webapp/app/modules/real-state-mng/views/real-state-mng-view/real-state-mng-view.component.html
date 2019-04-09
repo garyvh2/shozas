@@ -1,4 +1,4 @@
-<div *ngIf="editableMode && (loading$ | async) && !(firstFormGroup.get('garage').value); else render_form">
+<div *ngIf="editableMode && (loading$ | async) && !(firstFormGroup.get('id').value); else render_form">
     <jhi-ready-component [IsLoading]="loading$" [IsError]="realState$" [isEditable]="editableMode"></jhi-ready-component>
 </div>
 

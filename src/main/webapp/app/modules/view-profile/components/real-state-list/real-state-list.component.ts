@@ -23,7 +23,9 @@ export class RealStateListComponent implements OnChanges {
 
     constructor(private router: Router) {}
 
-    ngOnChanges() {}
+    ngOnChanges() {
+        console.log(this.title, this.loading, this.stateList);
+    }
     onEdit(id: string) {
         this.router.navigate([`real-state/edit/${id}`]);
     }

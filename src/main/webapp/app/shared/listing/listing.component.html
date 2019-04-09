@@ -1,5 +1,5 @@
 <mat-card>
-    <img mat-card-image [src]="listing.image.source" />
+    <img mat-card-image [src]="getImage()" />
     <mat-card-header>
         <div class="details">
             <mat-card-title [title]="listing.title">{{ listing.title }}</mat-card-title>
@@ -20,7 +20,7 @@
             <jhi-detail-spec src="../../../content/images/ruler.png">{{ listing.size }}mt<sup>2</sup></jhi-detail-spec>
         </div>
         <div class="details">
-            <jhi-user-rating class="details__user" [user]="listing.user"></jhi-user-rating>
+            <jhi-user-rating class="details__user" [user]="listing.user || listing.owner "></jhi-user-rating>
             <span class="details__price">{{ listing.price | currency: 'CRC':'¢' }}</span>
         </div>
     </mat-card-content>

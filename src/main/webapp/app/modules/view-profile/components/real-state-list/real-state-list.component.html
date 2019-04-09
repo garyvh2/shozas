@@ -1,13 +1,14 @@
 <div class="list__container">
     <h2>{{ title }}</h2>
     <hr />
-    <h3 *ngIf="!loading && (!stateList || stateList.length === 0)">No hay inmuebles {{ title.toLowerCase() }}</h3>
+    <h3 *ngIf="!loading && stateList && stateList.length === 0">No hay inmuebles {{ title.toLowerCase() }}</h3>
     <div class="state__container" *ngIf="stateList">
         <div *ngFor="let realState of (stateList | slice: 0:3); let i = index" class="state__card {{ linkable ? 'clickable' : '' }}">
             <div class="{{ i !== 0 ? 'no__mobile' : '' }}">
                 <div *ngIf="editable">
                     <mat-icon (click)="onEdit(stateList[getIndex(i)].id)" class="edit">edit</mat-icon>
                     <mat-icon class="delete">close</mat-icon>
+                    <mat-icon class="money">attach_money</mat-icon>
                 </div>
                 <jhi-listing *ngIf="!linkable" [listing]="stateList[getIndex(i)]"></jhi-listing>
                 <jhi-listing
@@ -20,5 +21,5 @@
         <mat-icon *ngIf="stateList.length > 3" (click)="prev()" class="slider__btn left">keyboard_arrow_left</mat-icon>
         <mat-icon *ngIf="stateList.length > 3" (click)="next()" class="slider__btn right">keyboard_arrow_right</mat-icon>
     </div>
-    <mat-spinner *ngIf="loading && !stateList" color="warn"></mat-spinner>
+    <mat-spinner *ngIf="loading" color="warn"></mat-spinner>
 </div>

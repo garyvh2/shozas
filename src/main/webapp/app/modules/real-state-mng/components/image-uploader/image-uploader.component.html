@@ -8,7 +8,7 @@
             <mat-icon class="close__icon" (click)="onRemove(i)">closed_rounded</mat-icon>
             <img (click)="setPrimary(i)" mat-card-image src="{{ image.source }}" alt="foto #{{ i }}" />
             <div class="primary__icon {{ image.isPrimary ? 'isPrimary' : '' }}">
-                <mat-icon >check_circle</mat-icon>
+                <mat-icon (click)="setPrimary(i)" >check_circle</mat-icon>
             </div>
         </div>
     </div>
