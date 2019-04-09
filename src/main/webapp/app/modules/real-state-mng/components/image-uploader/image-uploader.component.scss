@@ -1,0 +1,96 @@
+.upload__input {
+    display: none;
+}
+
+.image__container {
+    border: 1px dashed rgba(0, 0, 0, 0.87);
+    position: relative;
+    min-height: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+
+    .image {
+        position: relative;
+        height: fit-content;
+        cursor: pointer;
+
+        .close__icon {
+            position: absolute;
+            z-index: 1;
+            right: 0;
+            top: 0;
+            background: #37474f;
+            border-radius: 15px;
+            color: #fff;
+        }
+
+        .primary__icon {
+            width: fit-content;
+            height: fit-content;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            padding: 5px;
+
+            mat-icon {
+                border-radius: 50%;
+                color: #37474f;
+                background: #fff;
+            }
+        }
+    }
+
+    .isPrimary {
+        mat-icon {
+            color: #69f0ae !important;
+        }
+    }
+
+    .background__image {
+        position: absolute;
+        z-index: 0;
+        font-size: 150px;
+        height: fit-content;
+        width: fit-content;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    img {
+        margin-top: 10px;
+        max-height: 200px;
+        width: auto;
+    }
+}
+
+h3 {
+    margin: 10px auto;
+}
+
+::ng-deep body .mat-simple-snackbar-action {
+    color: #ff6666;
+}
+
+.image__uploader {
+    margin: auto;
+    min-height: 300px;
+    text-align: center;
+
+    p {
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+button {
+    background: #69f0ae;
+    margin: 20px auto;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+}

@@ -32,7 +32,7 @@ public class RealState {
 
     private String district;
 
-    private int price;
+    private long price;
 
     private String description;
 
@@ -63,6 +63,8 @@ public class RealState {
     private boolean hasHealthServices;
 
     private boolean isSold;
+
+    private boolean isRented;
 
     private Instant dateCreated;
 
@@ -135,11 +137,11 @@ public class RealState {
         this.district = district;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -263,6 +265,10 @@ public class RealState {
         isSold = sold;
     }
 
+    public boolean isRented() { return isRented;     }
+
+    public void setRented(boolean rented) { isRented = rented; }
+
     public HashSet<Image> getImages() {
         return images;
     }
@@ -324,9 +330,5 @@ public class RealState {
         return !(realState.getId() == null || getId() == null) && Objects.equals(getId(), realState.getId());
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 
 }

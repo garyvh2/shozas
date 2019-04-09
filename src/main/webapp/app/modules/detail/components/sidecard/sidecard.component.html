@@ -1,6 +1,6 @@
 <mat-card class="rsd__sidecard">
     <mat-card-header>
-        <img mat-card-avatar src="http://picsum.photos/50/50/?random" />
+        <img mat-card-avatar src="{{detail?.owner?.image?.source || 'http://picsum.photos/50/50/?random'}}" />
         <mat-card-title>{{detail.owner.firstName}} {{detail.owner.lastName}}</mat-card-title>
         <mat-card-subtitle>
             <div>
@@ -43,7 +43,12 @@
         </div>
         <div class="row rsd__contact-seller">
             <div class="col-12">
-                <button mat-button class="rsd__btn--full" (click)="contactOwner()">Contactar al vendedor</button>
+                <button mat-button class="rsd__btn--full" (click)="contactOwner()" [disabled]="loading">
+                    <span *ngIf="!loading">
+                        Contactar al vendedor
+                    </span>
+                    <mat-spinner *ngIf="loading" [diameter]="38">Procesando...</mat-spinner>
+                </button>
             </div>
         </div>
     </mat-card-actions>

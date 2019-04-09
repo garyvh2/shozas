@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     registerForm: FormGroup;
     passwordsMatcher = new RepeatPasswordEStateMatcher();
     userType = UserType;
+    isLoading = false;
     constructor(private loginModalService: LoginModalService, private registerService: Register, private fb: FormBuilder) {
         this.registerForm = this.fb.group(
             {
@@ -72,6 +73,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         }
 
         if (this.registerForm.valid) {
+            this.isLoading = true;
             const newUser = {
                 ...this.registerForm.value,
                 phone: Number(this.registerForm.get('phone').value),
@@ -80,6 +82,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
             this.registerService.save(newUser).subscribe(
                 () => {
+                    this.isLoading = false;
                     this.success = true;
                     this.registerForm.reset({
                         userType: UserType.Personal
@@ -90,7 +93,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     this.registerForm.get('confirmPass').markAsPristine();
                     this.registerForm.updateValueAndValidity();
                 },
-                response => this.processError(response)
+                response => {
+                    this.isLoading = false;
+                    this.processError(response);
+                }
             );
         }
     }

@@ -7,6 +7,7 @@ export class SearchRealState {
     public maxSize: number;
     public minSize: number;
     public elements: RealState[];
+    public averagePrice: number;
 }
 
 export function initialSearchRealState(): SearchRealState {
@@ -16,6 +17,7 @@ export function initialSearchRealState(): SearchRealState {
         minPrice: 0,
         maxSize: 0,
         minSize: 0,
-        elements: []
+        elements: [],
+        averagePrice: 0
     };
 }

@@ -1,0 +1,20 @@
+<div class="custom__amenities">
+  <div>
+    <mat-form-field color="accent" appearance="outline" matAutosize="true">
+      <mat-label>Nombre</mat-label>
+      <input matInput [formControl]="name" placeholder="Nombre"></input>
+      <mat-error>Este campo es requerido para agregar</mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field color="accent" appearance="outline" matAutosize="true">
+      <mat-label>Descripción</mat-label>
+      <input matInput [formControl]="description" placeholder="Descripción"></input>
+      <mat-error>Este campo es requerido para agregar</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="add__btn">
+    <div class="btn" mat-raised-button (click)="onAddButton()"> Agregar</div>
+  </div>
+
+</div>

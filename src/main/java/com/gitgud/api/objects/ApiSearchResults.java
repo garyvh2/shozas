@@ -4,25 +4,26 @@ import java.util.List;
 
 public class ApiSearchResults {
 
-    private int maxPrice;
-    private int minPrice;
+    private long maxPrice;
+    private long minPrice;
     private double maxSize;
     private double minSize;
+    private long averagePrice;
     private List<ApiRealState> elements;
 
-    public int getMaxPrice() {
+    public long getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(int maxPrice) {
+    public void setMaxPrice(long maxPrice) {
         this.maxPrice = maxPrice;
     }
 
-    public int getMinPrice() {
+    public long getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(int minPrice) {
+    public void setMinPrice(long minPrice) {
         this.minPrice = minPrice;
     }
 
@@ -48,5 +49,13 @@ public class ApiSearchResults {
 
     public void setElements(List<ApiRealState> elements) {
         this.elements = elements;
+    }
+
+    public long getAveragePrice() {
+        return averagePrice;
+    }
+
+    public void setAveragePrice(long averagePrice) {
+        this.averagePrice = averagePrice;
     }
 }

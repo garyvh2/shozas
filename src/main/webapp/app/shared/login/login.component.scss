@@ -1,6 +1,7 @@
 .title {
     background: #ff6666;
     color: #fff;
+
     mat-icon {
         line-height: 35px;
         cursor: pointer;
@@ -10,12 +11,20 @@
 mat-form-field {
     width: 100%;
 }
+.login__btn__container {
+    display: flex;
+    margin: 0.75rem auto 1rem auto;
+    mat-spinner {
+        margin-left: 10px;
+    }
+}
+
 .login__btn {
-    background: #00e676;
-    color: #fff;
+    background: #69f0ae;
+    color: #424242;
 }
 
 .alert__custom {
-    background: #ffebee;
-    color: #ff6666;
+    background: #69f0ae;
+    color: #424242;
 }

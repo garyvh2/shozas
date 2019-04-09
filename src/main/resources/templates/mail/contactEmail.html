@@ -1,43 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title th:text="#{email.contact.title}">JHipster activation</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
-    </head>
-    <body>
+
+<head>
+    <title th:text="#{email.contact.title}">JHipster activation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    <style type="text/css" media="screen">
+        * {
+            font-family: 'Lato', Arial, sans-serif !important;
+        }
+        .im {
+            color: #333333;
+        }
+        .ii a[href] {
+            color: #fff;
+            text-decoration: none;
+        }
+        .email a{
+            color: #fff !important;
+        }
+        .gt a {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body style="background:#eee; padding: 20px 20px 60px 20px;font-size:16px;">
+    <div style="width:100%; text-align:center;">
+        <span style="color:#ff6666; font-size:30px;">Shozas</span>
+    </div>
+    <div
+        style="max-width:800px;margin:auto;color:#333;background:#fff; padding: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);font-family: 'Lato', Arial, sans-serif !important;">
+        <h1 style="text-align:center">¡Encontramos un interesado!</h1>
+
         <p th:text="#{email.contact.greeting(${owner.firstName})}">
-            Dear
+            Hola Señor/a,
         </p>
         <p>
             Un usuario está interesado en una de sus propiedades. Puede encontrar la información de contacto abajo:
         </p>
-        <ul>
-            <li th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">
-                Name: Anonymous
-            </li>
-            <li th:text="#{email.contact.email(${client.login})}">
-                Email: anonymous@anonymous.com
-            </li>
-            <li th:text="#{email.contact.phone(${client.phone})}">
-                Phone: unavailable
-            </li>
-        </ul>
-        <p>
-            Información de la propiedad:
-        </p>
-        <ul>
-            <li th:text="#{email.contact.property1(${rs.id})}">
-                ID: Unavailable
-            </li>
-            <li th:text="#{email.contact.property2(${rs.title})}">
-                Title: unavailable
-            </li>
-        </ul>
-        <p>
-            <span th:text="#{email.contact.regards}">Regards, </span>
-            <br/>
-            <em th:text="#{email.signature}">JHipster.</em>
-        </p>
-    </body>
+        <div
+            style="display: flex; width: fit-content; margin: 30px auto; padding: 10px; background: #ff6666; color:#fff; border-radius: 5px;">
+            <img style="height:70px; width: auto; border-radius:100%;"
+                th:src="${client.image != null && !#strings.isEmpty(client.image.source) ? client.image.source : 'https://res.cloudinary.com/ucenfotec19/image/upload/v1554338838/profile.jpg'}"
+                alt="user-profile" src="https://res.cloudinary.com/ucenfotec19/image/upload/v1554338838/profile.jpg" />
+            <ul style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 30px;line-height: 22px;">
+                <li>
+                    <b>Nombre: </b> <span
+                        th:text="#{email.contact.name(${client.firstName} + ' ' + ${client.lastName})}">Anonymous</span>
+                </li>
+                <li>
+                    <b>Correo: </b> <span class="email"
+                        th:text="#{email.contact.email(${client.login})}">anonymous@anonymous.com</span>
+                </li>
+                <li th:if="${client.displayPhone}">
+                    <b>Telefono: </b> <span th:text="#{email.contact.phone(${client.phone} + '')}">unavailable</span>
+                </li>
+            </ul>
+        </div>
+        <h3 style="margin-bottom:0;">
+            Información de la propiedad
+        </h3>
+        <div style="display: flex;justify-content: space-between; padding: 10px;  background: transparent; color:#333">
+            <ul style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 0px;line-height: 30px;">
+                <li>
+                    <b>Titulo: </b>
+                </li>
+                <li>
+                    <b>Ubicación: </b>
+                </li>
+                <li>
+                    <b>Precio: </b>
+                </li>
+            </ul>
+            <ul
+                style="width: fit-content; margin: 0; list-style: none;padding-inline-start: 0px;line-height: 30px; margin-left: auto;">
+                <li>
+                    <span th:text="#{email.contact.property1(${rs.title})}">No
+                        Disponible</span>
+                </li>
+                <li>
+
+                    <span
+                        th:text="#{email.contact.property2(${rs.province} + ' '+ ${rs.city} + ' ' + ${rs.district})}">
+                        No Disponible
+                    </span>
+                </li>
+                <li>
+                    <span>&#8353;</span><spa th:text="#{email.contact.property2(${#numbers.formatDecimal(rs.price, 0, 'DEFAULT', 3, 'DEFAULT')})}">21.000.000</spa>
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin: 0 auto 30px auto; text-align: center;">
+            <a style="text-decoration:none;display: block; padding:10px; margin: 0 auto; max-width: 150px; background:#69f0ae; color:#fff;"
+                th:with="url=(@{|${baseUrl}/#/detail/${rs.id}|})" th:href="${url}">
+                Ver Propiedad
+            </a>
+        </div>
+        <div>
+            <span th:text="#{email.activation.text2}">Saludos, </span>
+            <br />
+            <em style="font-weight: bold;" th:text="#{email.signature}">Shozas Team.</em>
+        </div>
+    </div>
+</body>
+
 </html>
