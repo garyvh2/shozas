@@ -337,25 +337,30 @@ public class RealStateService {
 
     private HashSet<Image> getUpdatedImage(HashSet<Image> updatedImages, HashSet<Image> imagesOnDb) {
         Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
-        updatedImages.forEach(i ->{
-            imagesOnDb.forEach(im -> {
-                if(i.getImageId().equalsIgnoreCase(im.getImageId())){
-                    if (!i.getSource().equalsIgnoreCase(im.getSource())){
-                        try {
-                            if (!i.getImageId().equals("0"))
-                                cloudinaryUploader.uploader().destroy(i.getImageId(), ObjectUtils.emptyMap());
 
-                            Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
-                            i.setImageId(uploadResult.get("public_id").toString());
-                            i.setSource(uploadResult.get("url").toString());
-                        } catch (IOException e) {
-                            i.setSource(
-                                "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
-                            i.setImageId("0");
-                        }
-                    }
+            imagesOnDb.forEach(im -> {
+                try {
+                    if ( im.getImageId() != null && !im.getImageId().equals("0") &&  !updatedImages.stream().filter(u -> u.getImageId().equalsIgnoreCase(im.getImageId())).findAny().isPresent())
+                        cloudinaryUploader.uploader().destroy(im.getImageId(), ObjectUtils.emptyMap());
+
+                     } catch (IOException e) {
+
                 }
             });
+
+        updatedImages.forEach(i ->{
+            try {
+                if(!imagesOnDb.stream().filter(u -> u.getImageId().equalsIgnoreCase(i.getImageId())).findAny().isPresent()){
+                    Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
+                   i.setImageId(uploadResult.get("public_id").toString());
+                   i.setSource(uploadResult.get("url").toString());
+                }
+            }
+            catch (IOException e) {
+                i.setSource(
+                    "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
+                i.setImageId("0");
+            }
         });
 
         return updatedImages;
