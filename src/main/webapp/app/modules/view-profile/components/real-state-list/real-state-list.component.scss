@@ -43,9 +43,15 @@
     @media (max-width: 800px) {
         max-width: 240px;
     }
-    mat-icon {
+    .buttons {
+        display: flex;
+        align-self: flex-start;
+        justify-content: space-between;
         position: absolute;
         top: 10px;
+        width: 100%;
+    }
+    mat-icon {
         border-radius: 50%;
         color: #fff;
         z-index: 1;
@@ -56,15 +62,12 @@
         cursor: pointer;
     }
     .edit {
-        left: 0;
         background: #69f0ae;
     }
     .delete {
-        right: 0;
         background: #ff6666;
     }
     .money {
-        left: 50%;
         background: #ffc058;
     }
 }

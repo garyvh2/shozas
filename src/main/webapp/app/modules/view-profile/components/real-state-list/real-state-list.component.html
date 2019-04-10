@@ -5,10 +5,10 @@
     <div class="state__container" *ngIf="stateList">
         <div *ngFor="let realState of (stateList | slice: 0:3); let i = index" class="state__card {{ linkable ? 'clickable' : '' }}">
             <div class="{{ i !== 0 ? 'no__mobile' : '' }}">
-                <div *ngIf="editable">
+                <div *ngIf="editable" class="buttons">
                     <mat-icon (click)="onEdit(stateList[getIndex(i)].id)" class="edit">edit</mat-icon>
-                    <mat-icon class="delete">close</mat-icon>
                     <mat-icon class="money">attach_money</mat-icon>
+                    <mat-icon class="delete">close</mat-icon>
                 </div>
                 <jhi-listing *ngIf="!linkable" [listing]="stateList[getIndex(i)]"></jhi-listing>
                 <jhi-listing
