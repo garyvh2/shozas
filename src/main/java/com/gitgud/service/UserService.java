@@ -12,6 +12,7 @@ import com.gitgud.repository.UserRepository;
 import com.gitgud.security.AuthoritiesConstants;
 import com.gitgud.security.SecurityUtils;
 import com.gitgud.service.dto.UserDTO;
+import com.gitgud.service.recommendation.RecommendationService;
 import com.gitgud.service.util.CloudinaryUtil;
 import com.gitgud.service.util.RandomUtil;
 import com.gitgud.web.rest.errors.*;
@@ -46,11 +47,14 @@ public class UserService {
 
     private final MailService mailService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService) {
+    private RecommendationService recommendationService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService, RecommendationService recommendationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.mailService = mailService;
+        this.recommendationService = recommendationService;
     }
 
     public Optional<User> getUserByEmail(String email){

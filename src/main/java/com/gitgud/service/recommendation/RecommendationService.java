@@ -2,23 +2,27 @@ package com.gitgud.service.recommendation;
 
 
 import com.cloudinary.Api;
+import com.gitgud.api.objects.ApiImage;
+import com.gitgud.api.objects.ApiRealState;
+import com.gitgud.api.objects.ApiUser;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
+import com.gitgud.service.RealStateService;
 import com.gitgud.service.UserService;
+import com.gitgud.service.util.RealStateUtils;
 import com.recombee.api_client.RecombeeClient;
 import com.recombee.api_client.api_requests.*;
+import com.recombee.api_client.bindings.RecommendationResponse;
 import com.recombee.api_client.exceptions.ApiException;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class RecommendationService {
@@ -209,7 +213,6 @@ public class RecommendationService {
         this.recombeeClient.send(new AddBookmark(user.getId(), realState.getId())
             .setTimestamp(date)
             .setCascadeCreate(true)
-            .setRecommId(user.getId() + '_' + realState.getId() + '_' + date.toString())
         );
     }
 
@@ -218,13 +221,11 @@ public class RecommendationService {
      */
     @Transactional
     public void removeFavorite(User user, RealState realState) throws ApiException {
-        this.recombeeClient.send(new DeleteBookmark(user.getId(), realState.getId())
-            .setTimestamp(new Date())
-        );
+        this.recombeeClient.send(new DeleteBookmark(user.getId(), realState.getId()));
     }
 
     /**
-     * Sync Favorites
+     * Sync Favoritesxxx
      */
     @Transactional
     public void syncFavorites() {
@@ -261,4 +262,17 @@ public class RecommendationService {
         this.recombeeClient.send(new ResetDatabase());
     }
 
+    /**
+     * Recommend
+     */
+    @Transactional(readOnly = true)
+    public HashSet<ApiRealState> userRecommendations(String userId, long count) throws ApiException {
+        RecommendationResponse recommendations = this.recombeeClient.send(new RecommendItemsToUser(userId, count));
+
+        Iterable<String> ids = Arrays.asList(recommendations.getIds());
+        Set<RealState> items = new HashSet<>();
+        this.realStateRepository.findAllById(ids).forEach(items::add);
+        return items.stream().map(favorite -> RealStateUtils.toApiRealState(favorite))
+            .collect(Collectors.toCollection(HashSet::new));
+    }
 }
