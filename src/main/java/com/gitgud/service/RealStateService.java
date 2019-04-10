@@ -350,7 +350,7 @@ public class RealStateService {
 
         updatedImages.forEach(i ->{
             try {
-                if(!imagesOnDb.stream().filter(u -> u.getImageId().equalsIgnoreCase(i.getImageId())).findAny().isPresent()){
+                if(i.getImageId() == null || !imagesOnDb.stream().filter(u -> u.getImageId().equalsIgnoreCase(i.getImageId())).findAny().isPresent()){
                     Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
                    i.setImageId(uploadResult.get("public_id").toString());
                    i.setSource(uploadResult.get("url").toString());
