@@ -1,3 +1,4 @@
+import { ID } from '@datorama/akita';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { RealState } from './../../@akita/real-state/real-state.model';
@@ -24,7 +25,7 @@ export class RealStateListComponent implements OnChanges {
     constructor(private router: Router) {}
 
     ngOnChanges() {}
-    onEdit(id: string) {
+    onEdit(id: ID) {
         this.router.navigate([`real-state/edit/${id}`]);
     }
 
