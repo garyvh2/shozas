@@ -53,7 +53,7 @@ public class RealStateService {
                 : realState.getRealStateType().equals("D") ? "Departamento en " : "Lote en ";
         realStateTitle = realStateTitle.concat(realState.getProvince() + " ").concat(realState.getDistrict());
         realState.setTitle(realStateTitle);
-
+        realState.setActive(true);
         if (realState.getImages() != null && !realState.getImages().isEmpty()) {
             Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
             realState.getImages().forEach(i -> {
@@ -276,7 +276,10 @@ public class RealStateService {
         Optional<RealState> result = realStateRepository.findById(id);
         if (!result.isPresent())
             throw new Exception("El elemento solicitado ya no existe");
-        return result.get();
+
+        RealState realState =  result.get();
+        realState.getOwner().setFavorites(null);
+        return realState;
     }
 
     public RealState update(RealState updateElement) throws Exception {
@@ -340,7 +343,7 @@ public class RealStateService {
 
             imagesOnDb.forEach(im -> {
                 try {
-                    if ( im.getImageId() != null && !im.getImageId().equals("0") &&  !updatedImages.stream().filter(u -> u.getImageId().equalsIgnoreCase(im.getImageId())).findAny().isPresent())
+                    if ( im.getImageId() != null && !im.getImageId().equals("0") && !im.getImageId().equals("1") &&  !updatedImages.stream().filter(u -> u.getImageId().equalsIgnoreCase(im.getImageId())).findAny().isPresent())
                         cloudinaryUploader.uploader().destroy(im.getImageId(), ObjectUtils.emptyMap());
 
                      } catch (IOException e) {
