@@ -32,7 +32,8 @@ export class ImageUploaderComponent implements OnInit {
         this.cd.markForCheck();
     }
 
-    onRemove(index: number) {
+    onRemove(event: Event, index: number) {
+        event.preventDefault();
         if (this.imageArray[index].isPrimary && this.imageArray.length > 0) {
             this.imageArray.splice(index, 1);
             this.imageArray[0].isPrimary = true;
@@ -40,7 +41,8 @@ export class ImageUploaderComponent implements OnInit {
             this.imageArray.splice(index, 1);
         }
     }
-    setPrimary(selected: number) {
+    setPrimary(event: Event, selected: number) {
+        event.preventDefault();
         const message = 'Se ha puesto la imagen como primaria';
         for (let index = 0; index < this.imageArray.length; index++) {
             if (index === selected) {

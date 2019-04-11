@@ -8,12 +8,10 @@ import { ShozasSharedModule } from './../../shared/shared.module';
 import { OwnProfileComponent } from './views/own-profile/own-profile.component';
 import { ExternalProfileComponent } from './views/external-profile/external-profile.component';
 import { ViewProfileRoutingModule } from './view-profile.route';
-import { UserInfoComponent } from './components/user-info/user-info.component';
-import { RealStateListComponent } from './components/real-state-list/real-state-list.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { UserQuery } from './../../@akita/user/index';
 @NgModule({
-    declarations: [OwnProfileComponent, ExternalProfileComponent, UserInfoComponent, RealStateListComponent],
+    declarations: [OwnProfileComponent, ExternalProfileComponent],
     imports: [CommonModule, ViewProfileRoutingModule, ShozasSharedModule, StarRatingModule.forRoot()],
     providers: [RealStateService, RealStateQuery, AccountService, UserService, UserQuery]
 })
