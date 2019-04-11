@@ -1,3 +1,4 @@
+import { User } from './../../@akita/user/user.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { TempUser } from 'app/@akita/external-models/tempUser';
 import { isEmpty } from '../util/gitgud-lodash/isEmpty';
@@ -8,7 +9,7 @@ import { isEmpty } from '../util/gitgud-lodash/isEmpty';
 })
 export class UserRatingComponent implements OnInit {
     @Input()
-    user: TempUser;
+    user: User;
     isEmpty: Function = isEmpty;
 
     constructor() {}

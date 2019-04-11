@@ -16,11 +16,6 @@ const routes: Routes = [
     },
     {
         path: 'user/:id',
-        // data: {
-        //     authorities: ['ROLE_USER'],
-        //     pageTitle: 'Crear Inmueble'
-        // },
-        // canActivate: [UserRouteAccessService],
         component: ExternalProfileComponent
     }
 ];

@@ -1,17 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from '../../../../@akita/user';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { User } from '../../@akita/user';
 
 @Component({
     selector: 'jhi-user-info',
     templateUrl: './user-info.component.html',
     styleUrls: ['user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnChanges {
     @Input()
     user: User;
     constructor() {}
 
-    ngOnInit() {}
+    ngOnChanges() {
+        console.log('user', this.user);
+    }
 
     getImage(): string {
         if (this.user && this.user.image) {

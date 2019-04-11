@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { RealState } from './../../../../@akita/real-state/real-state.model';
+import { RealState } from './../../@akita/real-state/real-state.model';
 
 @Component({
     selector: 'jhi-real-state-list',
@@ -23,9 +23,7 @@ export class RealStateListComponent implements OnChanges {
 
     constructor(private router: Router) {}
 
-    ngOnChanges() {
-        console.log(this.title, this.loading, this.stateList);
-    }
+    ngOnChanges() {}
     onEdit(id: string) {
         this.router.navigate([`real-state/edit/${id}`]);
     }

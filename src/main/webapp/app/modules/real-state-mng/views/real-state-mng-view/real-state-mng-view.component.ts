@@ -101,7 +101,6 @@ export class RealStateMngViewComponent implements OnInit {
     }
 
     isEditing() {
-        console.log('edit');
         const id = this.activeRoute.snapshot.paramMap.get('id');
         if (id) {
             this.editableMode = true;
@@ -113,7 +112,6 @@ export class RealStateMngViewComponent implements OnInit {
 
     setForm() {
         this.realState$.subscribe(realState => {
-            console.log(realState);
             if (realState && realState.id) {
                 this.firstFormGroup = this._formBuilder.group({
                     id: new FormControl(realState.id),
