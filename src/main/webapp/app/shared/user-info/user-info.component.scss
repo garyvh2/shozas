@@ -1,0 +1,81 @@
+.user__info__container {
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    padding: 30px 0;
+    .background__image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+        background: url('https://picsum.photos/1280/1024/?random&?landscape?');
+        filter: blur(2px);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .user__info__content {
+        display: flex;
+        padding: 20px;
+        margin: 20px;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+        width: 90%;
+        z-index: 2;
+        margin: auto;
+        color: white;
+        > div {
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-weight: bold;
+        }
+    }
+}
+.reviews {
+    color: #ff6666;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.user__image {
+    width: fit-content;
+    border-radius: 100%;
+    background: #fff;
+    margin-right: 20px;
+    img {
+        height: 150px;
+        width: 150px;
+        border-radius: 100%;
+    }
+}
+
+.details__rating {
+    svg {
+        fill: #ff6e6e !important;
+    }
+}
+
+.icon__text {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    mat-icon {
+        height: fit-content;
+        width: fit-content;
+        font-size: 36px;
+        margin-right: 10px;
+    }
+    .text {
+        span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+}

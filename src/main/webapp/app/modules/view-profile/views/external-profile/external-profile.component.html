@@ -1,0 +1,5 @@
+<jhi-user-info [user]="user$ |  async"></jhi-user-info>
+
+<div class="profile__container">
+    <jhi-real-state-list [title]="'En venta'" [linkable]="true" [stateList]="realStates$ | async" [loading]="isLoadingRealState$ | async" [editable]="false"></jhi-real-state-list>
+</div>

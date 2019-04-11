@@ -52,7 +52,13 @@ public class UserService {
         this.authorityRepository = authorityRepository;
         this.mailService = mailService;
     }
-
+    public  User getUserById (String id) {
+        Optional<User> user =  userRepository.findById(id);
+        if(user.isPresent()){
+            return user.get();
+        }
+        return null;
+    }
     public Optional<User> getUserByEmail(String email){
         return userRepository.findOneByLogin(email);
     }

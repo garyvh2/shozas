@@ -13,7 +13,7 @@ public class ApiBaseController {
         ApiResultModel<T> result = new ApiResultModel<T>();
         boolean error = false;
         Exception exception = null;
-        timer.start();
+
 
         try {
             result.setResult(func.call());
@@ -27,9 +27,7 @@ public class ApiBaseController {
             result.setMessage(e.getMessage());
         }
         finally {
-            timer.stop();
-            result.setTime(Long.toString(timer.getTime()));
-            timer.reset();
+
         }
 
         if (error)
