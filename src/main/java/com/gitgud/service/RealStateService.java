@@ -123,9 +123,8 @@ public class RealStateService {
         }
 
         realStates.and(realStates.criteria("isSold").equal(parameters.isSold()));
-
-        if (parameters.isRented())
-            realStates.and(realStates.criteria("isRented").equal(parameters.isRented()));
+        realStates.and(realStates.criteria("isRented").equal(parameters.isRented()));
+        realStates.and(realStates.criteria("isActive").equal(true));
 
         if(parameters.isSimilarTo()){
             List<RealState> realStateList = getSimilarElements(realStates, parameters);
