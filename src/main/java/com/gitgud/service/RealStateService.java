@@ -30,17 +30,15 @@ public class RealStateService {
 
     private RealStateRepository realStateRepository;
     private UserRepository userRepository;
-    private MongoTemplate mongoTemplate;
     private UserService userService;
 
     @Autowired
     private Datastore datastore;
 
     public RealStateService(RealStateRepository realStateRepository, UserRepository userRepository,
-            MongoTemplate mongoTemplate, UserService userService) {
+             UserService userService) {
         this.realStateRepository = realStateRepository;
         this.userRepository = userRepository;
-        this.mongoTemplate = mongoTemplate;
         this.userService = userService;
     }
 

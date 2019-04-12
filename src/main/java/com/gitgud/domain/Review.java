@@ -1,5 +1,6 @@
 package com.gitgud.domain;
 
+import dev.morphia.annotations.Reference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,9 +12,10 @@ public class Review {
     @Id
     private String id;
 
-    private String email;
-
-    private String name;
+    @DBRef
+    @Field
+    @Reference
+    private User userShopper;
 
     private double rating;
 
@@ -21,6 +23,7 @@ public class Review {
 
     @DBRef
     @Field
+    @Reference
     private RealState realState;
 
     public String getId() {
@@ -31,20 +34,12 @@ public class Review {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUserShopper() {
+        return userShopper;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUserShopper(User userShopper) {
+        this.userShopper = userShopper;
     }
 
     public double getRating() {

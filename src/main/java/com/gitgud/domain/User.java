@@ -90,6 +90,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @DBRef
     @Field
+    @Reference
     private HashSet<Review> reviews = new HashSet<Review>();
 
     @DBRef

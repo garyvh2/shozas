@@ -8,6 +8,7 @@ import com.gitgud.domain.Image;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.AuthorityRepository;
+import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
 import com.gitgud.security.AuthoritiesConstants;
 import com.gitgud.security.SecurityUtils;
@@ -16,8 +17,12 @@ import com.gitgud.service.util.CloudinaryUtil;
 import com.gitgud.service.util.RandomUtil;
 import com.gitgud.web.rest.errors.*;
 
+import dev.morphia.Datastore;
+import dev.morphia.query.Query;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -46,11 +51,17 @@ public class UserService {
 
     private final MailService mailService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService) {
+    private final RealStateRepository realStateRepository;
+
+    @Autowired
+    private Datastore datastore;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService, RealStateRepository realStateRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.mailService = mailService;
+        this.realStateRepository = realStateRepository;
     }
     public  User getUserById (String id) {
         Optional<User> user =  userRepository.findById(id);
@@ -357,5 +368,24 @@ public class UserService {
         } else {
             throw new Exception("El Login solicitado no existe");
         }
+    }
+
+    public List<User> getUsersBasedOnFavorites(String realStateId) throws Exception {
+        Optional<RealState> realStateOptional = realStateRepository.findById(realStateId);
+        Query<RealState> realStateQuery =  datastore.createQuery(RealState.class);
+        realStateQuery.criteria("id").equal(new ObjectId(realStateId));
+
+        if(!realStateOptional.isPresent())
+            throw new Exception("The element searched with id: "+ realStateId + " was not found");
+
+        RealState realState = realStateOptional.get();
+
+        Query<User> userQuery = datastore.createQuery(User.class);
+
+        userQuery.criteria("favorites").in(realStateQuery.asKeyList());
+
+
+
+        return userQuery.asList();
     }
 }
