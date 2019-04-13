@@ -53,11 +53,11 @@ public class RealStateController extends ApiBaseController {
     }
 
     @PostMapping("/search/all")
-    public ApiResultModel<ApiSearchResults> searchAllTypes(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
-        return GetApiResultModel(() ->{
-            ApiSearchResults results = new ApiSearchResults();
-            results.setElements(realStateService.getRealStateElements(ResultType.All, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
-            return results;
+    public ApiResultModel<List<RealState>> searchAllTypes(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
+        return GetApiResultModel(() -> {
+            List<RealState> result = realStateService.getRealStateElements(ResultType.All, apiSearchParams, new ApiSearchResults());
+            result.forEach(r -> r.getOwner().setFavorites(null));
+            return result;
         } );
     }
 

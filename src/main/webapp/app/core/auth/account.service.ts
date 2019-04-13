@@ -1,3 +1,4 @@
+import { User } from './../../@akita/user/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
@@ -103,6 +104,9 @@ export class AccountService {
         return this.userIdentity !== undefined;
     }
 
+    getIdentity(): User {
+        return this.userIdentity;
+    }
     getAuthenticationState(): Observable<any> {
         return this.authenticationState.asObservable();
     }

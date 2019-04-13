@@ -27,6 +27,7 @@ import { AngularMaterialModule } from 'app/shared/angular-material/angular-mater
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingModule } from './modules/landing/landing.module';
 import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@akita/search';
+import { UserStore, UserQuery } from './@akita/user';
 
 @NgModule({
     imports: [
@@ -74,6 +75,8 @@ import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@a
         },
         SearchRealStateStore,
         FavoriteStateStore,
+        UserStore,
+        UserQuery,
         FavoriteStateQuery,
         SearchRealStateQuery
     ],

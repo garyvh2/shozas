@@ -22,9 +22,9 @@ export class RealStateMngViewComponent implements OnInit {
     longitude = 0;
     userAccount: User;
     observable: Subject<RealState> = new Subject();
-    $loading: Observable<boolean>;
-    $error: Observable<boolean>;
-    $realState: Observable<RealState>;
+    loading$: Observable<boolean>;
+    error$: Observable<boolean>;
+    realState$: Observable<RealState>;
     editableMode = false;
 
     constructor(
@@ -81,8 +81,8 @@ export class RealStateMngViewComponent implements OnInit {
             })
             .catch(() => (this.userAccount = undefined));
         this.account.getAuthenticationState().subscribe(user => (this.userAccount = user));
-        this.$loading = this.realStateQuery.selectLoading();
-        this.$error = this.realStateQuery.selectError();
+        this.loading$ = this.realStateQuery.selectLoading();
+        this.error$ = this.realStateQuery.selectError();
         this.isEditing();
     }
     firstStepValidation() {
@@ -103,16 +103,16 @@ export class RealStateMngViewComponent implements OnInit {
     isEditing() {
         const id = this.activeRoute.snapshot.paramMap.get('id');
         if (id) {
-            this.realStateService.get(id);
-            this.$realState = this.realStateQuery.getDetail(id);
             this.editableMode = true;
+            this.realState$ = this.realStateQuery.getDetail(id);
             this.setForm();
+            this.realStateService.get(id);
         }
     }
 
     setForm() {
-        this.$realState.subscribe(realState => {
-            if (realState) {
+        this.realState$.subscribe(realState => {
+            if (realState && realState.id) {
                 this.firstFormGroup = this._formBuilder.group({
                     id: new FormControl(realState.id),
                     realStateType: new FormControl(realState.realStateType, Validators.required),
@@ -151,7 +151,7 @@ export class RealStateMngViewComponent implements OnInit {
         const newRealState: RealState = {
             ...this.firstFormGroup.value,
             images: this.imageArray,
-            owner: this.userAccount
+            owner: { ...this.userAccount, favorites: undefined }
         };
         if (this.editableMode) {
             this.realStateService.updateRealState(newRealState);

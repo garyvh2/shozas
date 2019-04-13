@@ -10,6 +10,14 @@ export class RealStateQuery extends QueryEntity<DetailState, RealState> {
     getDetail(id: string) {
         return this.selectEntity(id);
     }
+
+    getUserRealState(login: string) {
+        return this.selectAll({
+            filterBy: entity => {
+                return (entity.owner && entity.owner.login === login) || (entity.user && entity.user.login === login);
+            }
+        });
+    }
 }
 
 export const detailQuery = new RealStateQuery(detailStore);
