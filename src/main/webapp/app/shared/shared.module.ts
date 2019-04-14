@@ -1,12 +1,11 @@
+import { CommentComponent } from './comment/comment.component';
 import { RealStateListComponent } from './real-state-list/real-state-list.component';
-import { UserInfoComponent } from './user-info/user-info.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { ListingComponent } from './listing/listing.component';
 import { DetailSpecComponent } from './detail-spec/detail-spec.component';
 import { DetailLikeComponent } from './detail-like/detail-like.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { AgmCoreModule } from '@agm/core';
 
 import { NgbDateMomentAdapter } from './util/datepicker-adapter';
 import { ShozasSharedLibsModule, ShozasSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';
@@ -22,11 +21,11 @@ import { LocationFiltersComponent } from './location-filters/location-filters.co
         HasAnyAuthorityDirective,
         DetailLikeComponent,
         DetailSpecComponent,
-        UserInfoComponent,
         RealStateListComponent,
         ListingComponent,
         UserRatingComponent,
-        LocationFiltersComponent
+        LocationFiltersComponent,
+        CommentComponent
     ],
     providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
     entryComponents: [JhiLoginModalComponent],
@@ -37,13 +36,13 @@ import { LocationFiltersComponent } from './location-filters/location-filters.co
         AngularMaterialModule,
         DetailLikeComponent,
         DetailSpecComponent,
-        UserInfoComponent,
         RealStateListComponent,
         ListingComponent,
         UserRatingComponent,
         ReactiveFormsModule,
         FormsModule,
-        LocationFiltersComponent
+        LocationFiltersComponent,
+        CommentComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

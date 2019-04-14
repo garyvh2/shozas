@@ -1,3 +1,4 @@
+import { ShozasSharedModule } from 'app/shared';
 import { FormsModule } from '@angular/forms';
 import { SearchRealStateStore } from './../landing/@akita/search/search.store';
 import { ReviewService } from './../../@akita/review/review.service';
@@ -21,7 +22,6 @@ import { TitleComponent } from './components/title/title.component';
 import { FeaturesComponent } from './components/features/features.component';
 import { AmenitiesComponent } from './components/amenities/amenities.component';
 import { MapComponent } from './components/map/map.component';
-import { CommentComponent } from './components/comment/comment.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 import { SidecardComponent } from './components/sidecard/sidecard.component';
@@ -38,7 +38,6 @@ import { NgxMaskModule } from 'ngx-mask';
         StateDetailComponent,
         ImagesCarrouselComponent,
         MapComponent,
-        CommentComponent,
         CommentSectionComponent,
         TitleComponent,
         SidecardComponent,
@@ -53,6 +52,7 @@ import { NgxMaskModule } from 'ngx-mask';
         DetailRoutingModule,
         GalleryModule.forRoot(),
         CommonModule,
+        ShozasSharedModule,
         AngularMaterialModule,
         StarRatingModule,
         MatDialogModule,

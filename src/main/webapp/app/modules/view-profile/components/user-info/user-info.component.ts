@@ -1,5 +1,7 @@
+import { ReviewsModalComponent } from './../reviews-modal/reviews-modal.component';
+import { MatDialog } from '@angular/material';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { User } from '../../@akita/user';
+import { User } from '../../../../@akita/user';
 
 @Component({
     selector: 'jhi-user-info',
@@ -9,12 +11,18 @@ import { User } from '../../@akita/user';
 export class UserInfoComponent implements OnChanges {
     @Input()
     user: User;
-    constructor() {}
 
-    ngOnChanges() {
-        console.log('user', this.user);
+    constructor(public dialog: MatDialog) {}
+
+    ngOnChanges() {}
+
+    onClickClose() {
+        this.dialog.closeAll();
     }
 
+    onClickReviews() {
+        this.dialog.open(ReviewsModalComponent, { data: this.user.reviews, autoFocus: false });
+    }
     getImage(): string {
         if (this.user && this.user.image) {
             return this.user.image.source;

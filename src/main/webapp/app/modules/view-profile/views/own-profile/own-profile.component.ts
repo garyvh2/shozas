@@ -1,3 +1,4 @@
+import { MatDialog } from '@angular/material';
 import { RealStateQuery } from './../../../../@akita/real-state/real-state.query';
 import { FavoriteStateQuery } from './../../../listings/@akita/favorite/favorite.query';
 import { Observable } from 'rxjs';
@@ -30,6 +31,7 @@ export class OwnProfileComponent implements OnInit {
         this.getUserRealState(this.user);
         this.getFavorites(this.user);
     }
+
     getUserRealState(user: User) {
         this.realStates$ = this.realStateQuery.getUserRealState(user.login);
         this.isLoadingRealState$ = this.realStateQuery.selectLoading();

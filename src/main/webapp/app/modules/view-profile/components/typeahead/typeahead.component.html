@@ -1,0 +1,30 @@
+<mat-form-field class="chip-List" appearance="outline">
+  <mat-label>Preferences</mat-label>
+  <mat-chip-list #chipList [formControl]="tagCtrl">
+    <mat-chip
+      *ngFor="let user of users"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(user)"
+    >
+      {{ tag.name }}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="New preference..."
+      #tagInput
+      [formControl]="inputCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let tag of (filteredTags | async)" [value]="tag">
+      {{ tag.name }}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="tagCtrl.hasError('emptyTags')" >Please add your preferences </mat-error>
+</mat-form-field>
