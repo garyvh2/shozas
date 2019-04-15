@@ -343,6 +343,7 @@ public class RealStateService {
         if (presentRealState.isPresent() && presentUser.isPresent()) {
             // Get the realState and user object
             RealState realState = presentRealState.get();
+            realState.setOwner(null);
             User user = presentUser.get();
 
             // Add the favorite
