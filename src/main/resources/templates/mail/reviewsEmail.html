@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Cuentenos su experiencia</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    <style type="text/css" media="screen">
+        * {
+            font-family: 'Lato', Arial, sans-serif !important;
+        }
+    </style>
+</head>
+
+<body style="background:#eee; padding: 20px 20px 60px 20px;">
+    <div style="width:100%; text-align:center;">
+        <span style="color:#ff6666; font-size:30px;">Shozas</span>
+    </div>
+    <div
+        style="max-width:800px;margin:auto;background:#fff; padding: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);font-family: 'Lato', Arial, sans-serif !important;">
+        <h1 style="text-align:center">¡Ayudanos a mejorar Shozas!</h1>
+
+        <p style="font-size:16px;" th:text="#{email.activation.greeting(${email})}">
+            Hola Señor/a,
+        </p>
+        <p>
+            Nosotros queremos que su experiencia sea cada vez mejor.
+            Por favor ayudenos a mejorar Shozas, califique al vendedor en el siguiente link:
+        </p>
+        <div style="margin: 0 auto 30px auto; text-align: center;">
+            <a style="text-decoration:none;display: block; padding:10px; margin: 0 auto; max-width: 150px; background:#69f0ae; color:#fff;"
+               th:with="url=(@{|${baseUrl}/#/detail/${detailId}?isRegistred=${register}&email=${email}|})" th:href="${url}">
+                Calificar ahora
+            </a>
+        </div>
+        <p>
+            <span th:text="#{email.activation.text2}">Saludos, </span>
+            <br />
+            <em style="font-weight: bold;" th:text="#{email.signature}">Shozas Team.</em>
+        </p>
+    </div>
+</body>
+
+</html>

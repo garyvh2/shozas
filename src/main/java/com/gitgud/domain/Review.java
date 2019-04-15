@@ -1,6 +1,7 @@
 package com.gitgud.domain;
 
 import dev.morphia.annotations.Reference;
+import dev.morphia.annotations.Transient;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
