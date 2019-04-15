@@ -1,3 +1,4 @@
+import { BoughtModalComponent } from './bought-modal/bought-modal.component';
 import { CommentComponent } from './comment/comment.component';
 import { RealStateListComponent } from './real-state-list/real-state-list.component';
 import { StarRatingModule } from 'angular-star-rating';
@@ -13,9 +14,11 @@ import { AngularMaterialModule } from 'app/shared/angular-material/angular-mater
 import { UserRatingComponent } from './user-rating/user-rating.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LocationFiltersComponent } from './location-filters/location-filters.component';
+import { TypeaheadComponent } from './typeahead/typeahead.component';
+import { RemoveModalComponent } from './remove-modal/remove-modal.component';
 
 @NgModule({
-    imports: [ShozasSharedLibsModule, ShozasSharedCommonModule, StarRatingModule.forRoot()],
+    imports: [ShozasSharedLibsModule, ShozasSharedCommonModule, StarRatingModule.forRoot(), AngularMaterialModule, ReactiveFormsModule],
     declarations: [
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
@@ -25,10 +28,13 @@ import { LocationFiltersComponent } from './location-filters/location-filters.co
         ListingComponent,
         UserRatingComponent,
         LocationFiltersComponent,
-        CommentComponent
+        CommentComponent,
+        TypeaheadComponent,
+        BoughtModalComponent,
+        RemoveModalComponent
     ],
     providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
-    entryComponents: [JhiLoginModalComponent],
+    entryComponents: [JhiLoginModalComponent, BoughtModalComponent, RemoveModalComponent],
     exports: [
         ShozasSharedCommonModule,
         JhiLoginModalComponent,
@@ -42,7 +48,8 @@ import { LocationFiltersComponent } from './location-filters/location-filters.co
         ReactiveFormsModule,
         FormsModule,
         LocationFiltersComponent,
-        CommentComponent
+        CommentComponent,
+        RemoveModalComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

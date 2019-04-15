@@ -7,8 +7,8 @@
             <div class="{{ i !== 0 ? 'no__mobile' : '' }}">
                 <div *ngIf="editable" class="buttons">
                     <mat-icon (click)="onEdit(stateList[getIndex(i)].id)" class="edit">edit</mat-icon>
-                    <mat-icon class="money">attach_money</mat-icon>
-                    <mat-icon class="delete">close</mat-icon>
+                    <mat-icon class="money" (click)="openBoughtModal(stateList[getIndex(i)].id)">attach_money</mat-icon>
+                    <mat-icon class="delete" (click)="openRemoveModal(stateList[getIndex(i)].id)">close</mat-icon>
                 </div>
                 <jhi-listing *ngIf="!linkable" [listing]="stateList[getIndex(i)]"></jhi-listing>
                 <jhi-listing

@@ -1,50 +1,53 @@
-import { RealStateService } from './../../../../@akita/real-state/real-state.service';
-import { User } from './../../../../@akita/user/user.model';
-import { Component, OnInit, Output, Input } from '@angular/core';
+import { UserService } from './../../@akita/user/user.service';
+import { ID } from '@datorama/akita';
+import { User } from './../../@akita/user/user.model';
+import { Component, OnInit, Output, Input, OnChanges } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ElementRef, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
-import { EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'jhi-typeahead',
     templateUrl: './typeahead.component.html',
     styleUrls: ['./typeahead.component.scss']
 })
-export class TypeaheadComponent implements OnInit {
+export class TypeaheadComponent implements OnInit, OnChanges {
+    @Input()
+    realStateId: ID;
+    @Input()
+    users: string[] = [];
     visible = true;
     selectable = true;
     removable = true;
     addOnBlur = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
-    filteredTags: Observable<User[]>;
-    users: User[] = [];
+    filteredUsers: Observable<User[]>;
     allUsers: User[] = [];
 
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
-    @Output() tagsChanged: EventEmitter<User[]> = new EventEmitter();
-    @Output() validation: EventEmitter<FormControl> = new EventEmitter();
     tagCtrl: FormControl;
-    inputCtrl = new FormControl();
+    inputCtrl = new FormControl('');
+    emailCtrl = new FormControl('', Validators.email);
 
-    constructor(private realStateService: RealStateService) {}
+    constructor(private userService: UserService) {}
 
     ngOnInit() {
         this.tagCtrl = new FormControl('', this.Validatetags);
-        this.tagsChanged.emit(this.users);
-        this.validation.emit(this.tagCtrl);
+    }
+    ngOnChanges() {
         this.loadTags();
     }
     loadTags() {
-        this.realStateService.getTags().subscribe(data => {
-            this.allUsers = data;
-            this.updateFilterList();
-        });
+        if (this.realStateId) {
+            this.userService.getInterested(this.realStateId).subscribe((data: any) => {
+                this.allUsers = data.result;
+                this.updateFilterList();
+            });
+        }
     }
 
     Validatetags = () => {
@@ -58,29 +61,29 @@ export class TypeaheadComponent implements OnInit {
         if (!this.matAutocomplete.isOpen) {
             const input = event.input;
             const value = event.value || '';
+            this.emailCtrl.setValue(value);
+            if (this.emailCtrl.valid) {
+                if (value.trim() && !this.isAlreadyOnList(value)) {
+                    this.users.push(value.trim());
+                }
 
-            if (value.trim() && !this.isAlreadyOnList(value)) {
-                this.users.push({ login: value.trim() });
-                this.tagsChanged.emit(this.users);
-                this.validation.emit(this.tagCtrl);
+                if (input) {
+                    input.value = '';
+                }
+
+                this.tagCtrl.setValue(null);
+                this.emailCtrl.setValue('');
+                this.emailCtrl.markAsPristine();
+                this.emailCtrl.markAsUntouched();
+            } else {
+                this.emailCtrl.markAsTouched();
+                this.emailCtrl.markAsDirty();
             }
-
-            if (input) {
-                input.value = '';
-            }
-
-            this.tagCtrl.setValue(null);
         }
     }
 
     remove(tag: User): void {
-        const index = this.users.indexOf(tag);
-
-        if (index >= 0) {
-            this.users.splice(index, 1);
-            this.tagsChanged.emit(this.users);
-            this.validation.emit(this.tagCtrl);
-        }
+        this.users = [];
     }
     selected(event: MatAutocompleteSelectedEvent): void {
         const value = event.option.value;
@@ -88,31 +91,29 @@ export class TypeaheadComponent implements OnInit {
             this.users.push(value);
             this.tagInput.nativeElement.value = '';
             this.tagCtrl.setValue(null);
-            this.tagsChanged.emit(this.users);
-            this.validation.emit(this.tagCtrl);
             this.updateFilterList();
         }
     }
 
     private isAlreadyOnList(value: string): boolean {
-        const findRow = this.users.find(tag => tag.name.toLowerCase() === value.toLowerCase());
-        return !!findRow;
+        const findRow = this.users.find(tag => tag.toLowerCase() === value.toLowerCase());
+        return !!findRow || this.users.length === 1;
     }
     updateFilterList() {
-        this.filteredTags = this.inputCtrl.valueChanges.pipe(
+        this.filteredUsers = this.inputCtrl.valueChanges.pipe(
             startWith(null),
             map((tag: User | string | null) => (tag ? this._filter(tag) : this.notIncludedTags().slice(0, 10)))
         );
     }
     private notIncludedTags(): User[] {
-        return this.allUsers.filter(tag => {
-            return !this.users.some(t => tag.name === t.name);
+        return this.allUsers.filter(userlist => {
+            return !this.users.some(user => userlist.login === user);
         });
     }
     private _filter(tag: any): User[] {
-        const value = tag.name ? tag.name : tag;
+        const value = tag.login ? tag.login : tag;
         const filterValue = value.toLowerCase();
         const notAddedTags = this.notIncludedTags();
-        return notAddedTags.filter(tag => tag.name.toLowerCase().indexOf(filterValue) === 0);
+        return notAddedTags.filter(tag => tag.login.toLowerCase().indexOf(filterValue) === 0);
     }
 }

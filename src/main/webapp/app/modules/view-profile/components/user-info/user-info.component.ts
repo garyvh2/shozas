@@ -1,7 +1,10 @@
+import { RemoveType } from './../../../../shared/util/remove-type';
+import { RemoveModalComponent } from './../../../../shared/remove-modal/remove-modal.component';
 import { ReviewsModalComponent } from './../reviews-modal/reviews-modal.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { User } from '../../../../@akita/user';
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'jhi-user-info',
@@ -22,6 +25,12 @@ export class UserInfoComponent implements OnChanges {
 
     onClickReviews() {
         this.dialog.open(ReviewsModalComponent, { data: this.user.reviews, autoFocus: false });
+    }
+    onClickDesactive() {
+        this.dialog.open(RemoveModalComponent, {
+            data: { id: this.user.id, actionMessage: 'este usuario', serviceType: RemoveType.User },
+            autoFocus: false
+        });
     }
     getImage(): string {
         if (this.user && this.user.image) {
