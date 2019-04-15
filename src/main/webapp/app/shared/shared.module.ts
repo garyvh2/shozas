@@ -1,3 +1,5 @@
+import { RealStateListComponent } from './real-state-list/real-state-list.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { ListingComponent } from './listing/listing.component';
 import { DetailSpecComponent } from './detail-spec/detail-spec.component';
@@ -20,6 +22,8 @@ import { LocationFiltersComponent } from './location-filters/location-filters.co
         HasAnyAuthorityDirective,
         DetailLikeComponent,
         DetailSpecComponent,
+        UserInfoComponent,
+        RealStateListComponent,
         ListingComponent,
         UserRatingComponent,
         LocationFiltersComponent
@@ -33,6 +37,8 @@ import { LocationFiltersComponent } from './location-filters/location-filters.co
         AngularMaterialModule,
         DetailLikeComponent,
         DetailSpecComponent,
+        UserInfoComponent,
+        RealStateListComponent,
         ListingComponent,
         UserRatingComponent,
         ReactiveFormsModule,

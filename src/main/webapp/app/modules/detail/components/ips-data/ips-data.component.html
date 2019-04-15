@@ -1,7 +1,7 @@
-<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData">
+<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData col-md-12 col-xl-4">
     <mat-card-header>
         <mat-card-title>Necesidades Humanas Básicas</mat-card-title>
-        <mat-card-subtitle>Puntuacion IPS: {{dataCRP.dimensiones.NHB.score}}</mat-card-subtitle>
+        <mat-card-subtitle>Puntuación IPS: {{dataCRP.dimensiones.NHB.score}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div class="row">
@@ -30,10 +30,10 @@
     <mat-card-footer></mat-card-footer>
 </mat-card>
 
-<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData">
+<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData col-md-12 col-xl-4">
     <mat-card-header>
         <mat-card-title>Fundamentos del Bienestar</mat-card-title>
-        <mat-card-subtitle>Puntuacion IPS: {{dataCRP.dimensiones.FB.score}}</mat-card-subtitle>
+        <mat-card-subtitle>Puntuación IPS: {{dataCRP.dimensiones.FB.score}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div class="row">
@@ -62,10 +62,10 @@
     <mat-card-footer></mat-card-footer>
 </mat-card>
 
-<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData">
+<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData col-md-12 col-xl-4">
     <mat-card-header>
         <mat-card-title>Oportunidades</mat-card-title>
-        <mat-card-subtitle>Puntuacion IPS: {{dataCRP.dimensiones.OP.score}}</mat-card-subtitle>
+        <mat-card-subtitle>Puntuación IPS: {{dataCRP.dimensiones.OP.score}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div class="row">

@@ -2,6 +2,6 @@
     [src]="user.image && user.image.source ? user.image.source : 'https://res.cloudinary.com/ucenfotec19/image/upload/v1554338838/profile.jpg'" />
 <div class="details">
     <span class="details__name">{{ !user.firstName ? user.name : user.firstName }}</span>
-    <star-rating class="details__rating" size="small" [starType]="'svg'" [rating]="user.stars" [readOnly]="true">
-    </star-rating>
+    <star-rating class="details__rating" size="small" [starType]="'icon'" [rating]="user.stars || user.raiting"
+        [readOnly]="true"></star-rating>
 </div>

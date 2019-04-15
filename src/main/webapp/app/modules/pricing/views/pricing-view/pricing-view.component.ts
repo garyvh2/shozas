@@ -24,7 +24,8 @@ export class PricingViewComponent implements OnInit {
     averagePrice = 0;
 
     showCanvas = false;
-    pricingIllustrationURL = 'https://res.cloudinary.com/shozas/image/upload/v1554718546/generichouse.jpg';
+
+    pricingIllustrationURL = 'https://res.cloudinary.com/shozas/image/upload/v1555192506/housebuild.gif';
 
     constructor(private pricingService: PricingService) {}
 

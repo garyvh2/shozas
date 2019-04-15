@@ -66,6 +66,8 @@ public class RealState {
 
     private boolean isRented;
 
+    private boolean isActive;
+
     private Instant dateCreated;
 
     @Field
@@ -315,6 +317,14 @@ public class RealState {
 
     public void setDateCreated(Instant dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override

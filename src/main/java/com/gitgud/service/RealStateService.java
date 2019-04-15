@@ -58,7 +58,7 @@ public class RealStateService {
                 : realState.getRealStateType().equals("D") ? "Departamento en " : "Lote en ";
         realStateTitle = realStateTitle.concat(realState.getProvince() + " ").concat(realState.getDistrict());
         realState.setTitle(realStateTitle);
-
+        realState.setActive(true);
         if (realState.getImages() != null && !realState.getImages().isEmpty()) {
             Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
             realState.getImages().forEach(i -> {
@@ -130,9 +130,8 @@ public class RealStateService {
         }
 
         realStates.and(realStates.criteria("isSold").equal(parameters.isSold()));
-
-        if (parameters.isRented())
-            realStates.and(realStates.criteria("isRented").equal(parameters.isRented()));
+        realStates.and(realStates.criteria("isRented").equal(parameters.isRented()));
+        realStates.and(realStates.criteria("isActive").equal(true));
 
         if(parameters.isSimilarTo()){
             List<RealState> realStateList = getSimilarElements(realStates, parameters);
@@ -247,7 +246,10 @@ public class RealStateService {
         Optional<RealState> result = realStateRepository.findById(id);
         if (!result.isPresent())
             throw new Exception("El elemento solicitado ya no existe");
-        return result.get();
+
+        RealState realState =  result.get();
+        realState.getOwner().setFavorites(null);
+        return realState;
     }
 
     public RealState update(RealState updateElement) throws Exception {
@@ -311,25 +313,30 @@ public class RealStateService {
 
     private HashSet<Image> getUpdatedImage(HashSet<Image> updatedImages, HashSet<Image> imagesOnDb) {
         Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
-        updatedImages.forEach(i ->{
-            imagesOnDb.forEach(im -> {
-                if(i.getImageId().equalsIgnoreCase(im.getImageId())){
-                    if (!i.getSource().equalsIgnoreCase(im.getSource())){
-                        try {
-                            if (!i.getImageId().equals("0"))
-                                cloudinaryUploader.uploader().destroy(i.getImageId(), ObjectUtils.emptyMap());
 
-                            Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
-                            i.setImageId(uploadResult.get("public_id").toString());
-                            i.setSource(uploadResult.get("url").toString());
-                        } catch (IOException e) {
-                            i.setSource(
-                                "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
-                            i.setImageId("0");
-                        }
-                    }
+            imagesOnDb.forEach(im -> {
+                try {
+                    if ( im.getImageId() != null && !im.getImageId().equals("0") && !im.getImageId().equals("1") &&  !updatedImages.stream().filter(u -> u.getImageId().equalsIgnoreCase(im.getImageId())).findAny().isPresent())
+                        cloudinaryUploader.uploader().destroy(im.getImageId(), ObjectUtils.emptyMap());
+
+                     } catch (IOException e) {
+
                 }
             });
+
+        updatedImages.forEach(i ->{
+            try {
+                if(i.getImageId() == null || !imagesOnDb.stream().filter(u -> u.getImageId().equalsIgnoreCase(i.getImageId())).findAny().isPresent()){
+                    Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
+                   i.setImageId(uploadResult.get("public_id").toString());
+                   i.setSource(uploadResult.get("url").toString());
+                }
+            }
+            catch (IOException e) {
+                i.setSource(
+                    "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
+                i.setImageId("0");
+            }
         });
 
         return updatedImages;
