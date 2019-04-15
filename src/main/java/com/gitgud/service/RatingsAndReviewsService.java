@@ -29,9 +29,13 @@ public class RatingsAndReviewsService {
     public Review save(Review review) throws Exception {
 
         Optional<RealState> realStateOptional = realStateRepository.findById(review.getRealState().getId());
+        Optional<User> userOptional = userRepository.findOneByLogin( review.getUserShopper().getLogin());
 
         if(!realStateOptional.isPresent())
             throw new Exception("El elemento a calificar no existe");
+
+        if(!userOptional.isPresent())
+            throw new Exception("El usuario aun no esta registrado");
 
         RealState realStateToEvaluate = realStateOptional.get();
         realStateToEvaluate.getOwner().setFavorites(null);
@@ -46,26 +50,41 @@ public class RatingsAndReviewsService {
 
         double numberOfStars = (currentCualifcation/maxCualification) * 5;
 
+        review.setUserShopper(userOptional.get());
+        review = ratingsAndReviewsRepository.save(review);
+
         HashSet<Review> reviews = userToCheck.getReviews();
         reviews.add(review);
+
         userToCheck.setRaiting(numberOfStars);
         userToCheck.setReviews(reviews);
 
         userRepository.save(userToCheck);
-        return ratingsAndReviewsRepository.save(review);
+
+        review.getUserShopper().setFavorites(null);
+        return  review;
     }
 
     public boolean generateReview( Review review ) throws Exception {
 
-        Optional<User> userOptional = userRepository.findOneByLogin( review.getUserShopper().getLogin());
         Optional<RealState> realStateOptional = realStateRepository.findById(review.getRealState().getId());
-        boolean isRegistred  = userOptional.isPresent();
 
         if(!realStateOptional.isPresent())
             throw new Exception("El elemento a calificar no existe");
 
+        RealState realState = realStateOptional.get();
+
+        realState.setRented(review.isRented());
+        realState.setSold(review.isSold());
+
+        realStateRepository.save(realState);
         try {
-            mailService.sendEmailReview(review.getUserShopper().getLogin(), isRegistred, review.getRealState().getId());
+            if (!review.isUserUnKnown())
+            {
+                Optional<User> userOptional = userRepository.findOneByLogin( review.getUserShopper().getLogin());
+                boolean isRegistred  = userOptional.isPresent();
+                mailService.sendEmailReview(review.getUserShopper().getLogin(), isRegistred, review.getRealState().getId());
+            }
         }
         catch (Exception e){
             return false;

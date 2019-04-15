@@ -95,7 +95,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @DBRef
     @Field
-    @Reference
+    @Reference(lazy = true)
     private HashSet<RealState> favorites = new HashSet<RealState>();
 
     @Field

@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Review {
 
     @Id
+    @dev.morphia.annotations.Id
     private String id;
 
     @DBRef
@@ -21,6 +22,12 @@ public class Review {
     private double rating;
 
     private String comment;
+
+    private boolean isSold;
+
+    private boolean isRented;
+
+    private boolean isUserUnKnown;
 
     @DBRef
     @Field
@@ -65,5 +72,29 @@ public class Review {
 
     public void setRealState(RealState realState) {
         this.realState = realState;
+    }
+
+    public boolean isSold() {
+        return isSold;
+    }
+
+    public void setSold(boolean sold) {
+        isSold = sold;
+    }
+
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
+    }
+
+    public boolean isUserUnKnown() {
+        return isUserUnKnown;
+    }
+
+    public void setUserUnKnown(boolean userUnKnown) {
+        isUserUnKnown = userUnKnown;
     }
 }
