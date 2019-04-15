@@ -2,6 +2,7 @@ package com.gitgud.service.recommendation;
 
 
 import com.cloudinary.Api;
+import com.gitgud.api.objects.ApiDetailView;
 import com.gitgud.api.objects.ApiImage;
 import com.gitgud.api.objects.ApiRealState;
 import com.gitgud.api.objects.ApiUser;
@@ -274,5 +275,16 @@ public class RecommendationService {
         this.realStateRepository.findAllById(ids).forEach(items::add);
         return items.stream().map(favorite -> RealStateUtils.toApiRealState(favorite))
             .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    /**
+     * Add view
+     */
+    @Transactional
+    public void addView(ApiDetailView apiDetailView) throws ApiException {
+        this.recombeeClient.send(new AddDetailView(apiDetailView.getUserId(), apiDetailView.getItemId())
+            .setTimestamp(apiDetailView.getInTime())
+            .setDuration(apiDetailView.getDuration())
+        );
     }
 }

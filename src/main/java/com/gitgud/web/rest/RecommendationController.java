@@ -1,5 +1,6 @@
 package com.gitgud.web.rest;
 
+import com.gitgud.api.objects.ApiDetailView;
 import com.gitgud.api.objects.ApiRealState;
 import com.gitgud.api.objects.ApiResultModel;
 import com.gitgud.domain.RealState;
@@ -53,5 +54,10 @@ public class RecommendationController extends ApiBaseController {
     @GetMapping("/user/{userId}")
     public ApiResultModel<HashSet<ApiRealState>> userRecommendations (@PathVariable String userId, @RequestParam(required = false, defaultValue = "10") long count) throws Exception {
         return GetApiResultModel(() -> recommendationService.userRecommendations(userId, count));
+    }
+
+    @PostMapping("/view")
+    public void addView(@RequestBody ApiDetailView apiDetailView) throws Exception {
+        this.recommendationService.addView(apiDetailView);
     }
 }
