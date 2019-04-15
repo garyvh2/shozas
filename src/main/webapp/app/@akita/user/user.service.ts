@@ -8,6 +8,10 @@ import { UserStore } from './user.store';
 export class UserService {
     constructor(private userStore: UserStore, private http: HttpClient) {}
 
+    getInterested(id: ID) {
+        const url = `${SERVER_API_URL}/api/user/typeahead?realStateId=${id}`;
+        return this.http.get(url);
+    }
     get(id: ID) {
         const url = `${SERVER_API_URL}/api/user?id=${id}`;
         this.userStore.setLoading(true);
