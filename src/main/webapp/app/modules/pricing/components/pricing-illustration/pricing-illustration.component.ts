@@ -31,8 +31,8 @@ export class PricingIllustrationComponent implements OnInit {
         this.scene.add(this.camera);
 
         // Add a light in the scene
-        this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        this.directionalLight.position.set(0, 0, 350);
+        this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        this.directionalLight.position.set(0, 0, 100);
         this.directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
         this.scene.add(this.directionalLight);
 
