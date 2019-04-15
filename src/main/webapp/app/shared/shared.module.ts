@@ -16,6 +16,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LocationFiltersComponent } from './location-filters/location-filters.component';
 import { TypeaheadComponent } from './typeahead/typeahead.component';
 import { RemoveModalComponent } from './remove-modal/remove-modal.component';
+import { ReviewService } from 'app/@akita/review';
 
 @NgModule({
     imports: [ShozasSharedLibsModule, ShozasSharedCommonModule, StarRatingModule.forRoot(), AngularMaterialModule, ReactiveFormsModule],
@@ -33,7 +34,7 @@ import { RemoveModalComponent } from './remove-modal/remove-modal.component';
         BoughtModalComponent,
         RemoveModalComponent
     ],
-    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
+    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }, ReviewService],
     entryComponents: [JhiLoginModalComponent, BoughtModalComponent, RemoveModalComponent],
     exports: [
         ShozasSharedCommonModule,

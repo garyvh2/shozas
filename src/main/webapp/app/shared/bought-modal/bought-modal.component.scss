@@ -6,8 +6,17 @@
     margin: 0;
     display: flex;
     flex-direction: column;
+    > div {
+        display: flex;
+        flex-direction: column;
+    }
     mat-checkbox {
         margin-bottom: 20px;
+    }
+    mat-spinner {
+        margin: auto;
+        text-align: center;
+        padding: 20px;
     }
 }
 .title {
@@ -38,7 +47,27 @@ h3 {
     color: #333;
     padding: 20px;
 }
+.mat-snack-bar-container.confirmation-snackbar {
+    color: #424242;
+    background-color: #69f0ae;
+    .mat-simple-snackbar {
+        color: #424242;
+        span {
+            color: #424242;
+        }
+    }
+}
 
+.confirmation-snackbar {
+    color: #424242;
+    background-color: #69f0ae;
+    .mat-simple-snackbar {
+        color: #424242;
+        span {
+            color: #424242;
+        }
+    }
+}
 .showButton {
     display: flex;
     justify-content: center;

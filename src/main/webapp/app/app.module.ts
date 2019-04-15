@@ -28,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingModule } from './modules/landing/landing.module';
 import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@akita/search';
 import { UserStore, UserQuery } from './@akita/user';
+import { ReviewStore } from './@akita/review';
 
 @NgModule({
     imports: [
@@ -77,6 +78,7 @@ import { UserStore, UserQuery } from './@akita/user';
         FavoriteStateStore,
         UserStore,
         UserQuery,
+        ReviewStore,
         FavoriteStateQuery,
         SearchRealStateQuery
     ],

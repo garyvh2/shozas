@@ -5,7 +5,7 @@ import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RealState, RealStateService, RealStateQuery } from '../../../../@akita/real-state';
 import { ReviewService } from '../../../../@akita/review/review.service';
@@ -23,6 +23,7 @@ export class StateDetailComponent implements OnInit {
         private detailService: RealStateService,
         private detailQuery: RealStateQuery,
         private route: ActivatedRoute,
+        private router: Router,
         private reviewService: ReviewService,
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer,
@@ -62,15 +63,19 @@ export class StateDetailComponent implements OnInit {
     }
 
     showReviewsModal() {
-        let review: string;
+        let isRegistred: boolean;
         let email: string;
         this.route.queryParamMap.subscribe(params => {
-            review = params.get('review');
+            isRegistred = params.get('isRegistred') === 'true';
             email = params.get('email');
-            if (review && email) {
+            if (isRegistred && email) {
                 this.accountService.identity().then(user => {
                     if (user) {
-                        this.dialog.open(ReviewModalComponent, { autoFocus: false, disableClose: true, data: user });
+                        this.dialog.open(ReviewModalComponent, {
+                            autoFocus: false,
+                            disableClose: true,
+                            data: { user, realStateId: this.id }
+                        });
                     } else {
                         this.loginModalService.open();
                     }
@@ -80,6 +85,8 @@ export class StateDetailComponent implements OnInit {
                         this.dialog.open(ReviewModalComponent, { autoFocus: false, disableClose: true, data: user });
                     }
                 });
+            } else if (!isRegistred && email) {
+                this.router.navigate(['/register']);
             }
         });
     }

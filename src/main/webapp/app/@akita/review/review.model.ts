@@ -4,10 +4,10 @@ import { TempUser } from '../external-models/tempUser';
 import { RealState } from '../real-state';
 
 export interface Review {
-    id: ID;
-    date: Date;
-    comment: string;
-    rating: number;
+    id?: ID;
+    date?: Date;
+    comment?: string;
+    rating?: number;
     userShopper: User;
     realState?: RealState;
 }
