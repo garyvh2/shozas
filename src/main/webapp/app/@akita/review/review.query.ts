@@ -10,7 +10,7 @@ export class ReviewQuery extends QueryEntity<ReviewState, Review> {
     getRealStateReviews(idRealState: ID) {
         return this.selectAll({
             filterBy: entity => {
-                return entity.realState.id.toString() === idRealState;
+                return entity.realState ? entity.realState.id.toString() === idRealState : false;
             }
         });
     }

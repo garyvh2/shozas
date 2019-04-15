@@ -110,10 +110,10 @@ export class TypeaheadComponent implements OnInit, OnChanges {
             return !this.users.some(user => userlist.login === user);
         });
     }
-    private _filter(tag: any): User[] {
-        const value = tag.login ? tag.login : tag;
+    private _filter(user: any): User[] {
+        const value = user.login ? user.login : user;
         const filterValue = value.toLowerCase();
-        const notAddedTags = this.notIncludedTags();
-        return notAddedTags.filter(tag => tag.login.toLowerCase().indexOf(filterValue) === 0);
+        const notAddedUsers = this.notIncludedTags();
+        return notAddedUsers.filter(notAddedUser => notAddedUser.login.toLowerCase().indexOf(filterValue) === 0);
     }
 }
