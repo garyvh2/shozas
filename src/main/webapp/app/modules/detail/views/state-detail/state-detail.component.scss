@@ -69,3 +69,18 @@
         }
     }
 }
+
+::ng-deep mat-tooltip-component {
+    /* your own custom styles here */
+    /* e.g. */
+    .mat-tooltip {
+        font-weight: bold;
+        font-size: 1em;
+    }
+
+    .finance__disclaimer {
+        background-color: rgba(255, 102, 102, 0.9);
+        border-radius: 8px;
+        max-width: 300px;
+    }
+}
