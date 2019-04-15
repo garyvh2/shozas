@@ -72,7 +72,7 @@
     }
 }
 
-.no__mobile {
+.state__card:not(:first-child) {
     @media (max-width: 800px) {
         display: none;
     }

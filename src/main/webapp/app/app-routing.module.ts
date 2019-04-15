@@ -39,7 +39,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 },
                 ...LAYOUT_ROUTES
             ],
-            { useHash: true, enableTracing: false }
+            { useHash: true, enableTracing: false, onSameUrlNavigation: 'reload' }
         )
     ],
     exports: [RouterModule]
