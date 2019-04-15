@@ -8,6 +8,7 @@ import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -25,8 +26,32 @@ public class RatingsAndReviewsService {
         this.realStateRepository = realStateRepository;
     }
 
-    public Review save(Review review){
+    public Review save(Review review) throws Exception {
 
+        Optional<RealState> realStateOptional = realStateRepository.findById(review.getRealState().getId());
+
+        if(!realStateOptional.isPresent())
+            throw new Exception("El elemento a calificar no existe");
+
+        RealState realStateToEvaluate = realStateOptional.get();
+        realStateToEvaluate.getOwner().setFavorites(null);
+
+        User userToCheck = realStateToEvaluate.getOwner();
+
+        double numberOfReviews = userToCheck.getReviews().size() + 1;
+
+        double maxCualification = numberOfReviews * 5;
+
+        double currentCualifcation = userToCheck.getReviews().stream().mapToInt(r -> (int)r.getRating()).sum() + review.getRating();
+
+        double numberOfStars = (currentCualifcation/maxCualification) * 5;
+
+        HashSet<Review> reviews = userToCheck.getReviews();
+        reviews.add(review);
+        userToCheck.setRaiting(numberOfStars);
+        userToCheck.setReviews(reviews);
+
+        userRepository.save(userToCheck);
         return ratingsAndReviewsRepository.save(review);
     }
 
