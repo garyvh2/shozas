@@ -32,6 +32,7 @@ import { MatDialogModule } from '@angular/material';
 import { FinanceCardComponent } from './components/finance-card/finance-card.component';
 import { SidecardLikeComponent } from './components/sidecard-like/sidecard-like.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { ReviewModalComponent } from './components/review-modal/review-modal.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { NgxMaskModule } from 'ngx-mask';
         IpsDataComponent,
         FinanceModalComponent,
         FinanceCardComponent,
-        SidecardLikeComponent
+        SidecardLikeComponent,
+        ReviewModalComponent
     ],
     imports: [
         DetailRoutingModule,
@@ -63,6 +65,6 @@ import { NgxMaskModule } from 'ngx-mask';
         NgxMaskModule.forRoot()
     ],
     providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, SearchRealStateStore],
-    entryComponents: [FinanceModalComponent]
+    entryComponents: [FinanceModalComponent, ReviewModalComponent]
 })
 export class DetailModule {}

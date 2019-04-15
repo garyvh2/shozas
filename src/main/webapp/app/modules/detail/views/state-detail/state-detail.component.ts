@@ -1,6 +1,9 @@
+import { LoginModalService } from './../../../../core/login/login-modal.service';
+import { AccountService } from 'app/core';
+import { ReviewModalComponent } from './../../components/review-modal/review-modal.component';
 import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -22,7 +25,10 @@ export class StateDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private reviewService: ReviewService,
         private matIconRegistry: MatIconRegistry,
-        private domSanitizer: DomSanitizer
+        private domSanitizer: DomSanitizer,
+        public dialog: MatDialog,
+        private accountService: AccountService,
+        private loginModalService: LoginModalService
     ) {}
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');
@@ -30,7 +36,6 @@ export class StateDetailComponent implements OnInit {
         this.detail$ = this.detailQuery.getDetail(this.id);
         this.detail$.subscribe(realState => {
             if (realState) {
-                console.log(realState);
                 this.reviewService.getReviews(realState.owner.id!, realState.id!);
             }
         });
@@ -53,5 +58,29 @@ export class StateDetailComponent implements OnInit {
         this.matIconRegistry.addSvgIcon(`rsd_bath`, this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/bath.svg'));
 
         this.matIconRegistry.addSvgIcon(`rsd_up`, this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/up.svg'));
+        this.showReviewsModal();
+    }
+
+    showReviewsModal() {
+        let review: string;
+        let email: string;
+        this.route.queryParamMap.subscribe(params => {
+            review = params.get('review');
+            email = params.get('email');
+            if (review && email) {
+                this.accountService.identity().then(user => {
+                    if (user) {
+                        this.dialog.open(ReviewModalComponent, { autoFocus: false, disableClose: true, data: user });
+                    } else {
+                        this.loginModalService.open();
+                    }
+                });
+                this.accountService.getAuthenticationState().subscribe(user => {
+                    if (user) {
+                        this.dialog.open(ReviewModalComponent, { autoFocus: false, disableClose: true, data: user });
+                    }
+                });
+            }
+        });
     }
 }
