@@ -9,6 +9,7 @@ import com.gitgud.service.MailService;
 import com.gitgud.service.UserService;
 import com.gitgud.service.dto.PasswordChangeDTO;
 import com.gitgud.service.dto.UserDTO;
+import com.gitgud.service.recommendation.RecommendationService;
 import com.gitgud.web.rest.errors.*;
 import com.gitgud.web.rest.vm.KeyAndPasswordVM;
 import com.gitgud.web.rest.vm.ManagedUserVM;
@@ -39,11 +40,14 @@ public class AccountResource extends ApiBaseController {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final RecommendationService recommendationService;
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, RecommendationService recommendationService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.recommendationService = recommendationService;
     }
 
     /**
@@ -71,10 +75,12 @@ public class AccountResource extends ApiBaseController {
      * @throws RuntimeException 500 (Internal Server Error) if the user couldn't be activated
      */
     @GetMapping("/activate")
-    public void activateAccount(@RequestParam(value = "key") String key) {
+    public void activateAccount(@RequestParam(value = "key") String key) throws Exception {
         Optional<User> user = userService.activateRegistration(key);
         if (!user.isPresent()) {
             throw new InternalServerErrorException("No user was found for this activation key");
+        } else {
+            this.recommendationService.addUser(user.get());
         }
     }
 

@@ -8,9 +8,12 @@ import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
+import com.gitgud.service.recommendation.RecommendationService;
 import com.gitgud.service.util.CloudinaryUtil;
+import com.gitgud.service.util.RealStateUtils;
 import com.gitgud.service.util.ResultType;
 import com.mongodb.DBRef;
+import com.recombee.api_client.exceptions.ApiException;
 import dev.morphia.Datastore;
 import dev.morphia.query.Criteria;
 import dev.morphia.query.FindOptions;
@@ -31,15 +34,17 @@ public class RealStateService {
     private RealStateRepository realStateRepository;
     private UserRepository userRepository;
     private UserService userService;
+    private RecommendationService recommendationService;
 
     @Autowired
     private Datastore datastore;
 
     public RealStateService(RealStateRepository realStateRepository, UserRepository userRepository,
-             UserService userService) {
+            MongoTemplate mongoTemplate, UserService userService, RecommendationService recommendationService) {
         this.realStateRepository = realStateRepository;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.recommendationService = recommendationService;
     }
 
     public RealState save(RealState realState) throws Exception, IOException {
@@ -79,7 +84,9 @@ public class RealStateService {
         realState.setDateCreated(Instant.now());
         realState.setOwner(user);
 
-        return realStateRepository.save(realState);
+        RealState savedRealState = realStateRepository.save(realState);
+        this.recommendationService.addItem(savedRealState);
+        return savedRealState;
     }
 
     private HashSet<Image> getDefaults() {
@@ -232,42 +239,6 @@ public class RealStateService {
         return realStateQuery.asList();
     }
 
-    public ApiRealState toApiRealState(RealState realState) {
-        ApiRealState result = new ApiRealState();
-        ApiUser user = new ApiUser();
-        ApiImage image = new ApiImage();
-        ApiImage realStateImage = new ApiImage();
-
-        result.setId(realState.getId());
-        result.setAddr(realState.getProvince() + ", " + realState.getCity() + ", " + realState.getDistrict());
-        result.setBaths(realState.getBaths());
-        result.setBeds(realState.getRooms());
-        result.setPrice(realState.getPrice());
-        result.setSize(realState.getSize());
-        result.setGar(realState.getGarage());
-        result.setTitle(realState.getTitle());
-        result.setType(realState.getRealStateType());
-
-        user.setName(realState.getOwner().getFirstName() + " " + realState.getOwner().getLastName());
-        user.setStars(realState.getOwner().getRaiting());
-        if (realState.getOwner().getImage() != null) {
-            image.setSource(realState.getOwner().getImage().getSource());
-        }
-        user.setImage(image);
-        result.setUser(user);
-
-        realState.getImages().forEach(i -> {
-            if (i.isPrimary()) {
-                realStateImage.setSource(i.getSource());
-                realStateImage.setPrimary(i.isPrimary());
-                realStateImage.setIs360Image(i.isIs360Image());
-            }
-            result.setImage(realStateImage);
-        });
-
-        return result;
-    }
-
     public RealState getRealStateDetailElement(String id) throws Exception {
         Optional<RealState> result = realStateRepository.findById(id);
         if (!result.isPresent())
@@ -331,7 +302,10 @@ public class RealStateService {
         elementInDB.setImages(updateElement.getImages() == null || updateElement.getImages().isEmpty() ? elementInDB.getImages()
                 : getUpdatedImage(updateElement.getImages(), elementInDB.getImages()));
         elementInDB.setRented(updateElement.isRented());
-        return realStateRepository.save(elementInDB);
+
+        RealState savedRealState = realStateRepository.save(elementInDB);
+        this.recommendationService.addItem(savedRealState);
+        return savedRealState;
     }
 
     private HashSet<Image> getUpdatedImage(HashSet<Image> updatedImages, HashSet<Image> imagesOnDb) {
@@ -365,7 +339,7 @@ public class RealStateService {
         return updatedImages;
     }
 
-    public User addFavorite(ApiFavorite favorite) {
+    public User addFavorite(ApiFavorite favorite) throws ApiException {
         // Check if realState or user are present
         Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
         Optional<User> presentUser = userRepository.findById(favorite.getUserId());
@@ -373,17 +347,20 @@ public class RealStateService {
         if (presentRealState.isPresent() && presentUser.isPresent()) {
             // Get the realState and user object
             RealState realState = presentRealState.get();
+            realState.setOwner(null);
             User user = presentUser.get();
 
             // Add the favorite
             user.addFavorite(realState);
 
-            return userRepository.save(user);
+            User userSaved = userRepository.save(user);
+            this.recommendationService.addFavorite(userSaved, realState);
+            return userSaved;
         }
         return null;
     }
 
-    public User removeFavorite(ApiFavorite favorite) {
+    public User removeFavorite(ApiFavorite favorite) throws ApiException {
         // Check if realState or user are present
         Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
         Optional<User> presentUser = userRepository.findById(favorite.getUserId());
@@ -396,7 +373,9 @@ public class RealStateService {
             // Add the favorite
             user.removeFavorite(realState);
 
-            return userRepository.save(user);
+            User userSaved = userRepository.save(user);
+            this.recommendationService.removeFavorite(userSaved, realState);
+            return userSaved;
         }
         return null;
     }
@@ -405,7 +384,7 @@ public class RealStateService {
         Optional<User> presentUser = userRepository.findById(userId);
         if (presentUser.isPresent()) {
             User user = presentUser.get();
-            return user.getFavorites().stream().map(favorite -> toApiRealState(favorite))
+            return user.getFavorites().stream().map(favorite -> RealStateUtils.toApiRealState(favorite))
                     .collect(Collectors.toCollection(HashSet::new));
         }
         return null;

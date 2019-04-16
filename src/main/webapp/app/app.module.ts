@@ -29,6 +29,8 @@ import { LandingModule } from './modules/landing/landing.module';
 import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@akita/search';
 import { UserStore, UserQuery } from './@akita/user';
 import { ReviewStore } from './@akita/review';
+import { RecommendedStateStore } from 'app/@akita/recommended/recommended.store';
+import { RecommendedStateQuery } from 'app/@akita/recommended/recommended.query';
 
 @NgModule({
     imports: [
@@ -74,13 +76,15 @@ import { ReviewStore } from './@akita/review';
             useClass: NotificationInterceptor,
             multi: true
         },
-        SearchRealStateStore,
-        FavoriteStateStore,
         UserStore,
         UserQuery,
         ReviewStore,
+        SearchRealStateStore,
+        SearchRealStateQuery,
+        FavoriteStateStore,
         FavoriteStateQuery,
-        SearchRealStateQuery
+        RecommendedStateStore,
+        RecommendedStateQuery
     ],
     bootstrap: [JhiMainComponent]
 })
