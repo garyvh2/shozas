@@ -28,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingModule } from './modules/landing/landing.module';
 import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@akita/search';
 import { UserStore, UserQuery } from './@akita/user';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
     imports: [
@@ -78,7 +79,8 @@ import { UserStore, UserQuery } from './@akita/user';
         UserStore,
         UserQuery,
         FavoriteStateQuery,
-        SearchRealStateQuery
+        SearchRealStateQuery,
+        CurrencyPipe
     ],
     bootstrap: [JhiMainComponent]
 })

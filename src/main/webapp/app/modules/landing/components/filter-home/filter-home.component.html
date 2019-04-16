@@ -10,7 +10,7 @@
             *ngIf="sizeConfig"></jhi-range-component>
     </div>
     <div class="filter">
-        <label>Calificación</label>
+        <label>Calificación Mínima</label>
         <star-rating name="rating" class="details__rating" [starType]="'icon'" [rating]="1"></star-rating>
     </div>
     <div class="filter">
@@ -37,7 +37,7 @@
     </div>
 
     <div class="filter">
-        <label>Codigo Postal</label>
+        <label>Código Postal</label>
         <mat-form-field appearance="outline">
             <input name="zipcode" matInput placeholder="ZIP" [(ngModel)]="searchFilters.zip" />
         </mat-form-field>
