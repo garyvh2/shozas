@@ -19,7 +19,6 @@ export class ListingComponent implements OnInit {
     ngOnInit() {}
 
     getImage() {
-        console.log(this.listing, 'listing');
         if (this.listing && this.listing.image) {
             return this.listing.image.source;
         } else {

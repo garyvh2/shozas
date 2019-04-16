@@ -35,9 +35,7 @@ export class BoughtModalComponent implements OnInit {
             this.loading = true;
             const review = {
                 userShopper: { login: this.users[0] },
-                realState: { ...this.data },
-                isSold: true,
-                isRented: this.data.isRented || false
+                realState: { ...this.data }
             };
             this.sendReview(review);
         } else if (this.unknownEmail.value) {
@@ -51,7 +49,7 @@ export class BoughtModalComponent implements OnInit {
             () => {
                 this.loading = false;
                 this.openSnackbar();
-                this.realStateService.getUserRealState(this.data.owner.login);
+                this.realStateService.removeRealStateStore(this.data.id);
                 this.onNoClick();
             },
             () => (this.loading = false)
