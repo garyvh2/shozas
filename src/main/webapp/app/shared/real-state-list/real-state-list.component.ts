@@ -22,6 +22,10 @@ export class RealStateListComponent implements OnChanges {
 
     currentIndex = 0;
 
+    get currentElements() {
+        return [0, 1, 2].map(index => this.stateList[this.getIndex(index)]);
+    }
+
     constructor(private router: Router) {}
 
     ngOnChanges() {}
@@ -31,6 +35,22 @@ export class RealStateListComponent implements OnChanges {
 
     getIndex(index: number) {
         return (this.currentIndex + index) % this.stateList.length;
+    }
+
+    getId(index: number) {
+        const realState = this.stateList[this.getIndex(index)];
+        return realState && realState.id;
+    }
+
+    navigate(id: number) {
+        if (this.linkable) {
+            document.querySelector('jhi-main').scroll(0, 0);
+            this.router.navigate(['/detail/', id]);
+        }
+    }
+
+    trackByFn(index: number, item: RealState) {
+        return item.id;
     }
 
     next() {

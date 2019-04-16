@@ -1,6 +1,6 @@
 import { Favorite } from './../../../../shared/detail-like/detail-like.service';
 import { AccountService, LoginModalService } from 'app/core';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { DetailLikeService } from 'app/shared/detail-like/detail-like.service';
 import { RealState } from 'app/@akita/real-state';
 
@@ -10,7 +10,7 @@ import { RealState } from 'app/@akita/real-state';
     styleUrls: ['./sidecard-like.component.scss'],
     providers: [DetailLikeService]
 })
-export class SidecardLikeComponent implements OnInit {
+export class SidecardLikeComponent implements OnInit, OnChanges {
     @Input()
     liked: boolean;
     @Input()
@@ -29,6 +29,14 @@ export class SidecardLikeComponent implements OnInit {
             }
         });
         this.accountService.getAuthenticationState().subscribe(user => {
+            if (user) {
+                this.liked = user.favorites.includes(this.realState.id);
+            }
+        });
+    }
+
+    ngOnChanges() {
+        this.accountService.identity().then(user => {
             if (user) {
                 this.liked = user.favorites.includes(this.realState.id);
             }

@@ -1,6 +1,6 @@
 import { DataCRP } from './../../../../@akita/external-models/data-crp';
 import { IpsDataService } from './../../services/ips-data.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { RealState } from '../../../../@akita/real-state';
 
 @Component({
@@ -8,7 +8,7 @@ import { RealState } from '../../../../@akita/real-state';
     templateUrl: './ips-data.component.html',
     styleUrls: ['./ips-data.component.scss']
 })
-export class IpsDataComponent implements OnInit {
+export class IpsDataComponent implements OnInit, OnChanges {
     @Input()
     rs: RealState;
 
@@ -17,6 +17,10 @@ export class IpsDataComponent implements OnInit {
     constructor(private ipsService: IpsDataService) {}
 
     ngOnInit() {
+        this.loadCRPData();
+    }
+
+    ngOnChanges() {
         this.loadCRPData();
     }
 
