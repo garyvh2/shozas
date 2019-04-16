@@ -1,4 +1,4 @@
-<div class="containe-fluid pricing__container">
+<div class="container-fluid pricing__container">
     <div class="row pricing__title">
         <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1">
             <h1>Cotizar Casa</h1>
@@ -9,7 +9,12 @@
             <div class="pricing__controls">
                 <jhi-pricing-filter [searchFilters]="homeFilters" [sizeConfig]="sizeRange"></jhi-pricing-filter>
             </div>
-            <button mat-button (click)="applyFilters()">Aplicar</button>
+            <button mat-button (click)="applyFilters()" [disabled]="loading">
+                    <span *ngIf="!loading">
+                        Aplicar
+                    </span>
+                    <mat-spinner *ngIf="loading" [diameter]="38">Procesando...</mat-spinner>
+            </button>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-4 pricing__illustration-container">
             <div class="pricing__illustration">
@@ -21,6 +26,9 @@
     <div class="row pricing__response">
         <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1">
             <h3>Precio estimado: {{averagePrice | currency: 'CRC':'¢'}}</h3>
+        </div>
+        <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1">
+                <jhi-real-state-list [title]="'Casas Similares'" [linkable]="true" [stateList]="realStates" [loading]="loading" [editable]="false"></jhi-real-state-list>
         </div>
     </div>
 </div>
