@@ -374,11 +374,22 @@ public class RealStateService {
             // Get the realState and user object
             RealState realState = presentRealState.get();
             User user = presentUser.get();
+            realState.getOwner().setReviews(null);
+            realState.getOwner().setFavorites(null);
 
             // Add the favorite
             user.addFavorite(realState);
 
-            return userRepository.save(user);
+            User result = userRepository.save(user);
+
+            result.setReviews(null);
+
+            result.getFavorites().forEach(r ->{
+                r.getOwner().setReviews(null);
+                r.getOwner().setFavorites(null);
+            });
+
+            return result;
         }
         return null;
     }
