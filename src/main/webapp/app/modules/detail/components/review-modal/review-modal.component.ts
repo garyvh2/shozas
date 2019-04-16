@@ -27,7 +27,6 @@ export class ReviewModalComponent implements OnInit {
     ngOnInit() {}
 
     updateRating(event: RatingChangeEvent) {
-        console.log(this.data);
         this.rating = event.rating;
     }
 
