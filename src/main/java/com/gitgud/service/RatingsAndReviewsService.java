@@ -74,8 +74,9 @@ public class RatingsAndReviewsService {
 
         RealState realState = realStateOptional.get();
 
-        realState.setRented(review.isRented());
-        realState.setSold(review.isSold());
+        realState.getOwner().setFavorites(null);
+        realState.getOwner().setReviews(null);
+        realState.setSold(true);
 
         realStateRepository.save(realState);
         try {
