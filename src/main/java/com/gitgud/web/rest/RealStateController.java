@@ -5,6 +5,7 @@ import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.service.RealStateService;
 import com.gitgud.service.UserService;
+import com.gitgud.service.util.RealStateUtils;
 import com.gitgud.service.util.ResultType;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class RealStateController extends ApiBaseController {
     public ApiResultModel<ApiSearchResults> searchHomes(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() ->{
             ApiSearchResults results = new ApiSearchResults();
-            results.setElements(realStateService.getRealStateElements(ResultType.Homes, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+            results.setElements(realStateService.getRealStateElements(ResultType.Homes, apiSearchParams, results).stream().map(l -> RealStateUtils.toApiRealState(l)).collect(Collectors.toList()));
             return results;
         } );
     }
@@ -38,7 +39,7 @@ public class RealStateController extends ApiBaseController {
     public ApiResultModel<ApiSearchResults> searchLots (@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() ->{
             ApiSearchResults results = new ApiSearchResults();
-            results.setElements(realStateService.getRealStateElements(ResultType.Lots, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+            results.setElements(realStateService.getRealStateElements(ResultType.Lots, apiSearchParams, results).stream().map(l -> RealStateUtils.toApiRealState(l)).collect(Collectors.toList()));
             return results;
         } );
     }
@@ -47,7 +48,7 @@ public class RealStateController extends ApiBaseController {
     public ApiResultModel<ApiSearchResults> searchDepartments(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() ->{
             ApiSearchResults results = new ApiSearchResults();
-            results.setElements(realStateService.getRealStateElements(ResultType.Departments, apiSearchParams, results).stream().map(l -> realStateService.toApiRealState(l)).collect(Collectors.toList()));
+            results.setElements(realStateService.getRealStateElements(ResultType.Departments, apiSearchParams, results).stream().map(l -> RealStateUtils.toApiRealState(l)).collect(Collectors.toList()));
             return results;
         } );
     }

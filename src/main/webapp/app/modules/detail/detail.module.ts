@@ -1,6 +1,4 @@
-import { ShozasSharedModule } from 'app/shared';
 import { FormsModule } from '@angular/forms';
-import { SearchRealStateStore } from './../landing/@akita/search/search.store';
 import { ReviewService } from './../../@akita/review/review.service';
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
@@ -33,6 +31,10 @@ import { FinanceCardComponent } from './components/finance-card/finance-card.com
 import { SidecardLikeComponent } from './components/sidecard-like/sidecard-like.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { ReviewModalComponent } from './components/review-modal/review-modal.component';
+import { RecommendedComponent } from './components/recommended/recommended.component';
+import { ShozasSharedModule } from './../../shared';
+import { RecommendedService } from './../../@akita/recommended/recommended.service';
+import { SearchRealStateStore } from '../landing/@akita/search';
 
 @NgModule({
     declarations: [
@@ -48,7 +50,8 @@ import { ReviewModalComponent } from './components/review-modal/review-modal.com
         FinanceModalComponent,
         FinanceCardComponent,
         SidecardLikeComponent,
-        ReviewModalComponent
+        ReviewModalComponent,
+        RecommendedComponent
     ],
     imports: [
         DetailRoutingModule,
@@ -62,9 +65,20 @@ import { ReviewModalComponent } from './components/review-modal/review-modal.com
         AgmCoreModule.forRoot({
             apiKey: MAPS_API_KEY
         }),
-        NgxMaskModule.forRoot()
+        NgxMaskModule.forRoot(),
+        ShozasSharedModule
     ],
-    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, SearchRealStateStore],
-    entryComponents: [FinanceModalComponent, ReviewModalComponent]
+    providers: [
+        RealStateStore,
+        RealStateQuery,
+        RealStateService,
+        ReviewQuery,
+        ReviewService,
+        ReviewStore,
+        SearchRealStateStore,
+        RecommendedService
+    ],
+    entryComponents: [FinanceModalComponent, ReviewModalComponent],
+    exports: [RecommendedComponent]
 })
 export class DetailModule {}

@@ -1,4 +1,4 @@
-<mat-card *ngIf="(dataCRP | async) as dataCRP" class="ipsData col-md-12 col-xl-4">
+<mat-card *ngIf="(dataCRP | async) as dataCRP; else loading" class="ipsData col-md-12 col-xl-4">
     <mat-card-header>
         <mat-card-title>Necesidades Humanas Básicas</mat-card-title>
         <mat-card-subtitle>Puntuación IPS: {{dataCRP.dimensiones.NHB.score}}</mat-card-subtitle>
@@ -93,3 +93,8 @@
     </mat-card-content>
     <mat-card-footer></mat-card-footer>
 </mat-card>
+
+
+<ng-template #loading>
+    <mat-spinner style="margin: 0 auto;" color="warn"></mat-spinner>
+</ng-template>

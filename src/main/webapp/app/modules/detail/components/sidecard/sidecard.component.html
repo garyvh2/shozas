@@ -1,5 +1,5 @@
-<mat-card class="rsd__sidecard">
-    <mat-card-header [routerLink]="['/profile/user/', detail.owner.id]">
+<mat-card class="rsd__sidecard" *ngIf="detail">
+    <mat-card-header *ngIf="detail.owner" [routerLink]="['/profile/user/', detail.owner.id]">
         <img mat-card-avatar src="{{detail?.owner?.image?.source || 'http://picsum.photos/50/50/?random'}}" />
         <mat-card-title>{{detail.owner.firstName}} {{detail.owner.lastName}}</mat-card-title>
         <mat-card-subtitle>

@@ -13,6 +13,7 @@ import com.gitgud.repository.UserRepository;
 import com.gitgud.security.AuthoritiesConstants;
 import com.gitgud.security.SecurityUtils;
 import com.gitgud.service.dto.UserDTO;
+import com.gitgud.service.recommendation.RecommendationService;
 import com.gitgud.service.util.CloudinaryUtil;
 import com.gitgud.service.util.RandomUtil;
 import com.gitgud.web.rest.errors.*;
@@ -56,12 +57,17 @@ public class UserService {
     @Autowired
     private Datastore datastore;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, MailService mailService, RealStateRepository realStateRepository) {
+    private RecommendationService recommendationService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AuthorityRepository authorityRepository, MailService mailService,
+                       RecommendationService recommendationService, RealStateRepository realStateRepository ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.mailService = mailService;
         this.realStateRepository = realStateRepository;
+        this.recommendationService = recommendationService;
     }
     public  User getUserById (String id) {
         Optional<User> user =  userRepository.findById(id);

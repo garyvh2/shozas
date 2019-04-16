@@ -1,23 +1,29 @@
 import { LoginModalService } from './../../../../core/login/login-modal.service';
-import { AccountService } from 'app/core';
+import { AccountService } from '../../../../core';
 import { ReviewModalComponent } from './../../components/review-modal/review-modal.component';
 import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { RealState, RealStateService, RealStateQuery } from '../../../../@akita/real-state';
 import { ReviewService } from '../../../../@akita/review/review.service';
+import { RecommendedService } from '../../../../@akita/recommended/recommended.service';
 
 @Component({
     selector: 'jhi-state-detail',
     templateUrl: './state-detail.component.html',
     styleUrls: ['state-detail.component.scss']
 })
-export class StateDetailComponent implements OnInit {
+export class StateDetailComponent implements OnInit, OnChanges {
     id: string;
     detail$: Observable<RealState>;
+    inTime: Date;
+
+    get viewDuration() {
+        return Math.floor(new Date().getTime() / 1000) - Math.floor(this.inTime.getTime() / 1000);
+    }
 
     constructor(
         private detailService: RealStateService,
@@ -28,9 +34,11 @@ export class StateDetailComponent implements OnInit {
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer,
         public dialog: MatDialog,
-        private accountService: AccountService,
-        private loginModalService: LoginModalService
+        private loginModalService: LoginModalService,
+        private recommendedService: RecommendedService,
+        private accountService: AccountService
     ) {}
+
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');
         this.detailService.get(this.id);
@@ -40,6 +48,7 @@ export class StateDetailComponent implements OnInit {
                 this.reviewService.getReviews(realState.owner.id!, realState.id!);
             }
         });
+        this.loadDetail();
 
         this.matIconRegistry.addSvgIcon(
             `rsd_arrow_down`,
@@ -94,5 +103,36 @@ export class StateDetailComponent implements OnInit {
                 this.router.navigate(['/register']);
             }
         });
+    }
+
+    loadDetail() {
+        this.inTime = new Date();
+        this.detailService.get(this.id);
+        this.detail$ = this.detailQuery.getDetail(this.id);
+        this.detail$.subscribe(realState => {
+            if (realState && realState.owner) {
+                this.reviewService.getReviews(realState.owner.id!, realState.id!);
+            }
+        });
+    }
+
+    ngOnChanges() {
+        this.loadDetail();
+    }
+
+    canDeactivate() {
+        const view$ = new Subject<boolean>();
+        this.detail$.subscribe(detail => {
+            this.accountService.identity().then(user => {
+                if (user) {
+                    this.recommendedService
+                        .addView(detail.id, user.id, new Date(), this.viewDuration)
+                        .subscribe(() => view$.next(true), () => view$.next(false));
+                } else {
+                    view$.next(true);
+                }
+            });
+        });
+        return view$.asObservable();
     }
 }

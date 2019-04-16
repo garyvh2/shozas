@@ -231,6 +231,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.reviews = reviews;
     }
 
+    @JsonIgnore
     public HashSet<RealState> getFavorites() {
         return favorites;
     }
