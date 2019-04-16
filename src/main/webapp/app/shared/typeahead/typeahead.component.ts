@@ -8,6 +8,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { RealState } from 'app/@akita/real-state';
 
 @Component({
     selector: 'jhi-typeahead',
@@ -16,7 +17,7 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class TypeaheadComponent implements OnInit, OnChanges {
     @Input()
-    realStateId: ID;
+    realState: RealState;
     @Input()
     users: string[] = [];
     visible = true;
@@ -42,8 +43,8 @@ export class TypeaheadComponent implements OnInit, OnChanges {
         this.loadTags();
     }
     loadTags() {
-        if (this.realStateId) {
-            this.userService.getInterested(this.realStateId).subscribe((data: any) => {
+        if (this.realState) {
+            this.userService.getInterested(this.realState.id).subscribe((data: any) => {
                 this.allUsers = data.result;
                 this.updateFilterList();
             });

@@ -1,3 +1,5 @@
+import { RealStateService } from 'app/@akita/real-state';
+import { RealState } from './../../@akita/real-state/real-state.model';
 import { FormControl } from '@angular/forms';
 import { ID } from '@datorama/akita';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
@@ -16,9 +18,10 @@ export class BoughtModalComponent implements OnInit {
     loading = false;
     constructor(
         public dialogRef: MatDialogRef<BoughtModalComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public data: ID,
+        @Optional() @Inject(MAT_DIALOG_DATA) public data: RealState,
         private reviewService: ReviewService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private realStateService: RealStateService
     ) {}
 
     ngOnInit() {}
@@ -30,10 +33,15 @@ export class BoughtModalComponent implements OnInit {
     onMarksAsSold() {
         if (!this.unknownEmail.value && this.users.length === 1) {
             this.loading = true;
-            const review = { userShopper: { login: this.users[0] }, realState: { id: this.data } };
+            const review = {
+                userShopper: { login: this.users[0] },
+                realState: { ...this.data },
+                isSold: this.data.isSold || false,
+                isRented: this.data.isRented || false
+            };
             this.sendReview(review);
         } else if (this.unknownEmail.value) {
-            const review = { userShopper: { login: '' }, realState: { id: this.data } };
+            const review = { userShopper: { login: '' }, realState: { ...this.data } };
             this.sendReview(review);
         }
     }
@@ -43,6 +51,7 @@ export class BoughtModalComponent implements OnInit {
             () => {
                 this.loading = false;
                 this.openSnackbar();
+                this.realStateService.getUserRealState(this.data.owner.login);
                 this.onNoClick();
             },
             () => (this.loading = false)

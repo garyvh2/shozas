@@ -5,17 +5,17 @@
     </div>
 
     <div class="review__container" mat-dialog-content>
-        <mat-spinner color="warn" *ngIf="loading"></mat-spinner>
-        <div *ngIf="!loading">
+        <mat-spinner color="warn" ></mat-spinner>
+        <!-- <div *ngIf="!loading">
             <p>
                 Para agregar el correo presione enter o coma (',') despues de escribirlo o bien seleccion de los posibles compradores que
                 salen en la lista
             </p>
-            <jhi-typeahead *ngIf="!unknownEmail.value" [realStateId]="data" [users]="users"></jhi-typeahead>
+            <jhi-typeahead *ngIf="!unknownEmail.value" [realState]="data" [users]="users"></jhi-typeahead>
 
             <mat-checkbox [formControl]="unknownEmail" color="warn">No conozco el correo del comprador</mat-checkbox>
 
             <button mat-raised-button color="warn" (click)="onMarksAsSold()">Marcar comprada</button>
-        </div>
+        </div> -->
     </div>
 </div>

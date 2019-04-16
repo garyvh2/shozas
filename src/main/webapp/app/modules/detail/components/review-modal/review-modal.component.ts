@@ -34,11 +34,10 @@ export class ReviewModalComponent implements OnInit {
     sendReview() {
         if (this.rating !== 0 && this.comment.valid) {
             this.loading = true;
-            const review: Review = {
+            const review = {
                 comment: this.comment.value,
                 rating: this.rating,
                 userShopper: { ...this.data.user, favorites: undefined },
-                // @ts-ignore
                 realState: { id: this.data.realStateId }
             };
 

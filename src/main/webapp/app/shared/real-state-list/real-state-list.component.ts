@@ -36,8 +36,8 @@ export class RealStateListComponent implements OnChanges {
         return (this.currentIndex + index) % this.stateList.length;
     }
 
-    openBoughtModal(id: ID) {
-        this.dialog.open(BoughtModalComponent, { data: id, autoFocus: false });
+    openBoughtModal(realState: RealState) {
+        this.dialog.open(BoughtModalComponent, { data: realState, autoFocus: false });
     }
 
     openRemoveModal(id: ID) {

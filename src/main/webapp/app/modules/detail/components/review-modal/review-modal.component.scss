@@ -18,6 +18,10 @@
         flex-direction: row;
         justify-content: space-between;
     }
+    mat-spinner {
+        margin: auto;
+        text-align: center;
+    }
 }
 .title {
     position: relative;

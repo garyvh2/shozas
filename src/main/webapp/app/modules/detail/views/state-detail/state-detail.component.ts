@@ -81,8 +81,13 @@ export class StateDetailComponent implements OnInit {
                     }
                 });
                 this.accountService.getAuthenticationState().subscribe(user => {
-                    if (user) {
-                        this.dialog.open(ReviewModalComponent, { autoFocus: false, disableClose: true, data: user });
+                    const isOnDetail = this.router.url.includes('detail/');
+                    if (user && isOnDetail) {
+                        this.dialog.open(ReviewModalComponent, {
+                            autoFocus: false,
+                            disableClose: true,
+                            data: { user, realStateId: this.id }
+                        });
                     }
                 });
             } else if (!isRegistred && email) {
