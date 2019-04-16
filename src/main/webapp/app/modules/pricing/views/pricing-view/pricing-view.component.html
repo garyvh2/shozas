@@ -27,8 +27,8 @@
         <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1">
             <h3>Precio estimado: {{averagePrice | currency: 'CRC':'¢'}}</h3>
         </div>
-        <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1">
-                <jhi-real-state-list [title]="'Casas Similares'" [linkable]="true" [stateList]="realStates" [loading]="loading" [editable]="false"></jhi-real-state-list>
+        <div class="col-lg-10 col-xl-8 offset-xl-2 offset-lg-1 pricing__recommendations" *ngIf="realStates" [ngClass]="{'fade-in': realStates}">
+            <jhi-real-state-list [title]="'Casas Similares'" [linkable]="true" [stateList]="realStates" [loading]="loading" [editable]="false"></jhi-real-state-list>
         </div>
     </div>
 </div>
