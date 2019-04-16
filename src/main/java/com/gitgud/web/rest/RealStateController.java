@@ -103,4 +103,9 @@ public class RealStateController extends ApiBaseController {
         return GetApiResultModel(() -> realStateService.removeFavorite(favorite));
     }
 
+    @GetMapping("/remove")
+    public ApiResultModel<Boolean> removeRealState(@RequestParam String id) throws Exception {
+        return GetApiResultModel(() -> realStateService.activationManagement(id) );
+    }
+
 }

@@ -411,4 +411,26 @@ public class RealStateService {
         }
         return null;
     }
+
+    public boolean activationManagement(String id) throws Exception {
+        Optional<RealState> realStateOptional =  realStateRepository.findById(id);
+
+        if(!realStateOptional.isPresent())
+            throw new Exception("El elemento no existe");
+
+        RealState realState = realStateOptional.get();
+
+        realState.getOwner().setReviews(null);
+        realState.getOwner().setFavorites(null);
+
+        realState.setActive(realState.isActive() ? false : true );
+
+        try {
+            realStateRepository.save(realState);
+        }catch (Exception e){
+            return false;
+        }
+
+        return true;
+    }
 }
