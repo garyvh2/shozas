@@ -90,11 +90,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @DBRef
     @Field
+    @Reference
     private HashSet<Review> reviews = new HashSet<Review>();
 
     @DBRef
     @Field
-    @Reference
+    @Reference(lazy = true)
     private HashSet<RealState> favorites = new HashSet<RealState>();
 
     @Field
@@ -273,6 +274,21 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void addFavorite(RealState realStateId) { this.favorites.add(realStateId); }
     public void removeFavorite(RealState realStateId) { this.favorites.remove(realStateId); }
+
+    public HashSet<Review> getParserReviews(){
+        HashSet<Review> result = new HashSet<>();
+
+        if(this.reviews !=null) {
+            this.reviews.forEach(review -> {
+                review.getUserShopper().setReviews(null);
+                review.getUserShopper().setFavorites(null);
+                review.getRealState().getOwner().setFavorites(null);
+                review.getRealState().getOwner().setReviews(null);
+                result.add(review);
+            });
+        }
+        return result;
+    }
 
     @Override
     public boolean equals(Object o) {

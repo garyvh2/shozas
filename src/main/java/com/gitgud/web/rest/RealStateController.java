@@ -57,7 +57,10 @@ public class RealStateController extends ApiBaseController {
     public ApiResultModel<List<RealState>> searchAllTypes(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() -> {
             List<RealState> result = realStateService.getRealStateElements(ResultType.All, apiSearchParams, new ApiSearchResults());
-            result.forEach(r -> r.getOwner().setFavorites(null));
+            result.forEach(r ->{
+                r.getOwner().setFavorites(null);
+                r.getOwner().setReviews(null);
+            });
             return result;
         } );
     }
@@ -99,6 +102,11 @@ public class RealStateController extends ApiBaseController {
     @PostMapping("/remove-favorite")
     public ApiResultModel<User> removeFavorite(@RequestBody ApiFavorite favorite) throws Exception {
         return GetApiResultModel(() -> realStateService.removeFavorite(favorite));
+    }
+
+    @GetMapping("/remove")
+    public ApiResultModel<Boolean> removeRealState(@RequestParam String id) throws Exception {
+        return GetApiResultModel(() -> realStateService.activationManagement(id) );
     }
 
 }

@@ -1,8 +1,11 @@
+import { MatDialog } from '@angular/material';
 import { ID } from '@datorama/akita';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { RealState } from './../../@akita/real-state/real-state.model';
-
+import { BoughtModalComponent } from '../bought-modal/bought-modal.component';
+import { RemoveModalComponent } from '../remove-modal/remove-modal.component';
+import { RemoveType } from '../util/remove-type';
 @Component({
     selector: 'jhi-real-state-list',
     templateUrl: './real-state-list.component.html',
@@ -26,7 +29,7 @@ export class RealStateListComponent implements OnChanges {
         return [0, 1, 2].map(index => this.stateList[this.getIndex(index)]);
     }
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, public dialog: MatDialog) {}
 
     ngOnChanges() {}
     onEdit(id: ID) {
@@ -37,6 +40,17 @@ export class RealStateListComponent implements OnChanges {
         return (this.currentIndex + index) % this.stateList.length;
     }
 
+    openBoughtModal(realState: RealState) {
+        this.dialog.open(BoughtModalComponent, { data: realState, autoFocus: false });
+    }
+
+    openRemoveModal(id: ID) {
+        const message = ' este inmueble';
+        this.dialog.open(RemoveModalComponent, {
+            data: { id, serviceType: RemoveType.RealState, actionMessage: message },
+            autoFocus: false
+        });
+    }
     getId(index: number) {
         const realState = this.stateList[this.getIndex(index)];
         return realState && realState.id;
