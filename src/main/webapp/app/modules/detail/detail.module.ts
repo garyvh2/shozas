@@ -1,5 +1,4 @@
 import { FormsModule } from '@angular/forms';
-import { SearchRealStateStore } from './../landing/@akita/search/search.store';
 import { ReviewService } from './../../@akita/review/review.service';
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
@@ -32,6 +31,9 @@ import { MatDialogModule } from '@angular/material';
 import { FinanceCardComponent } from './components/finance-card/finance-card.component';
 import { SidecardLikeComponent } from './components/sidecard-like/sidecard-like.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { RecommendedComponent } from './components/recommended/recommended.component';
+import { ShozasSharedModule } from 'app/shared';
+import { RecommendedService } from 'app/@akita/recommended/recommended.service';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,8 @@ import { NgxMaskModule } from 'ngx-mask';
         IpsDataComponent,
         FinanceModalComponent,
         FinanceCardComponent,
-        SidecardLikeComponent
+        SidecardLikeComponent,
+        RecommendedComponent
     ],
     imports: [
         DetailRoutingModule,
@@ -60,9 +63,11 @@ import { NgxMaskModule } from 'ngx-mask';
         AgmCoreModule.forRoot({
             apiKey: MAPS_API_KEY
         }),
-        NgxMaskModule.forRoot()
+        NgxMaskModule.forRoot(),
+        ShozasSharedModule
     ],
-    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, SearchRealStateStore],
-    entryComponents: [FinanceModalComponent]
+    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, RecommendedService],
+    entryComponents: [FinanceModalComponent],
+    exports: [RecommendedComponent]
 })
 export class DetailModule {}
