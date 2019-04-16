@@ -36,7 +36,7 @@ export class BoughtModalComponent implements OnInit {
             const review = {
                 userShopper: { login: this.users[0] },
                 realState: { ...this.data },
-                isSold: this.data.isSold || false,
+                isSold: true,
                 isRented: this.data.isRented || false
             };
             this.sendReview(review);

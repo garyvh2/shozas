@@ -7,9 +7,11 @@
             <div>
                 <p>
                     {{ comment.userShopper.firstName + ' ' + comment.userShopper.lastName }}
-                    <span> {{ showRealState && comment.realState ? '( ' + comment.realState.title + ' )' : '' }}</span>
                 </p>
                 <span> {{ getFormatDate() }}</span>
+                <br/>
+                <span> {{ showRealState && comment.realState ? '( ' + comment.realState.title + ' )' : '' }}</span>
+
             </div>
         </div>
         <div class="stars">

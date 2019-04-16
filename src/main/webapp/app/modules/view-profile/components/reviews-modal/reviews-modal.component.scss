@@ -26,6 +26,10 @@
 ::ng-deep .mat-dialog-container {
     padding: 0;
     overflow-x: hidden;
+    width: 600px;
+    @media (max-width: 600px) {
+        width: 100%;
+    }
 }
 
 h3 {

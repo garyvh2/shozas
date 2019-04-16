@@ -4,7 +4,7 @@ import { FavoriteStateQuery } from './../../../listings/@akita/favorite/favorite
 import { Observable } from 'rxjs';
 import { RealState } from './../../../../@akita/real-state/real-state.model';
 import { AccountService } from '../../../../core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { User } from 'app/@akita/user';
 import { RealStateService } from 'app/@akita/real-state';
 
@@ -13,7 +13,7 @@ import { RealStateService } from 'app/@akita/real-state';
     templateUrl: './own-profile.component.html',
     styleUrls: ['own-profile.component.scss']
 })
-export class OwnProfileComponent implements OnInit {
+export class OwnProfileComponent implements OnInit, OnChanges {
     user: User;
     favorites$: Observable<RealState[]>;
     realStates$: Observable<RealState[]>;
@@ -27,6 +27,11 @@ export class OwnProfileComponent implements OnInit {
     ) {}
 
     async ngOnInit() {
+        this.user = await this.account.identity();
+        this.getUserRealState(this.user);
+        this.getFavorites(this.user);
+    }
+    async ngOnChanges() {
         this.user = await this.account.identity();
         this.getUserRealState(this.user);
         this.getFavorites(this.user);
