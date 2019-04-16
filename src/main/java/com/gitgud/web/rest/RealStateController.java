@@ -56,7 +56,10 @@ public class RealStateController extends ApiBaseController {
     public ApiResultModel<List<RealState>> searchAllTypes(@RequestBody ApiSearchParams apiSearchParams) throws Exception {
         return GetApiResultModel(() -> {
             List<RealState> result = realStateService.getRealStateElements(ResultType.All, apiSearchParams, new ApiSearchResults());
-            result.forEach(r -> r.getOwner().setFavorites(null));
+            result.forEach(r ->{
+                r.getOwner().setFavorites(null);
+                r.getOwner().setReviews(null);
+            });
             return result;
         } );
     }
