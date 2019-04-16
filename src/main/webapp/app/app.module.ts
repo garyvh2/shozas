@@ -28,6 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingModule } from './modules/landing/landing.module';
 import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@akita/search';
 import { UserStore, UserQuery } from './@akita/user';
+import { RecommendedStateStore } from 'app/@akita/recommended/recommended.store';
+import { RecommendedStateQuery } from 'app/@akita/recommended/recommended.query';
 
 @NgModule({
     imports: [
@@ -73,12 +75,14 @@ import { UserStore, UserQuery } from './@akita/user';
             useClass: NotificationInterceptor,
             multi: true
         },
-        SearchRealStateStore,
-        FavoriteStateStore,
         UserStore,
         UserQuery,
+        SearchRealStateStore,
+        SearchRealStateQuery,
+        FavoriteStateStore,
         FavoriteStateQuery,
-        SearchRealStateQuery
+        RecommendedStateStore,
+        RecommendedStateQuery
     ],
     bootstrap: [JhiMainComponent]
 })

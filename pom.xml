@@ -111,6 +111,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.recombee</groupId>
+            <artifactId>api-client</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hppc</artifactId>
         </dependency>

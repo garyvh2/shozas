@@ -19,7 +19,7 @@ export class IpsDataService {
     constructor(private http: HttpClient) {}
 
     getCRPDataCanton(rs: RealState): Observable<DataCRP> {
-        if (rs.city.toLowerCase() === 'central') {
+        if (rs && rs.city && rs.city.toLowerCase() === 'central') {
             return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.province));
         } else {
             return this.http.get<DataCRP>(SERVER_API_URL + '/api/ips/' + this.formatText(rs.city));
@@ -28,10 +28,12 @@ export class IpsDataService {
     }
 
     formatText(txt: String): String {
-        const txtFormatted = txt
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/\s+/g, '-');
-        return txtFormatted.toLowerCase();
+        if (txt) {
+            const txtFormatted = txt
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/\s+/g, '-');
+            return txtFormatted.toLowerCase();
+        }
     }
 }

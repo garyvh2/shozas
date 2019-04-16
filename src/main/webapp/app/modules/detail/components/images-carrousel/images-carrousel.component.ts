@@ -30,23 +30,27 @@ export class ImagesCarrouselComponent implements OnChanges {
 
     ngOnChanges() {
         const arrangeImage = this.rearrangeImages();
-        this.carrouselImages = arrangeImage.map((image, index) => new Image(index, { img: image.source }));
+        if (arrangeImage && arrangeImage.constructor === Array) {
+            this.carrouselImages = arrangeImage.map((image, index) => new Image(index, { img: image.source }));
+        }
     }
 
     rearrangeImages() {
-        const imageArray = this.detailImages.map(image => ({
-            ...image,
-            isPrimary: image.primary
-        }));
-        let primaryImage;
-        for (let index = 0; index < imageArray.length; index++) {
-            if (imageArray[index].primary) {
-                primaryImage = imageArray.splice(index, 1);
-                break;
+        if (this.detailImages) {
+            const imageArray = this.detailImages.map(image => ({
+                ...image,
+                isPrimary: image.primary
+            }));
+            let primaryImage;
+            for (let index = 0; index < imageArray.length; index++) {
+                if (imageArray[index].primary) {
+                    primaryImage = imageArray.splice(index, 1);
+                    break;
+                }
             }
+            imageArray.unshift(primaryImage[0]);
+            return imageArray;
         }
-        imageArray.unshift(primaryImage[0]);
-        return imageArray;
     }
 
     openImageModal(image: Image) {
