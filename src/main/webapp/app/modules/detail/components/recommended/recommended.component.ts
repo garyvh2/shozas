@@ -29,7 +29,9 @@ export class RecommendedComponent implements OnInit, OnChanges {
         this.isLoading$ = this.recommendedQuery.selectLoading();
         this.accountService.identity().then(user => {
             if (user) {
-                this.recommendedService.getRecommended(user.id);
+                this.recommendedService.getRecommendedByUser(user.id);
+            } else {
+                this.recommendedService.getRecommendedByItem(this.realStateId);
             }
         });
     }
@@ -39,7 +41,9 @@ export class RecommendedComponent implements OnInit, OnChanges {
         if (currentValue !== previousValue) {
             this.accountService.identity().then(user => {
                 if (user) {
-                    this.recommendedService.getRecommended(user.id);
+                    this.recommendedService.getRecommendedByUser(user.id);
+                } else {
+                    this.recommendedService.getRecommendedByItem(this.realStateId);
                 }
             });
         }

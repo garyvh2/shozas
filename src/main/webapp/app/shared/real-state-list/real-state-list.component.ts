@@ -44,6 +44,7 @@ export class RealStateListComponent implements OnChanges {
 
     navigate(id: number) {
         if (this.linkable) {
+            document.querySelector('jhi-main').scroll(0, 0);
             this.router.navigate(['/detail/', id]);
         }
     }

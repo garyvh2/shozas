@@ -1,7 +1,7 @@
 import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { RealState, RealStateService, RealStateQuery } from '../../../../@akita/real-state';
@@ -14,7 +14,7 @@ import { AccountService } from 'app/core';
     templateUrl: './state-detail.component.html',
     styleUrls: ['state-detail.component.scss']
 })
-export class StateDetailComponent implements OnInit {
+export class StateDetailComponent implements OnInit, OnChanges {
     id: string;
     detail$: Observable<RealState>;
     inTime: Date;
@@ -66,20 +66,28 @@ export class StateDetailComponent implements OnInit {
         this.detailService.get(this.id);
         this.detail$ = this.detailQuery.getDetail(this.id);
         this.detail$.subscribe(realState => {
-            if (realState) {
+            if (realState && realState.owner) {
                 console.log(realState);
                 this.reviewService.getReviews(realState.owner.id!, realState.id!);
             }
         });
     }
 
+    ngOnChanges() {
+        this.loadDetail();
+    }
+
     canDeactivate() {
         const view$ = new Subject<boolean>();
         this.detail$.subscribe(detail => {
             this.accountService.identity().then(user => {
-                this.recommendedService
-                    .addView(detail.id, user.id, this.inTime, this.viewDuration)
-                    .subscribe(() => view$.next(true), () => view$.next(false));
+                if (user) {
+                    this.recommendedService
+                        .addView(detail.id, user.id, new Date(), this.viewDuration)
+                        .subscribe(() => view$.next(true), () => view$.next(false));
+                } else {
+                    view$.next(true);
+                }
             });
         });
         return view$.asObservable();

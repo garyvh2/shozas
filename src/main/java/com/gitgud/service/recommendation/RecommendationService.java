@@ -270,6 +270,16 @@ public class RecommendationService {
     public HashSet<ApiRealState> userRecommendations(String userId, long count) throws ApiException {
         RecommendationResponse recommendations = this.recombeeClient.send(new RecommendItemsToUser(userId, count));
 
+        return processRecommendations(recommendations);
+    }
+    @Transactional(readOnly = true)
+    public HashSet<ApiRealState> itemRecommendations(String itemId, long count) throws ApiException {
+        RecommendationResponse recommendations = this.recombeeClient.send(new RecommendItemsToItem(itemId, null, count));
+
+        return processRecommendations(recommendations);
+    }
+
+    private HashSet<ApiRealState> processRecommendations (RecommendationResponse recommendations) {
         Iterable<String> ids = Arrays.asList(recommendations.getIds());
         Set<RealState> items = new HashSet<>();
         this.realStateRepository.findAllById(ids).forEach(items::add);

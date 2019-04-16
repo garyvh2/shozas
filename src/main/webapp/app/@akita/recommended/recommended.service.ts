@@ -10,8 +10,25 @@ import { RealState, RealStateStore } from 'app/@akita/real-state';
 export class RecommendedService {
     constructor(private http: HttpClient, private detailStore: RealStateStore, private recommendedStore: RecommendedStateStore) {}
 
-    getRecommended(userId) {
+    getRecommendedByUser(userId) {
         const url = `${SERVER_API_URL}/api/recommendations/user/${userId}?count=10`;
+        this.recommendedStore.setLoading(true);
+        return this.http.get(url).subscribe(
+            ({ result: recommended }: ApiResponse<RealState[]>) => {
+                recommended.forEach((item: RealState) => {
+                    this.detailStore.upsert(item.id, item);
+                });
+                this.recommendedStore.update({
+                    recommended
+                });
+                this.recommendedStore.setLoading(false);
+            },
+            () => this.recommendedStore.setLoading(false)
+        );
+    }
+
+    getRecommendedByItem(itemId) {
+        const url = `${SERVER_API_URL}/api/recommendations/item/${itemId}?count=10`;
         this.recommendedStore.setLoading(true);
         return this.http.get(url).subscribe(
             ({ result: recommended }: ApiResponse<RealState[]>) => {

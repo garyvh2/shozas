@@ -56,6 +56,11 @@ public class RecommendationController extends ApiBaseController {
         return GetApiResultModel(() -> recommendationService.userRecommendations(userId, count));
     }
 
+    @GetMapping("/item/{itemId}")
+    public ApiResultModel<HashSet<ApiRealState>> itemRecommendations (@PathVariable String itemId, @RequestParam(required = false, defaultValue = "10") long count) throws Exception {
+        return GetApiResultModel(() -> recommendationService.itemRecommendations(itemId, count));
+    }
+
     @PostMapping("/view")
     public void addView(@RequestBody ApiDetailView apiDetailView) throws Exception {
         this.recommendationService.addView(apiDetailView);
