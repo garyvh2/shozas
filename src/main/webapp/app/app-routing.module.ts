@@ -37,6 +37,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'pricing',
                     loadChildren: './modules/pricing/pricing.module#PricingModule'
                 },
+                {
+                    path: 'reactivate',
+                    loadChildren: './modules/reactivate-user/reactivate-user.module#ReactivateUserModule'
+                },
                 ...LAYOUT_ROUTES
             ],
             { useHash: true, enableTracing: false, onSameUrlNavigation: 'reload' }
