@@ -1,13 +1,13 @@
 <div>
     <div class="row justify-content-center">
         <section>
-            <h1>Reactivar cuenta</h1>a
+            <h1>Reactivar cuenta</h1>
 
             <div class="alert alert-warning" *ngIf="!success">
                 <p>Ingresa el correo electrónico que usaste para registrarte.</p>
             </div>
             <div class="alert alert-warning" *ngIf="success">
-                <p>Su cuenta ha sido reactivada.</p>
+                <p>Revise su correo electrónico para confirmar la re-activación de su cuenta.</p>
             </div>
 
             <div class="alert alert-danger" *ngIf="errorEmailNotExists">
@@ -19,11 +19,11 @@
                     <mat-label>Correo</mat-label>
                     <input formControlName="login" matInput placeholder="Correo" />
                     <mat-error *ngIf="reactivateAccount.get('login').hasError('required')">Este campo es requerido</mat-error>
-                    <mat-error *ngIf="reactivateAccount.get('login').hasError('email')">Por favor ingrese un correo valido
+                    <mat-error *ngIf="reactivateAccount.get('login').hasError('email')">Por favor ingrese un correo válido
                     </mat-error>
                 </mat-form-field>
                 <div class="submit__button {{isLoading ? 'disabled' : ''}}"  >
-                    <button [disabled]="isLoading" type="submit" mat-raised-button>
+                    <button [disabled]="isLoading || !reactivateAccount.valid" type="submit" mat-raised-button>
                         <span *ngIf="!isLoading">
                         Reactivar
                         </span>

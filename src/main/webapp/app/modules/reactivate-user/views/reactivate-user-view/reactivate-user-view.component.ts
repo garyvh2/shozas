@@ -24,21 +24,24 @@ export class ReactivateUserViewComponent implements OnInit {
     ngOnInit() {}
 
     reactivate() {
-        this.isLoading = true;
+        if (this.reactivateAccount.valid) {
+            this.isLoading = true;
 
-        const newUser = {
-            ...this.reactivateAccount.value
-        };
+            const newUser = {
+                ...this.reactivateAccount.value
+            };
 
-        console.log(newUser);
+            console.log(newUser);
 
-        this.reactivateService.reactivate(newUser).subscribe(
-            response => {
-                this.success = true;
-            },
-            error => {
-                this.errorEmailNotExists = true;
-            }
-        );
+            this.reactivateService.reactivate(newUser).subscribe(
+                response => {
+                    this.errorEmailNotExists = false;
+                    this.success = true;
+                },
+                error => {
+                    this.errorEmailNotExists = true;
+                }
+            );
+        }
     }
 }
