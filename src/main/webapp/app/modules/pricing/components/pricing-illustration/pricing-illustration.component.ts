@@ -32,7 +32,7 @@ export class PricingIllustrationComponent implements OnInit {
 
         // Add a light in the scene
         this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        this.directionalLight.position.set(0, 0, 100);
+        this.directionalLight.position.set(100, 100, 100);
         this.directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
         this.scene.add(this.directionalLight);
 
@@ -47,7 +47,8 @@ export class PricingIllustrationComponent implements OnInit {
         const loader = new THREE.ObjectLoader(manager);
         // Launch loading of the obj file, addBananaInScene is the callback when it's ready
         loader.load(
-            'https://raw.githubusercontent.com/ladybug-tools/3d-models/gh-pages/content/json/urban-model/urban-model-002.json',
+            // 'https://raw.githubusercontent.com/ladybug-tools/3d-models/gh-pages/content/json/urban-model/urban-model-002.json',
+            'https://raw.githubusercontent.com/luisdanielmv/threejs/master/house/house.json',
             this.addBananaInScene.bind(this)
         );
     }
@@ -55,7 +56,7 @@ export class PricingIllustrationComponent implements OnInit {
     render() {
         requestAnimationFrame(this.render.bind(this));
         // Turn the banana
-        this.banana.rotation.z += 0.01;
+        this.banana.rotation.y += 0.01;
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -64,10 +65,10 @@ export class PricingIllustrationComponent implements OnInit {
         console.log(this);
         this.banana = object;
         // Move the banana in the scene
-        this.banana.rotation.x = Math.PI / 2;
+        // this.banana.rotation.x = Math.PI / 2;
         this.banana.position.y = -200;
         this.banana.position.z = 50;
-        this.banana.scale.set(-1, -1, -1);
+        this.banana.scale.set(100, 100, 100);
         // Go through all children of the loaded object and search for a Mesh
         object.traverse(function(child: any) {
             // This allow us to check if the children is an instance of the Mesh constructor
@@ -82,5 +83,6 @@ export class PricingIllustrationComponent implements OnInit {
         this.render();
 
         this.camera.lookAt(this.banana.position);
+        this.directionalLight.lookAt(this.banana.position);
     }
 }

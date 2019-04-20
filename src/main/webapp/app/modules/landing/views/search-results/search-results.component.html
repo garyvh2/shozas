@@ -41,7 +41,7 @@
             <jhi-listing *ngFor="let realstate of (elements$ | async)" [listing]="realstate"
                 [routerLink]="['/detail/', realstate.id]"></jhi-listing>
             <div class="loadMore">
-                <button mat-button (click)="loadMore()" *ngIf="loadMore$ | async">Cargar Mas</button>
+                <button mat-button (click)="loadMore()" *ngIf="loadMore$ | async">Cargar Más</button>
             </div>
         </div>
         <button class="filter" mat-icon-button *ngIf="mobile" (click)="drawer.open()">
