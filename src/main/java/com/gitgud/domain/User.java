@@ -102,7 +102,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Embedded
     private Image image;
 
-    ///User Identifier, Cedula Fisica o juridica
+    ///User Identifier, Cédula Fisica o juridica
     private String userId;
 
     private String userType;

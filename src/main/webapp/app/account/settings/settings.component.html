@@ -23,11 +23,11 @@
     </div>
 
     <div class="alert alert-danger" *ngIf="error">
-        <strong>No hemos podido guardar los cambios</strong> Por favor intentelo de nuevo.
+        <strong>No hemos podido guardar los cambios</strong> Por favor inténtelo de nuevo.
     </div>
 
     <div class="alert alert-danger" *ngIf="errorUserIdExists">
-        <strong>Esa cedula ya esta en uso!</strong> Por favor use otra.
+        <strong>Esa cédula ya esta en uso!</strong> Por favor use otra.
     </div>
 
     <form *ngIf="!success && !isLoading" [formGroup]="settingsForm" (submit)="save()">

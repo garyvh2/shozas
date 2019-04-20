@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import UserType from 'app/@akita/external-models/user-type';
 import { SettingsService } from './settings.service';
 import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
+import { settings } from 'cluster';
 
 @Component({
     selector: 'jhi-settings',
@@ -65,7 +66,7 @@ export class SettingsComponent implements OnInit {
     }
 
     getUserIdentifierText(): string {
-        return this.settingsForm.get('userType').value === UserType.Personal ? 'Cedula' : 'Cedula Juridica';
+        return this.settingsForm.get('userType').value === UserType.Personal ? 'Cédula' : 'Cédula Jurídica';
     }
 
     save() {
@@ -89,7 +90,9 @@ export class SettingsComponent implements OnInit {
                     // this.settingsForm.markAsPristine();
                     // this.settingsForm.markAsUntouched();
                     // this.settingsForm.updateValueAndValidity();
-                    this.accountService.identity(true);
+                    this.accountService.identity(true).then(account => {
+                        this.settingsAccount = { ...account };
+                    });
                 },
                 response => this.processError(response)
             );
