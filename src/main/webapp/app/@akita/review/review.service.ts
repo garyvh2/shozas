@@ -8,8 +8,8 @@ import { ReviewStore } from './review.store';
 @Injectable()
 export class ReviewService {
     constructor(private reviewStore: ReviewStore, private http: HttpClient) {}
-    getReviews(idUser: ID, idRealState: ID) {
-        const url = `${MOCK_SERVER_API_URL}/api/reviews/get?userId=${idUser}&realStateId=${idRealState}`;
+    getReviews(idRealState: ID) {
+        const url = `${SERVER_API_URL}/api/ratingsAndReviews/get-reviews?realStateId=${idRealState}`;
         this.http.get(url).subscribe((response: any) => {
             this.reviewStore.set(response.result);
         });

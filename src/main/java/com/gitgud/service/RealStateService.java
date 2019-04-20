@@ -246,6 +246,7 @@ public class RealStateService {
 
         RealState realState =  result.get();
         realState.getOwner().setFavorites(null);
+        realState.getOwner().setReviews(null);
         return realState;
     }
 

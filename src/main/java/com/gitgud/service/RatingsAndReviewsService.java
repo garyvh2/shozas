@@ -1,5 +1,8 @@
 package com.gitgud.service;
 
+import com.gitgud.api.objects.ApiImage;
+import com.gitgud.api.objects.ApiReview;
+import com.gitgud.api.objects.ApiUser;
 import com.gitgud.domain.RealState;
 import com.gitgud.domain.Review;
 import com.gitgud.domain.User;
@@ -8,8 +11,11 @@ import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RatingsAndReviewsService {
@@ -92,4 +98,40 @@ public class RatingsAndReviewsService {
         }
         return true;
     }
+
+    public List<Review> getReviews(String realstateId){
+
+        Optional<List<Review>> reviews = ratingsAndReviewsRepository.findByRealStateEquals(realstateId);
+
+        if (!reviews.isPresent())
+            return new ArrayList<>();
+
+        reviews.get().forEach(review -> {
+            review.getUserShopper().setFavorites(null);
+            review.getUserShopper().setReviews(null);
+            review.getRealState().getOwner().setFavorites(null);
+            review.getRealState().getOwner().setReviews(null);
+        });
+
+        return  reviews.get();
+
+//        return reviews.get().stream().map(reviews1 -> toApiReview(reviews1)).collect(Collectors.toList());
+    }
+
+    private ApiReview toApiReview(Review review){
+        ApiReview apiReview = new ApiReview();
+        ApiUser apiUser = new ApiUser();
+        ApiImage apiImage = new ApiImage();
+
+        apiReview.setComment(review.getComment());
+        apiReview.setStars(review.getRating());
+        apiUser.setName(review.getUserShopper().getFirstName() + " " + review.getUserShopper().getLastName());
+        apiUser.setStars(review.getUserShopper().getRaiting());
+        apiImage.setSource(review.getUserShopper().getImage().getSource());
+        apiUser.setImage(apiImage);
+        apiReview.setUser(apiUser);
+
+        return apiReview;
+    }
+
 }
