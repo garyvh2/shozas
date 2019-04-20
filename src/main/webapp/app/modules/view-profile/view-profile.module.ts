@@ -10,8 +10,11 @@ import { ExternalProfileComponent } from './views/external-profile/external-prof
 import { ViewProfileRoutingModule } from './view-profile.route';
 import { StarRatingModule } from 'angular-star-rating';
 import { UserQuery } from './../../@akita/user/index';
+import { ReviewsModalComponent } from './components/reviews-modal/reviews-modal.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 @NgModule({
-    declarations: [OwnProfileComponent, ExternalProfileComponent],
+    declarations: [OwnProfileComponent, ExternalProfileComponent, ReviewsModalComponent, UserInfoComponent],
+    entryComponents: [ReviewsModalComponent],
     imports: [CommonModule, ViewProfileRoutingModule, ShozasSharedModule, StarRatingModule.forRoot()],
     providers: [RealStateService, RealStateQuery, AccountService, UserService, UserQuery]
 })

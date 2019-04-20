@@ -5,19 +5,24 @@
                 <img src="https://www.alo.doctor/assets/images/usuario_chat.jpg" />
             </div>
             <div>
-                <p>{{ comment.user.firstName }}</p>
+                <p>
+                    {{ comment.userShopper.firstName + ' ' + comment.userShopper.lastName }}
+                </p>
                 <span> {{ getFormatDate() }}</span>
+                <br/>
+                <span> {{ showRealState && comment.realState ? '( ' + comment.realState.title + ' )' : '' }}</span>
+
             </div>
         </div>
         <div class="stars">
-            <span>{{ comment.stars }}</span>
+            <span>{{ comment.rating }}</span>
             <div>
                 <star-rating
                     class="details__rating"
                     size="medium"
                     [showHalfStars]="true"
                     [starType]="'icon'"
-                    [rating]="comment.stars"
+                    [rating]="comment.rating"
                     [readOnly]="true"
                 ></star-rating>
             </div>

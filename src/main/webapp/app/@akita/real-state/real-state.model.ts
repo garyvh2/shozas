@@ -38,6 +38,7 @@ export interface RealState {
     isSold?: boolean;
     user: User;
     owner: User;
+    isRented?: boolean;
     customAmenities: RSAmenity[];
     dateCreated: Date;
 }

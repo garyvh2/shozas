@@ -20,7 +20,6 @@ import { TitleComponent } from './components/title/title.component';
 import { FeaturesComponent } from './components/features/features.component';
 import { AmenitiesComponent } from './components/amenities/amenities.component';
 import { MapComponent } from './components/map/map.component';
-import { CommentComponent } from './components/comment/comment.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 import { SidecardComponent } from './components/sidecard/sidecard.component';
@@ -31,16 +30,17 @@ import { MatDialogModule } from '@angular/material';
 import { FinanceCardComponent } from './components/finance-card/finance-card.component';
 import { SidecardLikeComponent } from './components/sidecard-like/sidecard-like.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { ReviewModalComponent } from './components/review-modal/review-modal.component';
 import { RecommendedComponent } from './components/recommended/recommended.component';
-import { ShozasSharedModule } from 'app/shared';
-import { RecommendedService } from 'app/@akita/recommended/recommended.service';
+import { ShozasSharedModule } from './../../shared';
+import { RecommendedService } from './../../@akita/recommended/recommended.service';
+import { SearchRealStateStore } from '../landing/@akita/search';
 
 @NgModule({
     declarations: [
         StateDetailComponent,
         ImagesCarrouselComponent,
         MapComponent,
-        CommentComponent,
         CommentSectionComponent,
         TitleComponent,
         SidecardComponent,
@@ -50,12 +50,14 @@ import { RecommendedService } from 'app/@akita/recommended/recommended.service';
         FinanceModalComponent,
         FinanceCardComponent,
         SidecardLikeComponent,
+        ReviewModalComponent,
         RecommendedComponent
     ],
     imports: [
         DetailRoutingModule,
         GalleryModule.forRoot(),
         CommonModule,
+        ShozasSharedModule,
         AngularMaterialModule,
         StarRatingModule,
         MatDialogModule,
@@ -66,8 +68,17 @@ import { RecommendedService } from 'app/@akita/recommended/recommended.service';
         NgxMaskModule.forRoot(),
         ShozasSharedModule
     ],
-    providers: [RealStateStore, RealStateQuery, RealStateService, ReviewQuery, ReviewService, ReviewStore, RecommendedService],
-    entryComponents: [FinanceModalComponent],
+    providers: [
+        RealStateStore,
+        RealStateQuery,
+        RealStateService,
+        ReviewQuery,
+        ReviewService,
+        ReviewStore,
+        SearchRealStateStore,
+        RecommendedService
+    ],
+    entryComponents: [FinanceModalComponent, ReviewModalComponent],
     exports: [RecommendedComponent]
 })
 export class DetailModule {}
