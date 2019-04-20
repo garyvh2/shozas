@@ -94,11 +94,26 @@ public class UserService {
             .map(user -> {
                 // activate given user for the registration key.
                 user.setActivated(true);
-                user.setActivationKey(null);
                 userRepository.save(user);
                 log.debug("Activated user: {}", user);
                 return user;
             });
+    }
+
+    public User inactivateUser (String login) throws Exception {
+
+        Optional<User> userOptional = getUserByEmail(login);
+
+        if (!userOptional.isPresent())
+           throw new Exception("El usuario no existe");
+
+        User user = userOptional.get();
+
+        user.setActivated(false);
+        userRepository.save(user);
+        log.debug("Activated user: {}", user);
+        return user;
+
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {

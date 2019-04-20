@@ -68,6 +68,27 @@ public class AccountResource extends ApiBaseController {
         mailService.sendActivationEmail(user);
     }
 
+    @PostMapping("/restore")
+    public void reactivate(@RequestBody ManagedUserVM managedUserVM) throws Exception {
+
+        Optional<User> userOptional = userService.getUserByEmail(managedUserVM.getLogin());
+
+        if (!userOptional.isPresent())
+            throw new Exception("El usuario no existe");
+
+        User user = userOptional.get();
+
+        mailService.sendActivationEmail(user);
+    }
+
+    @PostMapping("/inactivate")
+    public void inactivate(@RequestBody ManagedUserVM managedUserVM) throws Exception {
+
+       userService.inactivateUser(managedUserVM.getLogin());
+    }
+
+
+
     /**
      * GET  /activate : activate the registered user.
      *

@@ -13,7 +13,7 @@
             [distritoControl]="realStateForm.get('district')"
             label="true"
         ></jhi-location-filters>
-        <mat-error *ngIf="!isDirectionValid()">Por favor agregue la ubicacion</mat-error>
+        <mat-error *ngIf="!isDirectionValid()">Por favor agregue la ubicación</mat-error>
     </div>
 
     <mat-label class="radio__label">Características</mat-label>
@@ -60,8 +60,8 @@
         <mat-error>Este campo es requerido</mat-error>
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline" matAutosize="true">
-        <mat-label>Codigo postal (opcional)</mat-label>
-        <input [formControl]="realStateForm.controls['postalCode']" mask="0*" matInput placeholder="Codigo postal" />
+        <mat-label>Código postal (opcional)</mat-label>
+        <input [formControl]="realStateForm.controls['postalCode']" mask="0*" matInput placeholder="Código postal" />
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline" matAutosize="true">
         <mat-label>Descripción</mat-label>

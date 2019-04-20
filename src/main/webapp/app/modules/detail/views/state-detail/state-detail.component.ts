@@ -45,7 +45,7 @@ export class StateDetailComponent implements OnInit, OnChanges {
         this.detail$ = this.detailQuery.getDetail(this.id);
         this.detail$.subscribe(realState => {
             if (realState) {
-                this.reviewService.getReviews(realState.owner.id!, realState.id!);
+                this.reviewService.getReviews(realState.id!);
             }
         });
         this.loadDetail();
@@ -111,7 +111,7 @@ export class StateDetailComponent implements OnInit, OnChanges {
         this.detail$ = this.detailQuery.getDetail(this.id);
         this.detail$.subscribe(realState => {
             if (realState && realState.owner) {
-                this.reviewService.getReviews(realState.owner.id!, realState.id!);
+                this.reviewService.getReviews(realState.id!);
             }
         });
     }

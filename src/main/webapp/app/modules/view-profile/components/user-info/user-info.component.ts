@@ -28,7 +28,7 @@ export class UserInfoComponent implements OnChanges {
     }
     onClickDesactive() {
         this.dialog.open(RemoveModalComponent, {
-            data: { id: this.user.id, actionMessage: 'este usuario', serviceType: RemoveType.User },
+            data: { id: this.user.login, actionMessage: 'este usuario', serviceType: RemoveType.User },
             autoFocus: false
         });
     }
