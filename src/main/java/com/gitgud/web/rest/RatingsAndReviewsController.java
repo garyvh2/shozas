@@ -1,14 +1,14 @@
 package com.gitgud.web.rest;
 
+import com.gitgud.api.objects.ApiResultModel;
 import com.gitgud.domain.Review;
 import com.gitgud.service.RatingsAndReviewsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apiguardian.api.API;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/ratingsAndReviews")
-public class RatingsAndReviewsController {
+public class RatingsAndReviewsController extends ApiBaseController {
 
     private RatingsAndReviewsService ratingsAndReviewsService;
 
@@ -17,7 +17,12 @@ public class RatingsAndReviewsController {
     }
 
     @PostMapping("/create")
-    public Review create (Review review){
-        return ratingsAndReviewsService.save(review);
+    public ApiResultModel<Review> create (@RequestBody Review review) throws Exception {
+        return GetApiResultModel(() -> ratingsAndReviewsService.save(review));
+    }
+
+    @PostMapping("/generate")
+    public ApiResultModel<Boolean> generate (@RequestBody Review review) throws Exception {
+        return GetApiResultModel(() -> ratingsAndReviewsService.generateReview(review));
     }
 }

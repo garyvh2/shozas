@@ -164,4 +164,10 @@ export class RealStateService {
             }
         );
     }
+
+    removeRealStateStore(id: ID) {
+        this.detailStore.setLoading(true);
+        this.detailStore.remove(id);
+        this.detailStore.setLoading(false);
+    }
 }

@@ -29,6 +29,7 @@ import { LandingModule } from './modules/landing/landing.module';
 import { SearchRealStateStore, SearchRealStateQuery } from './modules/landing/@akita/search';
 import { UserStore, UserQuery } from './@akita/user';
 import { CurrencyPipe } from '@angular/common';
+import { ReviewStore } from './@akita/review';
 import { RecommendedStateStore } from 'app/@akita/recommended/recommended.store';
 import { RecommendedStateQuery } from 'app/@akita/recommended/recommended.query';
 
@@ -78,6 +79,7 @@ import { RecommendedStateQuery } from 'app/@akita/recommended/recommended.query'
         },
         UserStore,
         UserQuery,
+        ReviewStore,
         SearchRealStateStore,
         SearchRealStateQuery,
         FavoriteStateStore,

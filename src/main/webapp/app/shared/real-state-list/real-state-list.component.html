@@ -6,8 +6,8 @@
         <div *ngFor="let realState of currentElements" class="state__card {{ linkable ? 'clickable' : '' }}">
             <div *ngIf="editable" class="buttons">
                 <mat-icon (click)="onEdit(realState.id)" class="edit">edit</mat-icon>
-                <mat-icon class="money">attach_money</mat-icon>
-                <mat-icon class="delete">close</mat-icon>
+                <mat-icon class="money" (click)="openBoughtModal(realState.id)">attach_money</mat-icon>
+                <mat-icon class="delete" (click)="openRemoveModal(realState.id)">close</mat-icon>
             </div>
             <jhi-listing *ngIf="realState" [listing]="realState" (click)="navigate(realState.id)"></jhi-listing>
         </div>

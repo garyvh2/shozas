@@ -1,6 +1,7 @@
 package com.gitgud.web.rest;
 
 
+import com.gitgud.api.objects.ApiResultModel;
 import com.gitgud.domain.User;
 import com.gitgud.repository.UserRepository;
 import com.gitgud.security.SecurityUtils;
@@ -22,13 +23,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing the current user's account.
  */
 @RestController
 @RequestMapping("/api")
-public class AccountResource {
+public class AccountResource extends ApiBaseController {
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
@@ -65,6 +67,27 @@ public class AccountResource {
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
         mailService.sendActivationEmail(user);
     }
+
+    @PostMapping("/restore")
+    public void reactivate(@RequestBody ManagedUserVM managedUserVM) throws Exception {
+
+        Optional<User> userOptional = userService.getUserByEmail(managedUserVM.getLogin());
+
+        if (!userOptional.isPresent())
+            throw new Exception("El usuario no existe");
+
+        User user = userOptional.get();
+
+        mailService.sendActivationEmail(user);
+    }
+
+    @PostMapping("/inactivate")
+    public void inactivate(@RequestBody ManagedUserVM managedUserVM) throws Exception {
+
+       userService.inactivateUser(managedUserVM.getLogin());
+    }
+
+
 
     /**
      * GET  /activate : activate the registered user.
@@ -172,9 +195,15 @@ public class AccountResource {
         }
     }
 
+    @GetMapping("/user/typeahead")
+    public ApiResultModel<List<UserDTO>> getUsersAccordingSaves(@RequestParam String realStateId) throws Exception {
+        return GetApiResultModel(() -> userService.getUsersBasedOnFavorites(realStateId).stream().map(UserDTO::new).collect(Collectors.toList()));
+    }
+
     private static boolean checkPasswordLength(String password) {
         return !StringUtils.isEmpty(password) &&
             password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
             password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
+
 }
