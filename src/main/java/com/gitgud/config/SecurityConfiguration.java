@@ -112,6 +112,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/realstate/search/all").permitAll()
                 .antMatchers("/api/realstate/search/deps").permitAll()
                 .antMatchers("/api/realstate/search/lots").permitAll()
+                .antMatchers("/api/ratingsAndReviews/get-reviews").permitAll()
                 .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/activate").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
