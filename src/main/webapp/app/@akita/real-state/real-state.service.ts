@@ -164,4 +164,25 @@ export class RealStateService {
             }
         );
     }
+
+    deactivateRealState(id: ID) {
+        const url = `${SERVER_API_URL}/api/realstate/remove?id=${id}`;
+        this.detailStore.setError(undefined);
+        this.detailStore.setLoading(true);
+        return this.http.get(url).subscribe(
+            () => {
+                this.detailStore.setLoading(false);
+                this.removeRealStateStore(id);
+            },
+            () => {
+                this.detailStore.setLoading(false);
+            }
+        );
+    }
+
+    removeRealStateStore(id: ID) {
+        this.detailStore.setLoading(true);
+        this.detailStore.remove(id);
+        this.detailStore.setLoading(false);
+    }
 }

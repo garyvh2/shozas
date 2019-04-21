@@ -1,13 +1,15 @@
+import { LoginModalService } from './../../../../core/login/login-modal.service';
+import { AccountService } from '../../../../core';
+import { ReviewModalComponent } from './../../components/review-modal/review-modal.component';
 import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDialog } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { RealState, RealStateService, RealStateQuery } from '../../../../@akita/real-state';
 import { ReviewService } from '../../../../@akita/review/review.service';
-import { RecommendedService } from 'app/@akita/recommended/recommended.service';
-import { AccountService } from 'app/core';
+import { RecommendedService } from '../../../../@akita/recommended/recommended.service';
 
 @Component({
     selector: 'jhi-state-detail',
@@ -27,17 +29,24 @@ export class StateDetailComponent implements OnInit, OnChanges {
         private detailService: RealStateService,
         private detailQuery: RealStateQuery,
         private route: ActivatedRoute,
+        private router: Router,
         private reviewService: ReviewService,
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer,
+        public dialog: MatDialog,
+        private loginModalService: LoginModalService,
         private recommendedService: RecommendedService,
         private accountService: AccountService
     ) {}
+
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');
-        this.route.params.subscribe(params => {
-            this.id = params['id'];
-            this.loadDetail();
+        this.detailService.get(this.id);
+        this.detail$ = this.detailQuery.getDetail(this.id);
+        this.detail$.subscribe(realState => {
+            if (realState) {
+                this.reviewService.getReviews(realState.id!);
+            }
         });
         this.loadDetail();
 
@@ -59,6 +68,41 @@ export class StateDetailComponent implements OnInit, OnChanges {
         this.matIconRegistry.addSvgIcon(`rsd_bath`, this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/bath.svg'));
 
         this.matIconRegistry.addSvgIcon(`rsd_up`, this.domSanitizer.bypassSecurityTrustResourceUrl('../../../content/images/up.svg'));
+        this.showReviewsModal();
+    }
+
+    showReviewsModal() {
+        let isRegistred: boolean;
+        let email: string;
+        this.route.queryParamMap.subscribe(params => {
+            isRegistred = params.get('isRegistred') === 'true';
+            email = params.get('email');
+            if (isRegistred && email) {
+                this.accountService.identity().then(user => {
+                    if (user) {
+                        this.dialog.open(ReviewModalComponent, {
+                            autoFocus: false,
+                            disableClose: true,
+                            data: { user, realStateId: this.id }
+                        });
+                    } else {
+                        this.loginModalService.open();
+                    }
+                });
+                this.accountService.getAuthenticationState().subscribe(user => {
+                    const isOnDetail = this.router.url.includes('detail/');
+                    if (user && isOnDetail) {
+                        this.dialog.open(ReviewModalComponent, {
+                            autoFocus: false,
+                            disableClose: true,
+                            data: { user, realStateId: this.id }
+                        });
+                    }
+                });
+            } else if (!isRegistred && email) {
+                this.router.navigate(['/register']);
+            }
+        });
     }
 
     loadDetail() {
@@ -67,8 +111,7 @@ export class StateDetailComponent implements OnInit, OnChanges {
         this.detail$ = this.detailQuery.getDetail(this.id);
         this.detail$.subscribe(realState => {
             if (realState && realState.owner) {
-                console.log(realState);
-                this.reviewService.getReviews(realState.owner.id!, realState.id!);
+                this.reviewService.getReviews(realState.id!);
             }
         });
     }

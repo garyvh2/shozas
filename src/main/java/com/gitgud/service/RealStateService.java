@@ -33,7 +33,6 @@ public class RealStateService {
 
     private RealStateRepository realStateRepository;
     private UserRepository userRepository;
-    private MongoTemplate mongoTemplate;
     private UserService userService;
     private RecommendationService recommendationService;
 
@@ -44,7 +43,6 @@ public class RealStateService {
             MongoTemplate mongoTemplate, UserService userService, RecommendationService recommendationService) {
         this.realStateRepository = realStateRepository;
         this.userRepository = userRepository;
-        this.mongoTemplate = mongoTemplate;
         this.userService = userService;
         this.recommendationService = recommendationService;
     }
@@ -130,7 +128,6 @@ public class RealStateService {
         }
 
         realStates.and(realStates.criteria("isSold").equal(parameters.isSold()));
-        realStates.and(realStates.criteria("isRented").equal(parameters.isRented()));
         realStates.and(realStates.criteria("isActive").equal(true));
 
         if(parameters.isSimilarTo()){
@@ -249,6 +246,7 @@ public class RealStateService {
 
         RealState realState =  result.get();
         realState.getOwner().setFavorites(null);
+        realState.getOwner().setReviews(null);
         return realState;
     }
 
@@ -352,11 +350,22 @@ public class RealStateService {
             RealState realState = presentRealState.get();
             realState.setOwner(null);
             User user = presentUser.get();
+            realState.getOwner().setReviews(null);
+            realState.getOwner().setFavorites(null);
 
             // Add the favorite
             user.addFavorite(realState);
 
+
             User userSaved = userRepository.save(user);
+
+            userSaved.setReviews(null);
+
+            userSaved.getFavorites().forEach(r ->{
+                r.getOwner().setReviews(null);
+                r.getOwner().setFavorites(null);
+            });
+
             this.recommendationService.addFavorite(userSaved, realState);
             return userSaved;
         }
@@ -391,5 +400,27 @@ public class RealStateService {
                     .collect(Collectors.toCollection(HashSet::new));
         }
         return null;
+    }
+
+    public boolean activationManagement(String id) throws Exception {
+        Optional<RealState> realStateOptional =  realStateRepository.findById(id);
+
+        if(!realStateOptional.isPresent())
+            throw new Exception("El elemento no existe");
+
+        RealState realState = realStateOptional.get();
+
+        realState.getOwner().setReviews(null);
+        realState.getOwner().setFavorites(null);
+
+        realState.setActive(realState.isActive() ? false : true );
+
+        try {
+            realStateRepository.save(realState);
+        }catch (Exception e){
+            return false;
+        }
+
+        return true;
     }
 }

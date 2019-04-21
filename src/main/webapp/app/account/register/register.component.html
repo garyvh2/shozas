@@ -14,7 +14,7 @@
     </div>
 
     <div class="alert alert-danger" *ngIf="errorUserIdExists">
-        <strong>Esa cedula ya esta en uso!</strong> Por favor use otra.
+        <strong>Esa cédula ya esta en uso!</strong> Por favor use otra.
     </div>
 
     <form *ngIf="!success" [formGroup]="registerForm" (submit)="register()">

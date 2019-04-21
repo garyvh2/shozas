@@ -3,6 +3,8 @@ import { Options } from 'ng5-slider';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
 import { PricingService } from '../../pricing.service';
 import { ApiResponse } from 'app/@akita/external-models/apiResponse.model';
+import { RealState } from 'app/@akita/real-state';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'jhi-pricing-view',
@@ -27,6 +29,10 @@ export class PricingViewComponent implements OnInit {
 
     pricingIllustrationURL = 'https://res.cloudinary.com/shozas/image/upload/v1555192506/housebuild.gif';
 
+    loading = false;
+
+    realStates: RealState[];
+
     constructor(private pricingService: PricingService) {}
 
     ngOnInit() {
@@ -39,12 +45,15 @@ export class PricingViewComponent implements OnInit {
     }
 
     applyFilters() {
-        console.log('SF: ', this.homeFilters);
+        this.loading = true;
+
         this.pricingService.getPricing(this.homeFilters).subscribe(
             response => {
                 console.log(response);
                 this.averagePrice = response.result.averagePrice;
                 this.updateIllustration(response);
+                this.realStates = response.result.elements;
+                this.loading = false;
             },
             error => {}
         );

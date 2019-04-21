@@ -1,4 +1,4 @@
-import { Review } from './../../../../@akita/review/review.model';
+import { Review } from './../../@akita/review/review.model';
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 @Component({
@@ -9,6 +9,8 @@ import * as moment from 'moment';
 export class CommentComponent implements OnInit {
     @Input()
     comment: Review;
+    @Input()
+    showRealState = false;
     constructor() {}
 
     ngOnInit() {}

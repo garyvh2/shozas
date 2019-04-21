@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     getUserIdentifierText(): string {
-        return this.registerForm.get('userType').value === UserType.Personal ? 'Cedula' : 'Cedula Juridica';
+        return this.registerForm.get('userType').value === UserType.Personal ? 'Cédula' : 'Cédula Jurídica';
     }
 
     ngAfterViewInit() {

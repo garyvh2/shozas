@@ -4,7 +4,7 @@
         <div>
             <h2>{{ user.firstName + ' ' + user.lastName }}</h2>
             <star-rating class="details__rating" size="large" [starType]="'icon'" [rating]="user.raiting" [readOnly]="true"></star-rating>
-            <span class="reviews">Ver calificaciones</span>
+            <span class="reviews" (click)="onClickReviews()">Ver calificaciones</span>
         </div>
         <div class="user__image">
             <img mat-card-avatar [src]="getImage()" />
@@ -22,6 +22,7 @@
                     <span>{{ getFormattedPhone() }}</span>
                 </div>
             </div>
+            <button mat-raised-button color="warn" (click)="onClickDesactive()"> Desactivar Usuario</button>
         </div>
     </div>
 </div>

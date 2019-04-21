@@ -89,4 +89,9 @@ export class JhiLoginModalComponent implements AfterViewInit {
         this.activeModal.dismiss('to state requestReset');
         this.router.navigate(['/reset', 'request']);
     }
+
+    reactivate() {
+        this.activeModal.dismiss('to state reactivate');
+        this.router.navigate(['/reactivate']);
+    }
 }
