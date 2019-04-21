@@ -4,7 +4,7 @@ import { ReviewModalComponent } from './../../components/review-modal/review-mod
 import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { RealState, RealStateService, RealStateQuery } from '../../../../@akita/real-state';
@@ -48,6 +48,13 @@ export class StateDetailComponent implements OnInit, OnChanges {
                 this.reviewService.getReviews(realState.id!);
             }
         });
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.id = this.route.snapshot.paramMap.get('id');
+                this.loadDetail();
+            }
+        });
+
         this.loadDetail();
 
         this.matIconRegistry.addSvgIcon(

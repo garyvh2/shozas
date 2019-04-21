@@ -32,11 +32,11 @@ export class SearchResultsComponent implements OnInit {
     /** Range */
     mobile = window.innerWidth <= 550;
     priceRange: Options = {
-        ceil: 0,
+        ceil: 90000000,
         floor: 0
     };
     sizeRange: Options = {
-        ceil: 0,
+        ceil: 900,
         floor: 0
     };
 

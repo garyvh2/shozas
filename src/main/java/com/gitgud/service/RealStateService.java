@@ -113,7 +113,7 @@ public class RealStateService {
         Query<RealState> realStates = datastore.createQuery(RealState.class);
 
         int pageSize = parameters.getPageSize() != 0 ? parameters.getPageSize() : 16;
-        int page = parameters.getPage() == 1 ? 0 : pageSize * (parameters.getPage() - 1);
+        int page = parameters.getPage() == 1 ? 0 : pageSize * (pargetRealStateElementsameters.getPage() - 1);
 
         switch (resultType) {
         case Lots:
@@ -348,7 +348,6 @@ public class RealStateService {
         if (presentRealState.isPresent() && presentUser.isPresent()) {
             // Get the realState and user object
             RealState realState = presentRealState.get();
-            realState.setOwner(null);
             User user = presentUser.get();
             realState.getOwner().setReviews(null);
             realState.getOwner().setFavorites(null);
