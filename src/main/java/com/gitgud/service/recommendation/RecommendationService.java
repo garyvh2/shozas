@@ -297,4 +297,26 @@ public class RecommendationService {
             .setDuration(apiDetailView.getDuration())
         );
     }
+
+    /**
+     * Add purchase
+     */
+    @Transactional
+    public void addPurchase(String userId, String itemId) throws ApiException {
+        this.recombeeClient.send(new AddPurchase(userId, itemId)
+            .setTimestamp(new Date())
+            .setCascadeCreate(true)
+        );
+    }
+
+    /**
+     * Add rating
+     */
+    @Transactional
+    public void addRating(String userId, String itemId, double rating) throws ApiException {
+        this.recombeeClient.send(new AddRating(userId, itemId, rating)
+            .setTimestamp(new Date())
+            .setCascadeCreate(true)
+        );
+    }
 }
