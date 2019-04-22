@@ -12,6 +12,7 @@ import { FilterLotComponent } from './components/filter-lot/filter-lot.component
 import { FilterHomeComponent } from './components/filter-home/filter-home.component';
 import { RealStateStore, RealStateService } from 'app/@akita/real-state';
 import { FilterRatingComponent } from './components/filter-rating/filter-rating.component';
+import { LocationFiltersService } from 'app/shared/location-filters/location-filters.service';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,7 @@ import { FilterRatingComponent } from './components/filter-rating/filter-rating.
         FilterRatingComponent
     ],
     imports: [ShozasSharedModule, LandingRoutingModule, StarRatingModule.forRoot()],
-    providers: [LandingService, RealStateStore, RealStateService],
+    providers: [LandingService, RealStateStore, RealStateService, LocationFiltersService],
     exports: [FilterAppartmentComponent, FilterLotComponent, FilterHomeComponent, FilterRatingComponent]
 })
 export class LandingModule {}

@@ -1,4 +1,4 @@
-<mat-drawer-container autosize>
+<mat-drawer-container autosize *ngIf="!loadingLocation">
     <mat-drawer [opened]="mobile ? null : true" #drawer mode="side" class="left">
         <div class="close">
             <button mat-icon-button *ngIf="mobile" (click)="drawer.close()">
@@ -10,7 +10,7 @@
         <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex"
             (selectedIndexChange)="selectedIndexChange()" mat-align-tabs="center">
             <mat-tab label="Casas">
-                <jhi-filter-home [searchFilters]="homeFilters" *ngIf="homeFilters" [priceConfig]="priceRange$ | async"
+                <jhi-filter-home [searchFilters]="homeFilters" [priceConfig]="priceRange$ | async"
                     [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
             </mat-tab>
             <mat-tab label="Apartamentos">
@@ -30,7 +30,8 @@
             <button mat-icon-button (click)="drawer.toggle()">
                 <mat-icon>filter_list</mat-icon>
             </button>
-            <jhi-location-filters [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+            <jhi-location-filters #locationFilters [searchFilters]="locationFilters"
+                (provinciaContext)="provinciaContext()">
             </jhi-location-filters>
         </div>
         <div class="items" *ngIf="(loading$ | async)">

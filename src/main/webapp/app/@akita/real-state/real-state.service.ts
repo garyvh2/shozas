@@ -77,10 +77,10 @@ export class RealStateService {
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
             response.result.loadMore = data.length > 0;
-            this.searchRealStateStore.update(response.result);
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
+            this.searchRealStateStore.update(response.result);
             this.searchRealStateStore.setLoading(false);
         });
     }
@@ -107,11 +107,11 @@ export class RealStateService {
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
             response.result.loadMore = data.length > 0;
-            this.searchRealStateStore.update(response.result);
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
             this.searchRealStateStore.setLoading(false);
+            this.searchRealStateStore.update(response.result);
         });
     }
 
@@ -124,11 +124,11 @@ export class RealStateService {
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
             response.result.loadMore = data.length > 0;
-            this.searchRealStateStore.update(response.result);
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
             this.searchRealStateStore.setLoading(false);
+            this.searchRealStateStore.update(response.result);
         });
     }
 
