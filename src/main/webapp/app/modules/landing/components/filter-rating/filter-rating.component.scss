@@ -1,0 +1,31 @@
+:host {
+    mat-radio-group {
+        display: flex;
+        flex-direction: column;
+
+        mat-radio-button {
+            ::ng-deep .mat-radio-label {
+                & .mat-radio-container {
+                    display: none;
+                }
+
+                & .mat-radio-label-content {
+                    padding: 0;
+                }
+            }
+
+            ::ng-deep .rating {
+                margin: 0;
+            }
+
+            ::ng-deep .star-container {
+                margin-left: 0;
+            }
+
+            ::ng-deep .label-value.medium,
+            ::ng-deep .rating.medium .label-value {
+                font-size: 16px !important;
+            }
+        }
+    }
+}

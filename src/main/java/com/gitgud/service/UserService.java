@@ -80,9 +80,18 @@ public class UserService {
         return userRepository.findOneByLogin(email);
     }
 
-    public List<User> getUsersByRaiting(double raiting){
+    public List<User> getUsersByRaitingGreaterThan(double raiting){
         List<User> resultUser = new ArrayList<User>();
         Optional<List<User>> dbResult = userRepository.findByRaitingGreaterThan(raiting);
+        if(dbResult.isPresent()){
+            resultUser = dbResult.get();
+        }
+        return  resultUser;
+    }
+
+    public List<User> getUsersByRaiting(double raiting){
+        List<User> resultUser = new ArrayList<User>();
+        Optional<List<User>> dbResult = userRepository.findByRaiting(raiting);
         if(dbResult.isPresent()){
             resultUser = dbResult.get();
         }

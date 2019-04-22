@@ -1,0 +1,18 @@
+<mat-radio-group [(ngModel)]="rating" (change)="valueChange($event)">
+    <mat-radio-button [value]="4">
+        <star-rating size="medium" [staticColor]="selected === 4 ? 'negative' : 'default'" [starType]="'icon'"
+            [rating]="4" [readOnly]="true" labelText="o más" labelPosition="right" numOfStars="5"></star-rating>
+    </mat-radio-button>
+    <mat-radio-button [value]="3">
+        <star-rating size="medium" [staticColor]="selected === 3 ? 'negative' : 'default'" [starType]="'icon'"
+            [rating]="3" [readOnly]="true" labelText="o más" labelPosition="right" numOfStars="5"></star-rating>
+    </mat-radio-button>
+    <mat-radio-button [value]="2">
+        <star-rating size="medium" [staticColor]="selected === 2 ? 'negative' : 'default'" [starType]="'icon'"
+            [rating]="2" [readOnly]="true" labelText="o más" labelPosition="right" numOfStars="5"></star-rating>
+    </mat-radio-button>
+    <mat-radio-button [value]="1">
+        <star-rating size="medium" [staticColor]="selected === 1 ? 'negative' : 'default'" [starType]="'icon'"
+            [rating]="1" [readOnly]="true" labelText="o más" labelPosition="right" numOfStars="5"></star-rating>
+    </mat-radio-button>
+</mat-radio-group>

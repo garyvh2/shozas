@@ -113,7 +113,7 @@ public class RealStateService {
         Query<RealState> realStates = datastore.createQuery(RealState.class);
 
         int pageSize = parameters.getPageSize() != 0 ? parameters.getPageSize() : 16;
-        int page = parameters.getPage() == 1 ? 0 : pageSize * (pargetRealStateElementsameters.getPage() - 1);
+        int page = parameters.getPage() == 1 ? 0 : pageSize * (parameters.getPage() - 1);
 
         switch (resultType) {
         case Lots:
@@ -193,16 +193,23 @@ public class RealStateService {
         }
 
         if (parameters.getRaiting() != 0) {
-            List<User> raitingUsers = userService.getUsersByRaiting(parameters.getRaiting());
-            if (!raitingUsers.isEmpty()) {
-                Criteria[] criterias = new Criteria[raitingUsers.size()];
+            List<User> raitingUsersRating = userService.getUsersByRaiting(parameters.getRaiting());
+            List<User> raitingUsersRatingGreaterThan = userService.getUsersByRaitingGreaterThan(parameters.getRaiting());
+
+
+            raitingUsersRating.addAll(raitingUsersRatingGreaterThan);
+
+            if (!raitingUsersRating.isEmpty()) {
+                Criteria[] criterias = new Criteria[raitingUsersRating.size()];
                 int count = 0;
-                for (User userToFind : raitingUsers) {
+                for (User userToFind : raitingUsersRating) {
                     criterias[count] = (realStates.criteria("owner")
                             .equal(new DBRef("jhi_user", new ObjectId(userToFind.getId()))));
                     count++;
                 }
                 realStates.disableValidation().or(criterias);
+            } else {
+                return new ArrayList<>();
             }
         }
 
