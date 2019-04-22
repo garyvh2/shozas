@@ -1,5 +1,6 @@
 package com.gitgud.repository;
 
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 
 import org.springframework.data.domain.Page;
@@ -28,6 +29,9 @@ public interface UserRepository extends MongoRepository<User, String> {
     Page<User> findAllByLoginNot(Pageable pageable, String login);
 
     Optional<User> getOneById(String id);
+
+
+    Optional<List<User>> findByFavoritesContaining(RealState realState);
 
     Optional<List<User>> findByRaiting(double raiting);
 

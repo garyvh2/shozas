@@ -252,6 +252,12 @@ public class RealStateService {
             throw new Exception("El elemento solicitado ya no existe");
 
         RealState realState =  result.get();
+
+        Optional<List<User>> favorited = userRepository.findByFavoritesContaining(realState);
+        if (favorited.isPresent() && favorited.get().size() > 0) {
+            realState.setFavoritesCount(favorited.get().size());
+        }
+
         realState.getOwner().setFavorites(null);
         realState.getOwner().setReviews(null);
         return realState;

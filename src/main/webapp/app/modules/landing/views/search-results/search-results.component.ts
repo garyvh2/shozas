@@ -7,6 +7,8 @@ import { RealState, RealStateService } from 'app/@akita/real-state';
 import { MatDrawer } from '@angular/material';
 import { LocationFiltersService } from 'app/shared/location-filters/location-filters.service';
 import { LocationFiltersComponent } from 'app/shared/location-filters/location-filters.component';
+import { Title } from '@angular/platform-browser';
+import { MetaService } from 'app/shared/meta.service';
 
 @Component({
     selector: 'jhi-search-results',
@@ -17,6 +19,7 @@ export class SearchResultsComponent implements OnInit {
     selectedIndex = 0;
 
     /** Queries */
+    title = 'Buscar casas, apartamentos y lotes en Costa Rica';
     loading$: Observable<boolean>;
     loadMore$: Observable<boolean>;
     elements$: Observable<RealState[]>;
@@ -47,10 +50,16 @@ export class SearchResultsComponent implements OnInit {
     constructor(
         private realStateService: RealStateService,
         private searchRealStateQuery: SearchRealStateQuery,
-        private locationFiltersService: LocationFiltersService
+        private locationFiltersService: LocationFiltersService,
+        private titleService: Title,
+        private meta: MetaService
     ) {}
 
     ngOnInit() {
+        this.meta.createCanonicalURL();
+        this.meta.addTag('robots', 'index, follow');
+        this.titleService.setTitle(this.title);
+
         /** Price Range */
         const { provincia, loading } = this.locationFiltersService.getProvincia();
         loading.subscribe(loadingLocation => {

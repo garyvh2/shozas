@@ -53,7 +53,13 @@
         </div>
     </mat-card-actions>
     <mat-card-footer>
-        <a>4 personas</a>
-        <span>más están interesadas</span>
+        <div *ngIf="detail.interestedCount && detail.interestedCount > 0">
+            <a>{{detail.interestedCount}} {{detail.interestedCount > 1 ? 'personas' : 'persona'}}</a>
+            <span>más {{detail.interestedCount > 1 ? 'están interesadas' : 'está interesada'}}</span>
+        </div>
+        <div *ngIf="detail.favoritesCount && detail.favoritesCount > 0">
+            <a>{{detail.favoritesCount}} {{detail.favoritesCount > 1 ? 'personas' : 'persona'}}</a>
+            <span>{{detail.favoritesCount > 1 ? 'han' : 'ha'}} marcado este elemento como favorito</span>
+        </div>
     </mat-card-footer>
 </mat-card>

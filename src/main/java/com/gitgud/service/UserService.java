@@ -387,6 +387,9 @@ public class UserService {
 
             if (client.isPresent()) {
                 if (!client.get().getId().equals(tempRS.getOwner().getId())) {
+                    tempRS.addInterested(client.get());
+                    realStateRepository.save(tempRS);
+
                     mailService.sendEmailToOwner(client.get(), tempRS);
                 }
 
