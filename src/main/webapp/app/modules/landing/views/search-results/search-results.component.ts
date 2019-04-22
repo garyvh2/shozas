@@ -1,6 +1,6 @@
 import { Options } from 'ng5-slider';
 import { SearchRealStateQuery } from './../../@akita/search/search.query';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { SearchFilter } from 'app/@akita/external-models/searchFilter';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RealState, RealStateService } from 'app/@akita/real-state';
@@ -27,6 +27,9 @@ export class SearchResultsComponent implements OnInit {
     sizeRange$: Observable<Options>;
     loadingLocation = true;
 
+    unsubscribePriceRange: Subscription;
+    unsubscribeSizeRange: Subscription;
+
     /** Filters */
     locationFilters: SearchFilter = new SearchFilter();
     appartmentFilters: SearchFilter = new SearchFilter();
@@ -39,11 +42,11 @@ export class SearchResultsComponent implements OnInit {
     /** Range */
     mobile = window.innerWidth <= 550;
     priceRange: Options = {
-        ceil: 90000000,
+        ceil: 1,
         floor: 0
     };
     sizeRange: Options = {
-        ceil: 900,
+        ceil: 1,
         floor: 0
     };
 
@@ -69,64 +72,63 @@ export class SearchResultsComponent implements OnInit {
             if (provincia) {
                 this.locationFiltersComponent.setProvincia(provincia);
             }
-            const priceRange$ = new Subject<Options>();
-            this.searchRealStateQuery.priceRange$.subscribe(data => {
-                if (data.ceil >= this.priceRange.ceil) {
-                    this.priceRange.ceil = data.ceil;
-                    this.setRange('rangePrice', data.ceil);
-                }
-                priceRange$.next({ ...data, ...this.priceRange } as Options);
-            });
-            this.priceRange$ = priceRange$.asObservable();
-            /** Size range */
-            const sizeRange$ = new Subject<Options>();
-            this.searchRealStateQuery.sizeRange$.subscribe(data => {
-                if (data.ceil >= this.sizeRange.ceil) {
-                    this.sizeRange.ceil = data.ceil;
-                    this.setRange('rangeSize', data.ceil);
-                }
-                sizeRange$.next({ ...data, ...this.sizeRange } as Options);
-            });
+            this.setupObservers();
             this.loading$ = this.searchRealStateQuery.selectLoading();
             this.loadMore$ = this.searchRealStateQuery.loadMore$;
-            this.sizeRange$ = sizeRange$.asObservable();
             this.elements$ = this.searchRealStateQuery.elements$;
             this.applyFilters();
         });
     }
 
-    setRange(name, ceil) {
+    setupObservers() {
+        const priceRange$ = new Subject<Options>();
+        this.unsubscribePriceRange = this.searchRealStateQuery.priceRange$.subscribe(data => {
+            if (data.ceil > this.priceRange.ceil) {
+                this.priceRange.ceil = data.ceil;
+                this.setRange('rangePrice', data.ceil);
+            }
+            priceRange$.next({ ...data, ...this.priceRange } as Options);
+        });
+        this.priceRange$ = priceRange$.asObservable();
+        /** Size range */
+        const sizeRange$ = new Subject<Options>();
+        this.unsubscribeSizeRange = this.searchRealStateQuery.sizeRange$.subscribe(data => {
+            if (data.ceil > this.sizeRange.ceil) {
+                this.sizeRange.ceil = data.ceil;
+                this.setRange('rangeSize', data.ceil);
+            }
+            sizeRange$.next({ ...data, ...this.sizeRange } as Options);
+        });
+        this.sizeRange$ = sizeRange$.asObservable();
+    }
+
+    setRange(name, ceil, low = 0) {
         if (ceil) {
             switch (this.selectedIndex) {
                 case 0:
-                    this.homeFilters[name].high = ceil;
-                    this.homeFilters[name].low = 0;
-                    this.homeFilters[name] = { ...this.homeFilters[name] };
+                    this.homeFilters[name] = { low, high: ceil };
                     break;
                 case 1:
-                    this.appartmentFilters[name].high = ceil;
-                    this.appartmentFilters[name].low = 0;
-                    this.appartmentFilters[name] = { ...this.appartmentFilters[name] };
+                    this.appartmentFilters[name] = { low, high: ceil };
                     break;
                 case 2:
-                    this.lotFilters[name].high = ceil;
-                    this.lotFilters[name].low = 0;
-                    this.lotFilters[name] = { ...this.lotFilters[name] };
+                    this.lotFilters[name] = { low, high: ceil };
                     break;
             }
         }
     }
 
     applyFilters() {
+        const filters = this.getFilters();
         switch (this.selectedIndex) {
             case 0:
-                this.realStateService.searchHomes(this.getFilters());
+                this.realStateService.searchHomes(filters);
                 break;
             case 1:
-                this.realStateService.searchAppartments(this.getFilters());
+                this.realStateService.searchAppartments(filters);
                 break;
             case 2:
-                this.realStateService.searchLots(this.getFilters());
+                this.realStateService.searchLots(filters);
                 break;
         }
 
@@ -162,19 +164,13 @@ export class SearchResultsComponent implements OnInit {
 
     selectedIndexChange() {
         this.priceRange = {
-            ceil: 0,
+            ceil: 1,
             floor: 0
         };
         this.sizeRange = {
-            ceil: 0,
+            ceil: 1,
             floor: 0
         };
-        this.setRange('rangeSize', this.getFilters().sizeHigh);
-        this.setRange('rangePrice', this.getFilters().prHigh);
-        this.applyFilters();
-    }
-
-    provinciaContext() {
         this.applyFilters();
     }
 
