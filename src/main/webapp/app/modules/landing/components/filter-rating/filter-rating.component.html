@@ -15,4 +15,8 @@
         <star-rating size="medium" [staticColor]="selected === 1 ? 'negative' : 'default'" [starType]="'icon'"
             [rating]="1" [readOnly]="true" labelText="o más" labelPosition="right" numOfStars="5"></star-rating>
     </mat-radio-button>
+    <mat-radio-button [value]="0">
+        <star-rating size="medium" [staticColor]="selected === 0 ? 'negative' : 'default'" [starType]="'icon'"
+            [rating]="0" [readOnly]="true" labelText="o más" labelPosition="right" numOfStars="5"></star-rating>
+    </mat-radio-button>
 </mat-radio-group>

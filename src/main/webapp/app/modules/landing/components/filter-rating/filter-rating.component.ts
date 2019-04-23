@@ -14,7 +14,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     ]
 })
 export class FilterRatingComponent implements OnInit {
-    rating = 1;
+    rating = 0;
 
     /** NG MODEL */
     selected = 1;
