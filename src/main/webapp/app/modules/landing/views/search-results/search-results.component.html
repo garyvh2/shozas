@@ -1,25 +1,34 @@
-<mat-drawer-container autosize>
+<mat-drawer-container autosize *ngIf="!loadingLocation">
     <mat-drawer [opened]="mobile ? null : true" #drawer mode="side" class="left">
         <div class="close">
             <button mat-icon-button *ngIf="mobile" (click)="drawer.close()">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
-        <jhi-location-filters *ngIf="mobile" [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+        <jhi-location-filters *ngIf="mobile" [searchFilters]="locationFilters">
         </jhi-location-filters>
         <mat-tab-group animationDuration="0ms" color="#FD6666" [(selectedIndex)]="selectedIndex"
             (selectedIndexChange)="selectedIndexChange()" mat-align-tabs="center">
             <mat-tab label="Casas">
-                <jhi-filter-home [searchFilters]="homeFilters" *ngIf="homeFilters" [priceConfig]="priceRange$ | async"
-                    [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
+                <ng-template matTabContent>
+                    <jhi-filter-home [searchFilters]="homeFilters" [priceConfig]="priceRange$ | async"
+                        [sizeConfig]="sizeRange$ | async"></jhi-filter-home>
+                </ng-template>
+
             </mat-tab>
             <mat-tab label="Apartamentos">
-                <jhi-filter-appartment [searchFilters]="appartmentFilters" [priceConfig]="priceRange$ | async"
-                    [sizeConfig]="sizeRange$ | async"></jhi-filter-appartment>
+                <ng-template matTabContent>
+                    <jhi-filter-appartment [searchFilters]="appartmentFilters" [priceConfig]="priceRange$ | async"
+                        [sizeConfig]="sizeRange$ | async"></jhi-filter-appartment>
+                </ng-template>
+
             </mat-tab>
             <mat-tab label="Lotes">
-                <jhi-filter-lot [searchFilters]="lotFilters" [priceConfig]="priceRange$ | async"
-                    [sizeConfig]="sizeRange$ | async"></jhi-filter-lot>
+                <ng-template matTabContent>
+                    <jhi-filter-lot [searchFilters]="lotFilters" [priceConfig]="priceRange$ | async"
+                        [sizeConfig]="sizeRange$ | async"></jhi-filter-lot>
+                </ng-template>
+
             </mat-tab>
         </mat-tab-group>
         <button mat-button (click)="applyFilters()">Aplicar</button>
@@ -30,7 +39,7 @@
             <button mat-icon-button (click)="drawer.toggle()">
                 <mat-icon>filter_list</mat-icon>
             </button>
-            <jhi-location-filters [searchFilters]="locationFilters" (provinciaContext)="provinciaContext()">
+            <jhi-location-filters #locationFilters [searchFilters]="locationFilters">
             </jhi-location-filters>
         </div>
         <div class="items" *ngIf="(loading$ | async)">
