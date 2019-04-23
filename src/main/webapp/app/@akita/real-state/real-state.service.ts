@@ -76,7 +76,7 @@ export class RealStateService {
         this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
-            response.result.loadMore = data.length > 0;
+            response.result.loadMore = data.length >= 16;
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
@@ -92,7 +92,7 @@ export class RealStateService {
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
-            response.result.loadMore = data.length > 0;
+            response.result.loadMore = data.length >= 16;
             response.result.elements = [...this.searchRealStateStore._value().elements, ...data];
             this.searchRealStateStore.update(response.result);
         });
@@ -106,7 +106,7 @@ export class RealStateService {
         this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
-            response.result.loadMore = data.length > 0;
+            response.result.loadMore = data.length >= 16;
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
@@ -123,7 +123,7 @@ export class RealStateService {
         this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
-            response.result.loadMore = data.length > 0;
+            response.result.loadMore = data.length >= 16;
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
