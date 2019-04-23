@@ -35,10 +35,12 @@ export class ReactivateUserViewComponent implements OnInit {
 
             this.reactivateService.reactivate(newUser).subscribe(
                 response => {
+                    this.isLoading = false;
                     this.errorEmailNotExists = false;
                     this.success = true;
                 },
                 error => {
+                    this.isLoading = false;
                     this.errorEmailNotExists = true;
                 }
             );
