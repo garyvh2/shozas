@@ -1,4 +1,3 @@
-import { LocationFiltersComponent } from './components/location-filters/location-filters.component';
 import { LandingService } from './landing.service';
 import { StarRatingModule } from 'angular-star-rating';
 import { FilterAmountComponent } from './components/filter-amount/filter-amount.component';
@@ -18,7 +17,6 @@ import { RealStateStore, RealStateService } from 'app/@akita/real-state';
         SearchResultsComponent,
         FilterAmountComponent,
         RangeComponentComponent,
-        LocationFiltersComponent,
         FilterAppartmentComponent,
         FilterLotComponent,
         FilterHomeComponent

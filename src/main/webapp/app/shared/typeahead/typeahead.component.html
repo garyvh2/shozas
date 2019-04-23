@@ -1,0 +1,31 @@
+<mat-form-field class="chip-List" appearance="outline" color="accent" >
+  <mat-label>Correo del comprador</mat-label>
+  <mat-chip-list #chipList [formControl]="tagCtrl">
+    <mat-chip
+      *ngFor="let user of users"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(user)"
+    >
+      {{ user }}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="Digite el correo del comprador."
+      #tagInput
+      [formControl]="inputCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let user of (filteredUsers | async)" [value]="user.login">
+      {{ user.login + ' ' + ' ( '+ user.firstName+ ' ' + user.lastName + ' )' }}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="tagCtrl.hasError('emptyTags')" >Por favor agregue el correo del comprando </mat-error>
+  <mat-error *ngIf="emailCtrl.hasError('email')" >Por favor ingrese un email correcto </mat-error>
+</mat-form-field>

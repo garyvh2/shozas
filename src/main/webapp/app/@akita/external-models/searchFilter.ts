@@ -38,4 +38,5 @@ export class SearchFilter {
     public user = '';
     public page = 1;
     public size = 20;
+    public similarTo = false;
 }

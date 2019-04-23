@@ -1,0 +1,6 @@
+<jhi-user-info [user]="user"></jhi-user-info>
+
+<div class="profile__container">
+    <jhi-real-state-list [title]="'En venta'" [linkable]="false" [stateList]="realStates$ | async" [loading]="isLoadingRealState$ | async" [editable]="true"></jhi-real-state-list>
+    <jhi-real-state-list [title]="'Guardados'" [linkable]="true" [stateList]="favorites$ | async" [loading]="isLoading$ | async" [editable]="false"></jhi-real-state-list>
+</div>

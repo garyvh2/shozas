@@ -1,7 +1,13 @@
+
 <div class="register__container justify-content-center">
     <h1 *ngIf="!success">Editar Perfil</h1>
 
-    <div *ngIf="!success" class="row justify-content-center">
+    <div *ngIf="isLoading" class="loading">
+        <mat-spinner color="warn"></mat-spinner>
+        <h3>Procesando...</h3>
+    </div>
+
+    <div *ngIf="!success && !isLoading" class="row justify-content-center">
         <div class="col-12 profile-photo">
             <label for="inputProfileImage">
                 <img #profileImage src="{{settingsAccount?.image?.source || 'http://picsum.photos/200/200/?random'}}" alt="Imagen de Perfil">
@@ -17,14 +23,14 @@
     </div>
 
     <div class="alert alert-danger" *ngIf="error">
-        <strong>No hemos podido guardar los cambios</strong> Por favor intentelo de nuevo.
+        <strong>No hemos podido guardar los cambios</strong> Por favor inténtelo de nuevo.
     </div>
 
     <div class="alert alert-danger" *ngIf="errorUserIdExists">
-        <strong>Esa cedula ya esta en uso!</strong> Por favor use otra.
+        <strong>Esa cédula ya esta en uso!</strong> Por favor use otra.
     </div>
 
-    <form *ngIf="!success" [formGroup]="settingsForm" (submit)="save()">
+    <form *ngIf="!success && !isLoading" [formGroup]="settingsForm" (submit)="save()">
         <mat-form-field color="accent" appearance="outline">
             <mat-label>{{ getUserIdentifierText() }}</mat-label>
             <input formControlName="userId" mask="{{getIdentifierMask()}}" matInput

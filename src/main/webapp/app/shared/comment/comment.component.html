@@ -1,0 +1,34 @@
+<div class="commentBody">
+    <div class="perfil">
+        <div class="user">
+            <div class="photo">
+                <img src={{comment.userShopper.image.source}} />
+            </div>
+            <div>
+                <p>
+                    {{ comment.userShopper.firstName + ' ' + comment.userShopper.lastName }}
+                </p>
+                <span> {{ getFormatDate() }}</span>
+                <br/>
+                <span> {{ showRealState && comment.realState ? '( ' + comment.realState.title + ' )' : '' }}</span>
+
+            </div>
+        </div>
+        <div class="stars">
+            <span>{{ comment.rating }}</span>
+            <div>
+                <star-rating
+                    class="details__rating"
+                    size="medium"
+                    [showHalfStars]="true"
+                    [starType]="'icon'"
+                    [rating]="comment.rating"
+                    [readOnly]="true"
+                ></star-rating>
+            </div>
+        </div>
+    </div>
+    <p class="comment">
+        {{ comment.comment }}
+    </p>
+</div>

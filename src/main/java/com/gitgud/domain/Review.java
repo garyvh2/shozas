@@ -1,5 +1,7 @@
 package com.gitgud.domain;
 
+import dev.morphia.annotations.Reference;
+import dev.morphia.annotations.Transient;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,18 +11,27 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Review {
 
     @Id
+    @dev.morphia.annotations.Id
     private String id;
 
-    private String email;
-
-    private String name;
+    @DBRef
+    @Field
+    @Reference
+    private User userShopper;
 
     private double rating;
 
     private String comment;
 
+    private boolean isSold;
+
+    private boolean isRented;
+
+    private boolean isUserUnKnown;
+
     @DBRef
     @Field
+    @Reference
     private RealState realState;
 
     public String getId() {
@@ -31,20 +42,12 @@ public class Review {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUserShopper() {
+        return userShopper;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUserShopper(User userShopper) {
+        this.userShopper = userShopper;
     }
 
     public double getRating() {
@@ -69,5 +72,29 @@ public class Review {
 
     public void setRealState(RealState realState) {
         this.realState = realState;
+    }
+
+    public boolean isSold() {
+        return isSold;
+    }
+
+    public void setSold(boolean sold) {
+        isSold = sold;
+    }
+
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
+    }
+
+    public boolean isUserUnKnown() {
+        return isUserUnKnown;
+    }
+
+    public void setUserUnKnown(boolean userUnKnown) {
+        isUserUnKnown = userUnKnown;
     }
 }

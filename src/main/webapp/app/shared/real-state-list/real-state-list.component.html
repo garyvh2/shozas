@@ -1,0 +1,19 @@
+<div class="list__container">
+    <h2>{{ title }}</h2>
+    <hr />
+    <h3 *ngIf="!loading && stateList && stateList.length === 0">No hay inmuebles {{ title | lowercase }}</h3>
+    <div class="state__container" *ngIf="!loading && stateList">
+        <div *ngFor="let realState of currentElements" class="state__card {{ linkable ? 'clickable' : '' }}">
+            <div *ngIf="editable" class="buttons">
+                <mat-icon (click)="onEdit(realState.id)" class="edit">edit</mat-icon>
+                <mat-icon class="money" (click)="openBoughtModal(realState.id)">attach_money</mat-icon>
+                <mat-icon class="delete" (click)="openRemoveModal(realState.id)">close</mat-icon>
+            </div>
+            <jhi-listing *ngIf="realState" [listing]="realState" (click)="navigate(realState.id)"></jhi-listing>
+        </div>
+        <mat-icon *ngIf="stateList.length > 3" (click)="prev()" class="slider__btn left">keyboard_arrow_left</mat-icon>
+        <mat-icon *ngIf="stateList.length > 3" (click)="next()" class="slider__btn right">keyboard_arrow_right
+        </mat-icon>
+    </div>
+    <mat-spinner *ngIf="loading" color="warn"></mat-spinner>
+</div>

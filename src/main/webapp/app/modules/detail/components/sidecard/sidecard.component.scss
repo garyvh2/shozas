@@ -16,6 +16,7 @@
     }
 
     .mat-card-header {
+        cursor: pointer;
         .mat-card-title {
             font-weight: bold;
             font-size: 14px;
@@ -66,6 +67,10 @@
             color: white;
             font-weight: bold;
             width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 

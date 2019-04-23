@@ -1,10 +1,10 @@
-<mat-card class="rsd__sidecard">
-    <mat-card-header>
-        <img mat-card-avatar src="http://picsum.photos/50/50/?random" />
+<mat-card class="rsd__sidecard" *ngIf="detail">
+    <mat-card-header *ngIf="detail.owner" [routerLink]="['/profile/user/', detail.owner.id]">
+        <img mat-card-avatar src="{{detail?.owner?.image?.source || 'http://picsum.photos/50/50/?random'}}" />
         <mat-card-title>{{detail.owner.firstName}} {{detail.owner.lastName}}</mat-card-title>
         <mat-card-subtitle>
             <div>
-                <star-rating class="details__rating" size="medium" [showHalfStars]="true" [starType]="'svg'"
+                <star-rating class="details__rating" size="medium" [showHalfStars]="true" [starType]="'icon'"
                     [rating]="detail.owner.raiting || 1" [readOnly]="true"></star-rating>
             </div>
         </mat-card-subtitle>
@@ -43,7 +43,12 @@
         </div>
         <div class="row rsd__contact-seller">
             <div class="col-12">
-                <button mat-button class="rsd__btn--full" (click)="contactOwner()">Contactar al vendedor</button>
+                <button mat-button class="rsd__btn--full" (click)="contactOwner()" [disabled]="loading">
+                    <span *ngIf="!loading">
+                        Contactar al vendedor
+                    </span>
+                    <mat-spinner *ngIf="loading" [diameter]="38">Procesando...</mat-spinner>
+                </button>
             </div>
         </div>
     </mat-card-actions>
