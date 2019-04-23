@@ -1,7 +1,8 @@
 import { DataCRP } from './../../../../@akita/external-models/data-crp';
 import { IpsDataService } from './../../services/ips-data.service';
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RealState } from '../../../../@akita/real-state';
+import { deepCompare } from 'app/shared/util/gitgud-lodash/deepCompare';
 
 @Component({
     selector: 'jhi-ips-data',
@@ -20,8 +21,11 @@ export class IpsDataComponent implements OnInit, OnChanges {
         this.loadCRPData();
     }
 
-    ngOnChanges() {
-        this.loadCRPData();
+    ngOnChanges(changes: SimpleChanges) {
+        const { currentValue, previousValue } = changes.rs;
+        if (!deepCompare(currentValue, previousValue, true)) {
+            this.loadCRPData();
+        }
     }
 
     loadCRPData() {

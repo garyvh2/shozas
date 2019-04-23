@@ -1,3 +1,4 @@
+import { MetaService } from './shared/meta.service';
 import { FavoriteStateQuery } from './modules/listings/@akita/favorite/favorite.query';
 import { FavoriteStateStore } from './modules/listings/@akita/favorite/favorite.store';
 import './vendor.ts';
@@ -87,7 +88,8 @@ import { RecommendedStateQuery } from 'app/@akita/recommended/recommended.query'
         SearchRealStateQuery,
         RecommendedStateStore,
         RecommendedStateQuery,
-        CurrencyPipe
+        CurrencyPipe,
+        MetaService
     ],
     bootstrap: [JhiMainComponent]
 })

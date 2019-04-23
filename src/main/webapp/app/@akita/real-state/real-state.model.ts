@@ -39,6 +39,8 @@ export interface RealState {
     user: User;
     owner: User;
     isRented?: boolean;
+    favoritesCount?: number;
+    interestedCount?: number;
     customAmenities: RSAmenity[];
     dateCreated: Date;
 }

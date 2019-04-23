@@ -9,6 +9,7 @@ import com.gitgud.domain.User;
 import com.gitgud.repository.RatingsAndReviewsRepository;
 import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
+import com.gitgud.service.recommendation.RecommendationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,12 +25,14 @@ public class RatingsAndReviewsService {
     private MailService mailService;
     private UserRepository userRepository;
     private RealStateRepository realStateRepository;
+    private RecommendationService recommendationService;
 
-    public RatingsAndReviewsService(RatingsAndReviewsRepository ratingsAndReviewsRepository, MailService mailService, UserRepository userRepository, RealStateRepository realStateRepository) {
+    public RatingsAndReviewsService(RatingsAndReviewsRepository ratingsAndReviewsRepository, MailService mailService, UserRepository userRepository, RealStateRepository realStateRepository, RecommendationService recommendationService) {
         this.ratingsAndReviewsRepository = ratingsAndReviewsRepository;
         this.mailService = mailService;
         this.userRepository = userRepository;
         this.realStateRepository = realStateRepository;
+        this.recommendationService = recommendationService;
     }
 
     public Review save(Review review) throws Exception {
@@ -68,6 +71,9 @@ public class RatingsAndReviewsService {
         userRepository.save(userToCheck);
 
         review.getUserShopper().setFavorites(null);
+
+        this.recommendationService.addRating(review.getUserShopper().getId(), review.getRealState().getId(), review.getRating());
+
         return  review;
     }
 
@@ -90,6 +96,10 @@ public class RatingsAndReviewsService {
             {
                 Optional<User> userOptional = userRepository.findOneByLogin( review.getUserShopper().getLogin());
                 boolean isRegistred  = userOptional.isPresent();
+
+                if (userOptional.isPresent()) {
+                    this.recommendationService.addPurchase(userOptional.get().getId(), realState.getId());
+                }
                 mailService.sendEmailReview(review.getUserShopper().getLogin(), isRegistred, review.getRealState().getId());
             }
         }
@@ -99,7 +109,7 @@ public class RatingsAndReviewsService {
         return true;
     }
 
-    public List<Review> getReviews(String realstateId){
+    public List<Review> getReviews(String realstateId) {
 
         Optional<List<Review>> reviews = ratingsAndReviewsRepository.findByRealStateEquals(realstateId);
 

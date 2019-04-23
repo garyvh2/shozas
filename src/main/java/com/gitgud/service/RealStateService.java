@@ -193,16 +193,23 @@ public class RealStateService {
         }
 
         if (parameters.getRaiting() != 0) {
-            List<User> raitingUsers = userService.getUsersByRaiting(parameters.getRaiting());
-            if (!raitingUsers.isEmpty()) {
-                Criteria[] criterias = new Criteria[raitingUsers.size()];
+            List<User> raitingUsersRating = userService.getUsersByRaiting(parameters.getRaiting());
+            List<User> raitingUsersRatingGreaterThan = userService.getUsersByRaitingGreaterThan(parameters.getRaiting());
+
+
+            raitingUsersRating.addAll(raitingUsersRatingGreaterThan);
+
+            if (!raitingUsersRating.isEmpty()) {
+                Criteria[] criterias = new Criteria[raitingUsersRating.size()];
                 int count = 0;
-                for (User userToFind : raitingUsers) {
+                for (User userToFind : raitingUsersRating) {
                     criterias[count] = (realStates.criteria("owner")
                             .equal(new DBRef("jhi_user", new ObjectId(userToFind.getId()))));
                     count++;
                 }
                 realStates.disableValidation().or(criterias);
+            } else {
+                return new ArrayList<>();
             }
         }
 
@@ -245,6 +252,12 @@ public class RealStateService {
             throw new Exception("El elemento solicitado ya no existe");
 
         RealState realState =  result.get();
+
+        Optional<List<User>> favorited = userRepository.findByFavoritesContaining(realState);
+        if (favorited.isPresent() && favorited.get().size() > 0) {
+            realState.setFavoritesCount(favorited.get().size());
+        }
+
         realState.getOwner().setFavorites(null);
         realState.getOwner().setReviews(null);
         return realState;
@@ -348,7 +361,6 @@ public class RealStateService {
         if (presentRealState.isPresent() && presentUser.isPresent()) {
             // Get the realState and user object
             RealState realState = presentRealState.get();
-            realState.setOwner(null);
             User user = presentUser.get();
             realState.getOwner().setReviews(null);
             realState.getOwner().setFavorites(null);

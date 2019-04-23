@@ -83,9 +83,7 @@ public class RealStateController extends ApiBaseController {
 
     @PostMapping("/contact-owner")
     public User sendEmail(@RequestBody RealState rs) throws Exception  {
-
         RealState tempRS = realStateService.getRealStateDetailElement(rs.getId());
-
         return userService.sendEmailToOwner(tempRS);
     }
 
