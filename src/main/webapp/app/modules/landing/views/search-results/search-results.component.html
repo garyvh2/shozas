@@ -39,7 +39,7 @@
             <button mat-icon-button (click)="drawer.toggle()">
                 <mat-icon>filter_list</mat-icon>
             </button>
-            <jhi-location-filters #locationFilters [searchFilters]="locationFilters">
+            <jhi-location-filters #jhiLocationFilters [searchFilters]="locationFilters">
             </jhi-location-filters>
         </div>
         <div class="items" *ngIf="(loading$ | async)">

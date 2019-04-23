@@ -37,7 +37,7 @@ export class SearchResultsComponent implements OnInit {
     homeFilters: SearchFilter = new SearchFilter();
 
     @ViewChild('drawer') drawer: MatDrawer;
-    @ViewChild('locationFilters') locationFiltersComponent: LocationFiltersComponent;
+    @ViewChild('jhiLocationFilters') locationFiltersComponent: LocationFiltersComponent;
 
     /** Range */
     mobile = window.innerWidth <= 550;

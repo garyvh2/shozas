@@ -18,7 +18,7 @@ export class SearchFilter {
     }
     public sizeLow = 1;
     public sizeHigh = 0;
-    public raiting = 1;
+    public raiting = 0;
     private _rangeSize = {
         low: this.sizeLow,
         high: this.sizeHigh

@@ -17,7 +17,7 @@ export class FilterRatingComponent implements OnInit {
     rating = 0;
 
     /** NG MODEL */
-    selected = 1;
+    selected = 0;
     private onChangeCallback: (_: any) => void = () => {};
 
     constructor() {}
