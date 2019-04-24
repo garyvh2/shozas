@@ -86,6 +86,9 @@ public class RealStateService {
 
         RealState savedRealState = realStateRepository.save(realState);
         this.recommendationService.addItem(savedRealState);
+
+        savedRealState.getOwner().setReviews(null);
+        savedRealState.getOwner().setFavorites(null);
         return savedRealState;
     }
 
