@@ -4,12 +4,14 @@ import { ReviewModalComponent } from './../../components/review-modal/review-mod
 import { IpsDataService } from './../../services/ips-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { RealState, RealStateService, RealStateQuery } from '../../../../@akita/real-state';
 import { ReviewService } from '../../../../@akita/review/review.service';
 import { RecommendedService } from '../../../../@akita/recommended/recommended.service';
+import { Title, Meta } from '@angular/platform-browser';
+import { MetaService } from 'app/shared/meta.service';
 
 @Component({
     selector: 'jhi-state-detail',
@@ -20,6 +22,7 @@ export class StateDetailComponent implements OnInit, OnChanges {
     id: string;
     detail$: Observable<RealState>;
     inTime: Date;
+    title: String;
 
     get viewDuration() {
         return Math.floor(new Date().getTime() / 1000) - Math.floor(this.inTime.getTime() / 1000);
@@ -36,18 +39,41 @@ export class StateDetailComponent implements OnInit, OnChanges {
         public dialog: MatDialog,
         private loginModalService: LoginModalService,
         private recommendedService: RecommendedService,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private titleService: Title,
+        private meta: MetaService
     ) {}
 
     ngOnInit() {
+        this.meta.createCanonicalURL();
+        this.meta.addTag('robots', 'index, follow');
+
         this.id = this.route.snapshot.paramMap.get('id');
         this.detailService.get(this.id);
         this.detail$ = this.detailQuery.getDetail(this.id);
         this.detail$.subscribe(realState => {
             if (realState) {
+                this.meta.addTag(
+                    'keywords',
+                    `Casas, Apartamentos, Lotes, Costa Rica, ${realState.province}, ${realState.district}, ${realState.city}, ${
+                        realState.schools
+                    },${realState.services.map(service => service.name)}, bienes raíces, comprar`
+                );
+                this.meta.addTag(
+                    'description',
+                    `Costa Rica, ${realState.province}, ${realState.district}, ${realState.city}, ${realState.description}`
+                );
+                this.titleService.setTitle(realState.title);
                 this.reviewService.getReviews(realState.id!);
             }
         });
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.id = this.route.snapshot.paramMap.get('id');
+                this.loadDetail();
+            }
+        });
+
         this.loadDetail();
 
         this.matIconRegistry.addSvgIcon(

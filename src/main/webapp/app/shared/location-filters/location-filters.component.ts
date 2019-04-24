@@ -47,18 +47,17 @@ export class LocationFiltersComponent implements OnInit {
     constructor(private locationFiltersService: LocationFiltersService) {}
 
     ngOnInit() {
-        this.provinciaSubscription = this.locationFiltersService.getProvincias().subscribe(
-            provincias => (
-                (this.provincias = provincias),
-                this.locationFiltersService.getProvincia().subscribe(provincia => {
-                    this.provinciaSubscription.unsubscribe();
-                    this.provincia = this.provinciaSelect.options.map(item => item.value).find(item => item.key === String(provincia));
-                    this.searchFilters.province = provincias[provincia];
-                    this.locationFiltersService.getGetCantones(provincia).subscribe(cantones => (this.cantones = cantones));
-                    this.provinciaContext.emit(this.provincia);
-                })
-            )
-        );
+        this.provinciaSubscription = this.locationFiltersService.getProvincias().subscribe(provincias => {
+            this.provincias = provincias;
+            this.provinciaSubscription.unsubscribe();
+        });
+    }
+
+    setProvincia(provincia) {
+        this.provincia = this.provinciaSelect.options.map(item => item.value).find(item => item.key === String(provincia));
+        this.searchFilters.province = this.provincias[provincia];
+        this.locationFiltersService.getGetCantones(provincia).subscribe(cantones => (this.cantones = cantones));
+        this.provinciaContext.emit(this.provincia);
     }
 
     selectedProvincia({ value: { key, value } }) {

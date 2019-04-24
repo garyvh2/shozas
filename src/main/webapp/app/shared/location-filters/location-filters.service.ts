@@ -13,19 +13,30 @@ export class LocationFiltersService {
 
     getProvincia() {
         const provincia = new Subject<number>();
+        const loading = new Subject<boolean>();
+
+        loading.next(true);
         this.landingService.getLocation().subscribe(
             data => {
                 this.getProvincias().subscribe(provincias => {
                     Object.keys(provincias).forEach(key => {
                         if (data.city === provincias[key]) {
                             provincia.next(Number(key));
+                            loading.next(false);
                         }
                     });
                 });
             },
-            error => console.warn(error)
+            error => {
+                loading.next(false);
+                provincia.next(null);
+                console.warn(error);
+            }
         );
-        return provincia.asObservable();
+        return {
+            provincia: provincia.asObservable(),
+            loading: loading.asObservable()
+        };
     }
 
     getProvincias() {

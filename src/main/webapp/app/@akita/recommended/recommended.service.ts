@@ -46,7 +46,6 @@ export class RecommendedService {
 
     addView(itemId, userId, inTime, duration) {
         const url = `${SERVER_API_URL}/api/recommendations/view`;
-        this.recommendedStore.setLoading(true);
         return this.http.post(url, {
             userId,
             itemId,
