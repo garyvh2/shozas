@@ -30,11 +30,19 @@ export class OwnProfileComponent implements OnInit, OnChanges {
         this.user = await this.account.identity();
         this.getUserRealState(this.user);
         this.getFavorites(this.user);
+        this.account.getAuthenticationState().subscribe(us => {
+            this.getUserRealState(this.user);
+            this.getFavorites(this.user);
+        });
     }
     async ngOnChanges() {
         this.user = await this.account.identity();
         this.getUserRealState(this.user);
         this.getFavorites(this.user);
+        this.account.getAuthenticationState().subscribe(us => {
+            this.getUserRealState(this.user);
+            this.getFavorites(this.user);
+        });
     }
 
     getUserRealState(user: User) {
