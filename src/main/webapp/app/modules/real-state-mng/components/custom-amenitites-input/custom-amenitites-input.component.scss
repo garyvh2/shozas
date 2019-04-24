@@ -1,0 +1,24 @@
+.custom__amenities {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    > div {
+        flex: 3;
+        padding: 0 10px;
+        mat-form-field {
+            width: 100%;
+            font-size: 0.9em;
+        }
+    }
+    .add__btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        .btn {
+            margin: auto;
+            background: #69f0ae;
+        }
+    }
+}

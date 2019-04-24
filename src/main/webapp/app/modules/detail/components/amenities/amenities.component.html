@@ -32,6 +32,15 @@
                     Servicios de Salud
                 </span>
             </div>
+            <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngFor="let school of detail.schools"
+                [ngClass]="{'rsd__amenity--hidden': !showMore}">
+                <mat-icon>
+                    school
+                </mat-icon>
+                <span>
+                    {{school}}
+                </span>
+            </div>
             <div class="col-lg-4 col-md-6 noPadding rsd__amenity" *ngFor="let service of detail.services"
                 [ngClass]="{'rsd__amenity--hidden': !showMore}">
                 <mat-icon>

@@ -19,6 +19,8 @@ export class SidecardComponent implements OnInit {
 
     financeData: FinanceData[];
 
+    loading = false;
+
     constructor(
         private financeService: FinanceDataService,
         public dialog: MatDialog,
@@ -53,6 +55,7 @@ export class SidecardComponent implements OnInit {
     }
 
     contactOwner() {
+        this.loading = true;
         let message = 'Se ha informado al vendedor de su interes en esta propiedad';
 
         try {
@@ -60,10 +63,11 @@ export class SidecardComponent implements OnInit {
                 if (data.id === this.detail.owner.id) {
                     message = 'Usted es el vendedor.';
                 }
-
+                this.loading = false;
                 this.openSnackBar(message);
             });
         } catch (error) {
+            this.loading = false;
             this.loginModalService.open();
         }
     }

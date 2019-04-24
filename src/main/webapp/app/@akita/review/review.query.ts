@@ -8,10 +8,9 @@ export class ReviewQuery extends QueryEntity<ReviewState, Review> {
         super(store);
     }
     getRealStateReviews(idRealState: ID) {
-        console.log(idRealState);
         return this.selectAll({
             filterBy: entity => {
-                return entity.realStateId.toString() === idRealState;
+                return entity.realState ? entity.realState.id.toString() === idRealState : false;
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.gitgud.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.morphia.annotations.Embedded;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Reference;
@@ -13,6 +14,8 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Document
 @Entity("realState")
@@ -32,7 +35,7 @@ public class RealState {
 
     private String district;
 
-    private int price;
+    private long price;
 
     private String description;
 
@@ -64,7 +67,19 @@ public class RealState {
 
     private boolean isSold;
 
+    private boolean isRented;
+
+    private boolean isActive;
+
     private Instant dateCreated;
+
+    private int favoritesCount = 0;
+
+    @DBRef(lazy = true)
+    @Field
+    @JsonIgnore
+    @Reference(lazy = true)
+    private HashSet<User> interested = new HashSet<>();
 
     @Field
     @Embedded
@@ -135,11 +150,11 @@ public class RealState {
         this.district = district;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -263,6 +278,10 @@ public class RealState {
         isSold = sold;
     }
 
+    public boolean isRented() { return isRented;     }
+
+    public void setRented(boolean rented) { isRented = rented; }
+
     public HashSet<Image> getImages() {
         return images;
     }
@@ -311,6 +330,43 @@ public class RealState {
         this.dateCreated = dateCreated;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public int getInterestedCount() {
+        return interested.size();
+    }
+
+    public HashSet<String> getInterested() {
+        return interested.stream().map(user -> user.getId()).collect(Collectors.toCollection(HashSet::new));
+    }
+
+    public void setInterested(HashSet<User> interested) {
+        this.interested = interested;
+    }
+
+    public void addInterested(User interested) {
+        this.interested.add(interested);
+    }
+
+    public int getFavoritesCount() {
+        return favoritesCount;
+    }
+
+    public void setFavoritesCount(int favoritesCount) {
+        this.favoritesCount = favoritesCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -324,9 +380,5 @@ public class RealState {
         return !(realState.getId() == null || getId() == null) && Objects.equals(getId(), realState.getId());
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 
 }

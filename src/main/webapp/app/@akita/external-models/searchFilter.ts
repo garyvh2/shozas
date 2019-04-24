@@ -18,6 +18,7 @@ export class SearchFilter {
     }
     public sizeLow = 1;
     public sizeHigh = 0;
+    public raiting = 0;
     private _rangeSize = {
         low: this.sizeLow,
         high: this.sizeHigh
@@ -38,4 +39,5 @@ export class SearchFilter {
     public user = '';
     public page = 1;
     public size = 20;
+    public similarTo = false;
 }

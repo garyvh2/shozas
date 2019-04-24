@@ -2,10 +2,7 @@ package com.gitgud.service.dto;
 
 import com.gitgud.config.Constants;
 
-import com.gitgud.domain.Authority;
-import com.gitgud.domain.Image;
-import com.gitgud.domain.RealState;
-import com.gitgud.domain.User;
+import com.gitgud.domain.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -66,6 +63,8 @@ public class UserDTO {
 
     private boolean displayPhone;
 
+    private HashSet<Review> reviews = new HashSet<Review>();
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -94,6 +93,8 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+        this.reviews = user.getParserReviews();
+
     }
 
     public String getId() {
@@ -246,6 +247,14 @@ public class UserDTO {
 
     public void setFavorites(HashSet<String> favorites) {
         this.favorites = favorites;
+    }
+
+    public HashSet<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(HashSet<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @Override

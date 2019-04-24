@@ -1,0 +1,18 @@
+<div class="image__uploader">
+    <p *ngIf="imageArray.length > 0">
+        Por defecto se mostará la primera foto en las busquedas para cambiar eso dele click al boton primaria de la imagen
+    </p>
+    <div class="image__container">
+        <mat-icon class="background__image" *ngIf="imageArray.length === 0" color="primary">landscape</mat-icon>
+        <div class="image" *ngFor="let image of imageArray; let i = index">
+            <mat-icon class="close__icon" (click)="onRemove($event, i)">closed_rounded</mat-icon>
+            <img (click)="setPrimary($event, i)" mat-card-image src="{{ image.source }}" alt="foto #{{ i }}" />
+            <div class="primary__icon {{ image.isPrimary ? 'isPrimary' : '' }}">
+                <mat-icon (click)="setPrimary($event, i)" >check_circle</mat-icon>
+            </div>
+        </div>
+    </div>
+    <h3 *ngIf="imageArray.length === 0">No hay imagenes subidas</h3>
+    <input class="upload__input" type="file" #fileInput name="img" multiple accept="image/*" (change)="onFileSelected($event)" />
+    <button mat-raised-button (click)="fileInput.click()">Subir imagenes</button>
+</div>

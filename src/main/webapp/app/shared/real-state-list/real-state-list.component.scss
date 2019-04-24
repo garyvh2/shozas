@@ -1,0 +1,85 @@
+.list__container {
+    margin: 30px auto;
+    h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+.state__container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    position: relative;
+    @media (max-width: 800px) {
+        justify-content: center;
+    }
+    .slider__btn {
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+        font-size: 35px;
+        cursor: pointer;
+        border-radius: 50%;
+        height: auto;
+        width: auto;
+        &:hover {
+            background: #eee;
+            color: #ff6666;
+        }
+    }
+    .left {
+        left: 0;
+    }
+    .right {
+        right: 0;
+    }
+}
+.state__card {
+    max-width: 270px;
+    height: fit-content;
+    position: relative;
+    @media (max-width: 800px) {
+        max-width: 240px;
+    }
+    .buttons {
+        display: flex;
+        align-self: flex-start;
+        justify-content: space-between;
+        position: absolute;
+        top: 10px;
+        width: 100%;
+    }
+    mat-icon {
+        border-radius: 50%;
+        color: #fff;
+        z-index: 1;
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        font-size: 21px;
+        cursor: pointer;
+    }
+    .edit {
+        background: #69f0ae;
+    }
+    .delete {
+        background: #ff6666;
+    }
+    .money {
+        background: #ffc058;
+    }
+}
+
+.state__card:not(:first-child) {
+    @media (max-width: 800px) {
+        display: none;
+    }
+}
+.clickable {
+    cursor: pointer;
+}
+mat-spinner {
+    margin: 10px auto;
+}

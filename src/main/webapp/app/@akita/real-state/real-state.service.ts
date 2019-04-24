@@ -24,25 +24,48 @@ export class RealStateService {
 
     get(id: ID) {
         const url = `${SERVER_API_URL}/api/realstate/detail?id=${id}`;
-        return this.http.get(url).subscribe((response: any) => {
-            console.log('Service GET response is: ', response);
-            this.detailStore.upsert(response.result.id, response.result);
-        });
+        this.detailStore.setLoading(true);
+        return this.http.get(url).subscribe(
+            (response: any) => {
+                this.detailStore.setLoading(false);
+                this.detailStore.upsert(response.result.id, response.result);
+            },
+            () => this.detailStore.setLoading(false)
+        );
+    }
+
+    getUserRealState(login: string) {
+        const param = { user: login };
+        this.currentUrl = `${SERVER_API_URL}/api/realstate/search/all`;
+        this.detailStore.setLoading(true);
+        return this.http.post(this.currentUrl, param).subscribe(
+            (response: ApiResponse<RealState[]>) => {
+                const data = response.result;
+                data.forEach((item: RealState) => {
+                    this.detailStore.upsert(item.id, item);
+                });
+                this.detailStore.setLoading(false);
+            },
+            () => this.detailStore.setLoading(false)
+        );
     }
 
     getFavorites(userId) {
         const url = `${SERVER_API_URL}/api/realstate/get-favorites/${userId}`;
         this.favoriteStateStore.setLoading(true);
-        return this.http.get(url).subscribe((response: ApiResponse<RealState[]>) => {
-            const data = response.result;
-            data.forEach((item: RealState) => {
-                this.detailStore.upsert(item.id, item);
-            });
-            this.favoriteStateStore.update({
-                favorites: data
-            });
-            this.favoriteStateStore.setLoading(false);
-        });
+        return this.http.get(url).subscribe(
+            (response: ApiResponse<RealState[]>) => {
+                const data = response.result;
+                data.forEach((item: RealState) => {
+                    this.detailStore.upsert(item.id, item);
+                });
+                this.favoriteStateStore.update({
+                    favorites: data
+                });
+                this.favoriteStateStore.setLoading(false);
+            },
+            () => this.favoriteStateStore.setLoading(false)
+        );
     }
 
     searchHomes(params) {
@@ -53,11 +76,11 @@ export class RealStateService {
         this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
-            response.result.loadMore = data.length > 0;
-            this.searchRealStateStore.update(response.result);
+            response.result.loadMore = data.length >= 16;
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
+            this.searchRealStateStore.update(response.result);
             this.searchRealStateStore.setLoading(false);
         });
     }
@@ -69,7 +92,7 @@ export class RealStateService {
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
-            response.result.loadMore = data.length > 0;
+            response.result.loadMore = data.length >= 16;
             response.result.elements = [...this.searchRealStateStore._value().elements, ...data];
             this.searchRealStateStore.update(response.result);
         });
@@ -83,12 +106,12 @@ export class RealStateService {
         this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
-            response.result.loadMore = data.length > 0;
-            this.searchRealStateStore.update(response.result);
+            response.result.loadMore = data.length >= 16;
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
             this.searchRealStateStore.setLoading(false);
+            this.searchRealStateStore.update(response.result);
         });
     }
 
@@ -100,12 +123,66 @@ export class RealStateService {
         this.searchRealStateStore.setLoading(true);
         return this.http.post(this.currentUrl, params).subscribe((response: ApiResponse<SearchRealState>) => {
             const data = response.result.elements;
-            response.result.loadMore = data.length > 0;
-            this.searchRealStateStore.update(response.result);
+            response.result.loadMore = data.length >= 16;
             data.forEach((item: RealState) => {
                 this.detailStore.upsert(item.id, item);
             });
             this.searchRealStateStore.setLoading(false);
+            this.searchRealStateStore.update(response.result);
         });
+    }
+
+    createRealState(realState: RealState) {
+        const url = `${SERVER_API_URL}/api/realstate/create`;
+        this.detailStore.setError(undefined);
+        this.detailStore.setLoading(true);
+        return this.http.post(url, realState).subscribe(
+            (response: ApiResponse<RealState>) => {
+                this.detailStore.setLoading(false);
+                this.detailStore.add(response.result);
+                return response.result;
+            },
+            (error: any) => {
+                this.detailStore.setLoading(false);
+                this.detailStore.setError(error);
+            }
+        );
+    }
+    updateRealState(realState: RealState) {
+        const url = `${SERVER_API_URL}/api/realstate/update`;
+        this.detailStore.setError(undefined);
+        this.detailStore.setLoading(true);
+        return this.http.put(url, realState).subscribe(
+            (response: ApiResponse<RealState>) => {
+                this.detailStore.setLoading(false);
+                this.detailStore.update(response.result.id, response.result);
+                return response.result;
+            },
+            (error: any) => {
+                this.detailStore.setLoading(false);
+                this.detailStore.setError(error);
+            }
+        );
+    }
+
+    deactivateRealState(id: ID) {
+        const url = `${SERVER_API_URL}/api/realstate/remove?id=${id}`;
+        this.detailStore.setError(undefined);
+        this.detailStore.setLoading(true);
+        return this.http.get(url).subscribe(
+            () => {
+                this.detailStore.setLoading(false);
+                this.removeRealStateStore(id);
+            },
+            () => {
+                this.detailStore.setLoading(false);
+            }
+        );
+    }
+
+    removeRealStateStore(id: ID) {
+        this.detailStore.setLoading(true);
+        this.detailStore.remove(id);
+        this.detailStore.setLoading(false);
     }
 }

@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="title" mat-dialog-title>
+        <h2>Remover {{ data.actionMessage }}</h2>
+        <mat-icon (click)="onNoClick()">close</mat-icon>
+    </div>
+
+    <div class="review__container" mat-dialog-content>
+        <mat-spinner
+            *ngIf="((isUserType() && userLoading) || (isRealState() && realStateLoading) | async); else confirm"
+            color="warn"
+        ></mat-spinner>
+        <ng-template #confirm>
+            <p>¿Seguro que desea desactivar {{ data.actionMessage }}?</p>
+
+            <div class="action-buttons">
+                <button mat-raised-button color="warn" (click)="onAccept()">Si</button>
+                <button mat-raised-button color="warn" (click)="onNoClick()">No</button>
+            </div>
+        </ng-template>
+    </div>
+</div>

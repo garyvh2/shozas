@@ -1,6 +1,7 @@
 package com.gitgud.web.rest;
 
 
+import com.gitgud.api.objects.ApiResultModel;
 import com.gitgud.domain.User;
 import com.gitgud.repository.UserRepository;
 import com.gitgud.security.SecurityUtils;
@@ -8,6 +9,7 @@ import com.gitgud.service.MailService;
 import com.gitgud.service.UserService;
 import com.gitgud.service.dto.PasswordChangeDTO;
 import com.gitgud.service.dto.UserDTO;
+import com.gitgud.service.recommendation.RecommendationService;
 import com.gitgud.web.rest.errors.*;
 import com.gitgud.web.rest.vm.KeyAndPasswordVM;
 import com.gitgud.web.rest.vm.ManagedUserVM;
@@ -21,13 +23,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing the current user's account.
  */
 @RestController
 @RequestMapping("/api")
-public class AccountResource {
+public class AccountResource extends ApiBaseController {
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
@@ -37,11 +40,14 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final RecommendationService recommendationService;
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, RecommendationService recommendationService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.recommendationService = recommendationService;
     }
 
     /**
@@ -62,6 +68,27 @@ public class AccountResource {
         mailService.sendActivationEmail(user);
     }
 
+    @PostMapping("/restore")
+    public void reactivate(@RequestBody ManagedUserVM managedUserVM) throws Exception {
+
+        Optional<User> userOptional = userService.getUserByEmail(managedUserVM.getLogin());
+
+        if (!userOptional.isPresent())
+            throw new Exception("El usuario no existe");
+
+        User user = userOptional.get();
+
+        mailService.sendActivationEmail(user);
+    }
+
+    @PostMapping("/inactivate")
+    public void inactivate(@RequestBody ManagedUserVM managedUserVM) throws Exception {
+
+       userService.inactivateUser(managedUserVM.getLogin());
+    }
+
+
+
     /**
      * GET  /activate : activate the registered user.
      *
@@ -69,10 +96,12 @@ public class AccountResource {
      * @throws RuntimeException 500 (Internal Server Error) if the user couldn't be activated
      */
     @GetMapping("/activate")
-    public void activateAccount(@RequestParam(value = "key") String key) {
+    public void activateAccount(@RequestParam(value = "key") String key) throws Exception {
         Optional<User> user = userService.activateRegistration(key);
         if (!user.isPresent()) {
             throw new InternalServerErrorException("No user was found for this activation key");
+        } else {
+            this.recommendationService.addUser(user.get());
         }
     }
 
@@ -166,9 +195,15 @@ public class AccountResource {
         }
     }
 
+    @GetMapping("/user/typeahead")
+    public ApiResultModel<List<UserDTO>> getUsersAccordingSaves(@RequestParam String realStateId) throws Exception {
+        return GetApiResultModel(() -> userService.getUsersBasedOnFavorites(realStateId).stream().map(UserDTO::new).collect(Collectors.toList()));
+    }
+
     private static boolean checkPasswordLength(String password) {
         return !StringUtils.isEmpty(password) &&
             password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
             password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
+
 }

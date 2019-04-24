@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="title" mat-dialog-title>
+        <h2>Calificaciones del usuario</h2>
+    </div>
+
+    <div class="review__container" mat-dialog-content>
+        <mat-spinner *ngIf="loading; else form" color="warn"></mat-spinner>
+        <ng-template #form>
+            <div class="rating">
+                <h4>Calificación</h4>
+                <star-rating
+                    (ratingChange)="updateRating($event)"
+                    [getHalfStarVisible]=true
+                    [showHalfStars]=true
+                    name="rating"
+                    size="large"
+                    class="details__rating"
+                    [starType]="'icon'"
+                    [rating]="rating"
+                ></star-rating>
+            </div>
+
+            <mat-form-field color="accent" appearance="outline" fullWidth="true">
+                <mat-label>Comentario</mat-label>
+                <textarea [formControl]="comment" matInput placeholder="Comentario"></textarea>
+                <mat-error *ngIf="comment.hasError('required')">Este campo es requerido</mat-error>
+            </mat-form-field>
+
+            <button (click)="sendReview()" mat-raised-button color="warn">Enviar calificación</button>
+        </ng-template>
+    </div>
+</div>
