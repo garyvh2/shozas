@@ -22,7 +22,7 @@
                     <span>{{ getFormattedPhone() }}</span>
                 </div>
             </div>
-            <button mat-raised-button color="warn" (click)="onClickDesactive()"> Desactivar Usuario</button>
+            <button *ngIf="desactive" mat-raised-button color="warn" (click)="onClickDesactive()">Desactivar Usuario</button>
         </div>
     </div>
 </div>
