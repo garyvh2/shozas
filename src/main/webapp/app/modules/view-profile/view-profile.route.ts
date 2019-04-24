@@ -7,11 +7,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        // data: {
-        //     authorities: ['ROLE_USER'],
-        //     pageTitle: 'Editar Inmueble'
-        // },
-        // canActivate: [UserRouteAccessService],
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Mi perfil'
+        },
+        canActivate: [UserRouteAccessService],
         component: OwnProfileComponent
     },
     {
