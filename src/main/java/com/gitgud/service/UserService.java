@@ -3,10 +3,7 @@ package com.gitgud.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.gitgud.config.Constants;
-import com.gitgud.domain.Authority;
-import com.gitgud.domain.Image;
-import com.gitgud.domain.RealState;
-import com.gitgud.domain.User;
+import com.gitgud.domain.*;
 import com.gitgud.repository.AuthorityRepository;
 import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
@@ -72,7 +69,16 @@ public class UserService {
     public  User getUserById (String id) {
         Optional<User> user =  userRepository.findById(id);
         if(user.isPresent()){
-            return user.get();
+            User result = user.get();
+            HashSet<Review> reviews = new HashSet();
+            result.getReviews().forEach(review -> {
+                review.getRealState().setOwner(new User());
+                reviews.add(review);
+            });
+            result.setReviews(null);
+            result.setReviews(reviews);
+
+            return result;
         }
         return null;
     }
