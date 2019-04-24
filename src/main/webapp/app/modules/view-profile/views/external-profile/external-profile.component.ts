@@ -9,7 +9,7 @@ import { RealStateService } from 'app/@akita/real-state';
 @Component({
     selector: 'jhi-external-profile',
     templateUrl: './external-profile.component.html',
-    styles: []
+    styleUrls: ['external-profile.component.scss']
 })
 export class ExternalProfileComponent implements OnInit {
     user$: Observable<User>;
