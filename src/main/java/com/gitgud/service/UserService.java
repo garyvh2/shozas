@@ -121,6 +121,9 @@ public class UserService {
         user.setActivated(false);
         userRepository.save(user);
         log.debug("Activated user: {}", user);
+
+        this.recommendationService.removeUser(user);
+
         return user;
 
     }
