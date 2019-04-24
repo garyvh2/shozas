@@ -14,6 +14,8 @@ import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 export class UserInfoComponent implements OnChanges {
     @Input()
     user: User;
+    @Input()
+    desactive: boolean;
 
     constructor(public dialog: MatDialog) {}
 

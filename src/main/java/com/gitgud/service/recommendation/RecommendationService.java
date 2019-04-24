@@ -319,4 +319,9 @@ public class RecommendationService {
             .setCascadeCreate(true)
         );
     }
+
+    @Transactional
+    public void removeUser(User user) throws ApiException {
+        this.recombeeClient.send(new DeleteUser(user.getId()));
+    }
 }

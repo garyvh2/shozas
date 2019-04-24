@@ -26,6 +26,9 @@ export class RealStateListComponent implements OnChanges {
     currentIndex = 0;
 
     get currentElements() {
+        if (this.stateList.length < 3) {
+            return this.stateList;
+        }
         return [0, 1, 2].map(index => this.stateList[this.getIndex(index)]);
     }
 

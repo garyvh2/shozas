@@ -85,6 +85,7 @@ export class TypeaheadComponent implements OnInit, OnChanges {
 
     remove(tag: User): void {
         this.users = [];
+        this.updateFilterList();
     }
     selected(event: MatAutocompleteSelectedEvent): void {
         const value = event.option.value;
