@@ -13,7 +13,7 @@ import { RealStateService } from 'app/@akita/real-state';
     templateUrl: './own-profile.component.html',
     styleUrls: ['own-profile.component.scss']
 })
-export class OwnProfileComponent implements OnInit, OnChanges {
+export class OwnProfileComponent implements OnInit {
     user: User;
     favorites$: Observable<RealState[]>;
     realStates$: Observable<RealState[]>;
@@ -27,12 +27,7 @@ export class OwnProfileComponent implements OnInit, OnChanges {
     ) {}
 
     async ngOnInit() {
-        this.user = await this.account.identity();
-        this.getUserRealState(this.user);
-        this.getFavorites(this.user);
-    }
-    async ngOnChanges() {
-        this.user = await this.account.identity();
+        this.user = await this.account.identity(true);
         this.getUserRealState(this.user);
         this.getFavorites(this.user);
     }
