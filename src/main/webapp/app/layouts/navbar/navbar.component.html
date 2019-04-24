@@ -10,23 +10,24 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed"
         [ngSwitch]="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
-            <li ngbDropdown class="nav-item" placement="bottom-right" [routerLink]="['listings', 'favorites']">
-                <a class="nav-link" href="javascript:void(0);" id="Guardados" *ngSwitchCase="true">
-                    <span>
-                        Guardados
-                    </span>
-                </a>
-            </li>
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
 
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                     <span>
-                        <img [src]="accountInfo?.image?.source || getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
+                        <img [src]="accountInfo?.image?.source || getImageUrl()" class="profile-image rounded-circle"
+                            alt="Avatar">
                         {{getUserName()}}
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="profile" routerLinkActive="active"
+                            (click)="collapseNavbar()">
+                            <fa-icon icon="user" fixedWidth="true"></fa-icon>
+                            <span>Ver Perfil</span>
+                        </a>
+                    </li>
                     <li *ngSwitchCase="true">
                         <a class="dropdown-item" routerLink="settings" routerLinkActive="active"
                             (click)="collapseNavbar()">
@@ -39,6 +40,20 @@
                             (click)="collapseNavbar()">
                             <fa-icon icon="clock" fixedWidth="true"></fa-icon>
                             <span>Cambiar contraseña</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="real-state/create" routerLinkActive="active"
+                            (click)="collapseNavbar()">
+                            <fa-icon icon="home" fixedWidth="true"></fa-icon>
+                            <span>Crear Inmueble</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="pricing" routerLinkActive="active"
+                            (click)="collapseNavbar()">
+                            <fa-icon icon="tags" fixedWidth="true"></fa-icon>
+                            <span>Cotizar Casa</span>
                         </a>
                     </li>
                     <li *ngSwitchCase="true">

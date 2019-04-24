@@ -4,18 +4,23 @@ import {
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
+    MatChipsModule,
     MatRadioModule,
     MatTabsModule,
     MatGridListModule,
+    MatAutocompleteModule,
     MatDividerModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatDialogModule,
     MatSnackBarModule,
     MatSidenavModule,
+    MatStepperModule,
+    MatCheckboxModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSliderModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 @NgModule({
@@ -23,8 +28,10 @@ import { NgModule } from '@angular/core';
         MatButtonModule,
         MatFormFieldModule,
         MatSidenavModule,
+        MatAutocompleteModule,
         MatIconModule,
         MatInputModule,
+        MatChipsModule,
         MatDividerModule,
         MatSelectModule,
         MatCardModule,
@@ -34,14 +41,19 @@ import { NgModule } from '@angular/core';
         MatProgressSpinnerModule,
         MatDialogModule,
         MatSnackBarModule,
+        MatStepperModule,
+        MatCheckboxModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatSliderModule
     ],
     exports: [
         MatButtonModule,
         MatFormFieldModule,
+        MatAutocompleteModule,
         MatSidenavModule,
+        MatChipsModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,
@@ -52,9 +64,13 @@ import { NgModule } from '@angular/core';
         MatGridListModule,
         MatProgressSpinnerModule,
         MatDialogModule,
+        MatStepperModule,
+        MatStepperModule,
+        MatCheckboxModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatSliderModule
     ]
 })
 export class AngularMaterialModule {}

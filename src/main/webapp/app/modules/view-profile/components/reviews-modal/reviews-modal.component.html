@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="title" mat-dialog-title>
+            <h2 >Calificaciones del usuario</h2>
+            <mat-icon (click)="onNoClick()">close</mat-icon>
+    </div>
+
+    <div class="review__container" mat-dialog-content>
+        <jhi-comment *ngFor="let comment of (data | slice: 0:showQty)" [comment]="comment" [showRealState]=true></jhi-comment>
+        <div *ngIf="isShowMore()" class="showButton">
+            <button   mat-button (click)="show()">
+                <ng-container *ngIf="showQty === minReviews; else less" >
+                        Mostrar más<mat-icon>arrow_downward</mat-icon>
+                </ng-container>
+                <ng-template #less>
+                        Mostrar menos<mat-icon>arrow_upward</mat-icon>
+                </ng-template>
+            </button>
+        </div>
+
+
+        <h3 *ngIf="!data || (data && data.length === 0)">No hay calificaciones para este vendedor</h3>
+    </div>
+</div>

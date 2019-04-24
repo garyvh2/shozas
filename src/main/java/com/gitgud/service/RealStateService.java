@@ -8,9 +8,12 @@ import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.RealStateRepository;
 import com.gitgud.repository.UserRepository;
+import com.gitgud.service.recommendation.RecommendationService;
 import com.gitgud.service.util.CloudinaryUtil;
+import com.gitgud.service.util.RealStateUtils;
 import com.gitgud.service.util.ResultType;
 import com.mongodb.DBRef;
+import com.recombee.api_client.exceptions.ApiException;
 import dev.morphia.Datastore;
 import dev.morphia.query.Criteria;
 import dev.morphia.query.FindOptions;
@@ -30,18 +33,18 @@ public class RealStateService {
 
     private RealStateRepository realStateRepository;
     private UserRepository userRepository;
-    private MongoTemplate mongoTemplate;
     private UserService userService;
+    private RecommendationService recommendationService;
 
     @Autowired
     private Datastore datastore;
 
     public RealStateService(RealStateRepository realStateRepository, UserRepository userRepository,
-            MongoTemplate mongoTemplate, UserService userService) {
+            MongoTemplate mongoTemplate, UserService userService, RecommendationService recommendationService) {
         this.realStateRepository = realStateRepository;
         this.userRepository = userRepository;
-        this.mongoTemplate = mongoTemplate;
         this.userService = userService;
+        this.recommendationService = recommendationService;
     }
 
     public RealState save(RealState realState) throws Exception, IOException {
@@ -53,7 +56,7 @@ public class RealStateService {
                 : realState.getRealStateType().equals("D") ? "Departamento en " : "Lote en ";
         realStateTitle = realStateTitle.concat(realState.getProvince() + " ").concat(realState.getDistrict());
         realState.setTitle(realStateTitle);
-
+        realState.setActive(true);
         if (realState.getImages() != null && !realState.getImages().isEmpty()) {
             Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
             realState.getImages().forEach(i -> {
@@ -76,10 +79,14 @@ public class RealStateService {
             realState.setImages(getDefaults());
         }
 
+        User user = userOwner.get();
+        user.setFavorites(null);
         realState.setDateCreated(Instant.now());
-        realState.setOwner(userOwner.get());
+        realState.setOwner(user);
 
-        return realStateRepository.save(realState);
+        RealState savedRealState = realStateRepository.save(realState);
+        this.recommendationService.addItem(savedRealState);
+        return savedRealState;
     }
 
     private HashSet<Image> getDefaults() {
@@ -118,6 +125,15 @@ public class RealStateService {
         case Departments:
             realStates = realStates.field("realStateType").equal("D");
             break;
+        }
+
+        realStates.and(realStates.criteria("isSold").equal(parameters.isSold()));
+        realStates.and(realStates.criteria("isActive").equal(true));
+
+        if(parameters.isSimilarTo()){
+            List<RealState> realStateList = getSimilarElements(realStates, parameters);
+            results.setAveragePrice(realStateList.stream().mapToLong(RealState::getPrice).sum() / realStateList.size());
+            return realStateList.stream().limit(10).collect(Collectors.toList());
         }
 
         if (parameters.getProvince() != null && !parameters.getProvince().isEmpty() && parameters.getCity() != null
@@ -177,16 +193,23 @@ public class RealStateService {
         }
 
         if (parameters.getRaiting() != 0) {
-            List<User> raitingUsers = userService.getUsersByRaiting(parameters.getRaiting());
-            if (!raitingUsers.isEmpty()) {
-                Criteria[] criterias = new Criteria[raitingUsers.size()];
+            List<User> raitingUsersRating = userService.getUsersByRaiting(parameters.getRaiting());
+            List<User> raitingUsersRatingGreaterThan = userService.getUsersByRaitingGreaterThan(parameters.getRaiting());
+
+
+            raitingUsersRating.addAll(raitingUsersRatingGreaterThan);
+
+            if (!raitingUsersRating.isEmpty()) {
+                Criteria[] criterias = new Criteria[raitingUsersRating.size()];
                 int count = 0;
-                for (User userToFind : raitingUsers) {
+                for (User userToFind : raitingUsersRating) {
                     criterias[count] = (realStates.criteria("owner")
                             .equal(new DBRef("jhi_user", new ObjectId(userToFind.getId()))));
                     count++;
                 }
                 realStates.disableValidation().or(criterias);
+            } else {
+                return new ArrayList<>();
             }
         }
 
@@ -210,46 +233,34 @@ public class RealStateService {
         return realStates.asList(new FindOptions().skip(page).limit(pageSize));
     }
 
-    public ApiRealState toApiRealState(RealState realState) {
-        ApiRealState result = new ApiRealState();
-        ApiUser user = new ApiUser();
-        ApiImage image = new ApiImage();
-        ApiImage realStateImage = new ApiImage();
+    private List<RealState> getSimilarElements(Query<RealState> realStateQuery, ApiSearchParams searchParams){
+        Criteria[] criterias = new Criteria[5];
 
-        result.setId(realState.getId());
-        result.setAddr(realState.getProvince() + ", " + realState.getCity() + ", " + realState.getDistrict());
-        result.setBaths(realState.getBaths());
-        result.setBeds(realState.getRooms());
-        result.setPrice(realState.getPrice());
-        result.setSize(realState.getSize());
-        result.setGar(realState.getGarage());
-        result.setTitle(realState.getTitle());
+        criterias[0] = realStateQuery.criteria("baths").equal(searchParams.getBaths());
+        criterias[1] = realStateQuery.criteria("rooms").equal(searchParams.getBeds());
+        criterias[2] = realStateQuery.criteria("size").greaterThanOrEq(searchParams.getSizeLow());
+        criterias[3] = realStateQuery.criteria("garage").equal(searchParams.getGarages());
+        criterias[4] = realStateQuery.criteria("stories").equal(searchParams.getStories());
+        realStateQuery.or(criterias);
 
-        user.setName(realState.getOwner().getFirstName() + " " + realState.getOwner().getLastName());
-        user.setStars(realState.getOwner().getRaiting());
-        if (realState.getOwner().getImage() != null) {
-            image.setSource(realState.getOwner().getImage().getSource());
-        }
-        user.setImage(image);
-        result.setUser(user);
-
-        realState.getImages().forEach(i -> {
-            if (i.isPrimary()) {
-                realStateImage.setSource(i.getSource());
-                realStateImage.setPrimary(i.isPrimary());
-                realStateImage.setIs360Image(i.isIs360Image());
-            }
-            result.setImage(realStateImage);
-        });
-
-        return result;
+        return realStateQuery.asList();
     }
 
     public RealState getRealStateDetailElement(String id) throws Exception {
         Optional<RealState> result = realStateRepository.findById(id);
         if (!result.isPresent())
             throw new Exception("El elemento solicitado ya no existe");
-        return result.get();
+
+        RealState realState =  result.get();
+
+        Optional<List<User>> favorited = userRepository.findByFavoritesContaining(realState);
+        if (favorited.isPresent() && favorited.get().size() > 0) {
+            realState.setFavoritesCount(favorited.get().size());
+        }
+
+        realState.getOwner().setFavorites(null);
+        realState.getOwner().setReviews(null);
+        return realState;
     }
 
     public RealState update(RealState updateElement) throws Exception {
@@ -258,6 +269,7 @@ public class RealStateService {
             throw new Exception("El elemento a actualizar no existe");
 
         RealState elementInDB = elementToUpdate.get();
+        elementInDB.getOwner().setFavorites(null);
 
         if (updateElement.getProvince() != null || updateElement.getDistrict() != null) {
             String realStateTitle = updateElement.getRealStateType().equals("H") ? "Casa en "
@@ -301,18 +313,47 @@ public class RealStateService {
         elementInDB.setCustomAmenities(updateElement.getCustomAmenities() == null ? elementInDB.getCustomAmenities()
                 : updateElement.getCustomAmenities());
 
-        elementInDB.setImages(updateElement.getImages() == null ? elementInDB.getImages()
+        elementInDB.setImages(updateElement.getImages() == null || updateElement.getImages().isEmpty() ? elementInDB.getImages()
                 : getUpdatedImage(updateElement.getImages(), elementInDB.getImages()));
-        return realStateRepository.save(elementInDB);
+        elementInDB.setRented(updateElement.isRented());
+
+        RealState savedRealState = realStateRepository.save(elementInDB);
+        this.recommendationService.addItem(savedRealState);
+        return savedRealState;
     }
 
     private HashSet<Image> getUpdatedImage(HashSet<Image> updatedImages, HashSet<Image> imagesOnDb) {
-        HashSet<Image> result = new HashSet<Image>();
+        Cloudinary cloudinaryUploader = CloudinaryUtil.getCloudinaryInstance();
 
-        return result;
+            imagesOnDb.forEach(im -> {
+                try {
+                    if ( im.getImageId() != null && !im.getImageId().equals("0") && !im.getImageId().equals("1") &&  !updatedImages.stream().filter(u -> u.getImageId().equalsIgnoreCase(im.getImageId())).findAny().isPresent())
+                        cloudinaryUploader.uploader().destroy(im.getImageId(), ObjectUtils.emptyMap());
+
+                     } catch (IOException e) {
+
+                }
+            });
+
+        updatedImages.forEach(i ->{
+            try {
+                if(i.getImageId() == null || !imagesOnDb.stream().filter(u -> u.getImageId().equalsIgnoreCase(i.getImageId())).findAny().isPresent()){
+                    Map uploadResult = cloudinaryUploader.uploader().upload(i.getSource(), ObjectUtils.emptyMap());
+                   i.setImageId(uploadResult.get("public_id").toString());
+                   i.setSource(uploadResult.get("url").toString());
+                }
+            }
+            catch (IOException e) {
+                i.setSource(
+                    "http://res.cloudinary.com/ucenfotec19/image/upload/v1553328159/dxtdpxwxyhav96tnklzc.png");
+                i.setImageId("0");
+            }
+        });
+
+        return updatedImages;
     }
 
-    public User addFavorite(ApiFavorite favorite) {
+    public User addFavorite(ApiFavorite favorite) throws ApiException {
         // Check if realState or user are present
         Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
         Optional<User> presentUser = userRepository.findById(favorite.getUserId());
@@ -321,16 +362,29 @@ public class RealStateService {
             // Get the realState and user object
             RealState realState = presentRealState.get();
             User user = presentUser.get();
+            realState.getOwner().setReviews(null);
+            realState.getOwner().setFavorites(null);
 
             // Add the favorite
             user.addFavorite(realState);
 
-            return userRepository.save(user);
+
+            User userSaved = userRepository.save(user);
+
+            userSaved.setReviews(null);
+
+            userSaved.getFavorites().forEach(r ->{
+                r.getOwner().setReviews(null);
+                r.getOwner().setFavorites(null);
+            });
+
+            this.recommendationService.addFavorite(userSaved, realState);
+            return userSaved;
         }
         return null;
     }
 
-    public User removeFavorite(ApiFavorite favorite) {
+    public User removeFavorite(ApiFavorite favorite) throws ApiException {
         // Check if realState or user are present
         Optional<RealState> presentRealState = realStateRepository.findById(favorite.getRealStateId());
         Optional<User> presentUser = userRepository.findById(favorite.getUserId());
@@ -343,7 +397,9 @@ public class RealStateService {
             // Add the favorite
             user.removeFavorite(realState);
 
-            return userRepository.save(user);
+            User userSaved = userRepository.save(user);
+            this.recommendationService.removeFavorite(userSaved, realState);
+            return userSaved;
         }
         return null;
     }
@@ -352,9 +408,31 @@ public class RealStateService {
         Optional<User> presentUser = userRepository.findById(userId);
         if (presentUser.isPresent()) {
             User user = presentUser.get();
-            return user.getFavorites().stream().map(favorite -> toApiRealState(favorite))
+            return user.getFavorites().stream().map(favorite -> RealStateUtils.toApiRealState(favorite))
                     .collect(Collectors.toCollection(HashSet::new));
         }
         return null;
+    }
+
+    public boolean activationManagement(String id) throws Exception {
+        Optional<RealState> realStateOptional =  realStateRepository.findById(id);
+
+        if(!realStateOptional.isPresent())
+            throw new Exception("El elemento no existe");
+
+        RealState realState = realStateOptional.get();
+
+        realState.getOwner().setReviews(null);
+        realState.getOwner().setFavorites(null);
+
+        realState.setActive(realState.isActive() ? false : true );
+
+        try {
+            realStateRepository.save(realState);
+        }catch (Exception e){
+            return false;
+        }
+
+        return true;
     }
 }

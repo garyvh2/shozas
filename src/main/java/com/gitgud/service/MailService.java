@@ -44,7 +44,11 @@ public class MailService {
     private static final String CLIENT = "client";
     private static final String OWNER = "owner";
     private static final String RS = "rs";
+    private static final String EMAIL = "email";
+    private static final String DETAIL = "detailId";
+    private static final String ISREGISTRED = "register";
     private static final String CONTACT_TEMPLATE = "mail/contactEmail";
+    private static final String REVIEW_TEMPLATE = "mail/reviewsEmail";
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
             MessageSource messageSource, SpringTemplateEngine templateEngine) {
@@ -120,5 +124,16 @@ public class MailService {
         String content = templateEngine.process(CONTACT_TEMPLATE, context);
         String subject = messageSource.getMessage("email.contact.title", null, locale);
         sendEmail(owner.getLogin(), subject, content, false, true);
+    }
+
+    public void sendEmailReview(String userEmail, boolean isRegistred, String realStateId ){
+        Locale locale = Locale.forLanguageTag("ES");
+        Context context = new Context(locale);
+        context.setVariable(EMAIL, userEmail);
+        context.setVariable(DETAIL, realStateId);
+        context.setVariable(ISREGISTRED, isRegistred);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(REVIEW_TEMPLATE, context);
+        sendEmail(userEmail, "¡Ayudanos a mejorar!", content, false, true);
     }
 }

@@ -1,0 +1,82 @@
+<form class="real__state" [formGroup]="realStateForm">
+    <mat-label class="radio__label">Tipo de Inmueble: {{ getRealStateName() }}</mat-label>
+    <mat-radio-group *ngIf="!isEditable" [formControl]="realStateForm.controls['realStateType']">
+        <mat-radio-button color="warn" value="{{ realStateType.HOUSE }}">Casa</mat-radio-button>
+        <mat-radio-button color="warn" value="{{ realStateType.DEPARTMENT }}">Apartamento</mat-radio-button>
+        <mat-radio-button color="warn" value="{{ realStateType.LOT }}">Lote</mat-radio-button>
+    </mat-radio-group>
+    <div *ngIf="!isEditable">
+        <mat-label class="radio__label">Ubicación</mat-label>
+        <jhi-location-filters
+            [provinciaControl]="realStateForm.get('province')"
+            [cantonControl]="realStateForm.get('city')"
+            [distritoControl]="realStateForm.get('district')"
+            label="true"
+        ></jhi-location-filters>
+        <mat-error *ngIf="!isDirectionValid()">Por favor agregue la ubicación</mat-error>
+    </div>
+
+    <mat-label class="radio__label">Características</mat-label>
+    <div class="checkbox" *ngIf="!isLot()">
+        <mat-checkbox [formControl]="realStateForm.controls['hasPool']" color="warn">Piscina</mat-checkbox>
+        <mat-checkbox [formControl]="realStateForm.controls['hasPrivateSecurity']" color="warn">Seguridad Privada</mat-checkbox>
+        <mat-checkbox *ngIf="isApartment()" [formControl]="realStateForm.controls['hasWater']" color="warn">Agua incluida</mat-checkbox>
+        <mat-checkbox *ngIf="isApartment()" formControlName="hasElectricity" color="warn">Electricidad incluida</mat-checkbox>
+    </div>
+    <div class="amenities" *ngIf="!isLot()">
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Cuartos</mat-label>
+            <input [formControl]="realStateForm.controls['rooms']"  type="text" mask="0" matInput placeholder="Cuartos" />
+            <mat-icon class="custom__icon" matPrefix svgIcon="rsd_bed">sentiment_very_satisfied</mat-icon>
+            <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Baños</mat-label>
+            <input [formControl]="realStateForm.controls['baths']" matInput type="number" placeholder="1.00" step="0.0" min="0" max="10" placeholder="Baños" />
+            <mat-icon class="custom__icon" matPrefix svgIcon="rsd_bath"></mat-icon>
+            <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Garaje</mat-label>
+            <input [formControl]="realStateForm.controls['garage']" matInput mask="0" type="text" placeholder="Capacidad de carros" />
+            <mat-icon class="custom__icon" matPrefix svgIcon="rsd_garage"></mat-icon>
+            <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" matAutosize="true">
+            <mat-label>Pisos</mat-label>
+            <input [formControl]="realStateForm.controls['stories']"  matInput mask="0" type="text" placeholder="Pisos" />
+            <mat-icon class="custom__icon" matPrefix svgIcon="rsd_up"></mat-icon>
+            <mat-error>Este campo es requerido</mat-error>
+        </mat-form-field>
+    </div>
+    <mat-form-field color="accent" appearance="outline" matAutosize="true">
+        <mat-label>Precio</mat-label>
+        <input [formControl]="realStateForm.controls['price']" maxlength="15" matInput prefix="₡" type="text" mask="dot_separator" placeholder="Precio" />
+        <mat-error>Este campo es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline" matAutosize="true">
+        <mat-label>Tamaño</mat-label>
+        <input [formControl]="realStateForm.controls['size']" maxlength="4" matInput mask="0*" placeholder="Tamaño" />
+        <mat-error>Este campo es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline" matAutosize="true">
+        <mat-label>Código postal (opcional)</mat-label>
+        <input [formControl]="realStateForm.controls['postalCode']" mask="0*" matInput placeholder="Código postal" />
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline" matAutosize="true">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput [formControl]="realStateForm.controls['description']" placeholder="Descripción"></textarea>
+        <mat-error>Este campo es requerido</mat-error>
+    </mat-form-field>
+    <mat-label class="radio__label">Otras Características</mat-label>
+    <div class="custom__container" *ngFor="let amenitie of customAmenities; let i = index">
+        <div class="custom__amenities">
+            <div>{{ amenitie.name }}</div>
+            <div>{{ amenitie.description }}</div>
+            <div class="remove__btn">
+                <mat-icon color="warn" (click)="onDeleteAmenities(i)">close</mat-icon>
+            </div>
+        </div>
+    </div>
+    <jhi-custom-amenitites-input (onNewCustomAmenities)="onAddCustomAmenitie($event)"></jhi-custom-amenitites-input>
+</form>

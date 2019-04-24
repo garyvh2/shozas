@@ -1,6 +1,8 @@
 package com.gitgud.web.rest;
 
+import com.gitgud.api.objects.ApiResultModel;
 import com.gitgud.config.Constants;
+import com.gitgud.domain.RealState;
 import com.gitgud.domain.User;
 import com.gitgud.repository.UserRepository;
 import com.gitgud.security.AuthoritiesConstants;
@@ -56,7 +58,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/api")
-public class UserResource {
+public class UserResource extends ApiBaseController {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
@@ -71,6 +73,11 @@ public class UserResource {
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
+    }
+
+    @GetMapping("/user")
+    public ApiResultModel<User> detailRealState(@RequestParam String id) throws Exception {
+        return GetApiResultModel(() ->  userService.getUserById(id));
     }
 
     /**

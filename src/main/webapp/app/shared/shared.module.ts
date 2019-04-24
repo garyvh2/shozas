@@ -1,3 +1,6 @@
+import { BoughtModalComponent } from './bought-modal/bought-modal.component';
+import { CommentComponent } from './comment/comment.component';
+import { RealStateListComponent } from './real-state-list/real-state-list.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { ListingComponent } from './listing/listing.component';
 import { DetailSpecComponent } from './detail-spec/detail-spec.component';
@@ -10,19 +13,29 @@ import { ShozasSharedLibsModule, ShozasSharedCommonModule, JhiLoginModalComponen
 import { AngularMaterialModule } from 'app/shared/angular-material/angular-material.module';
 import { UserRatingComponent } from './user-rating/user-rating.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LocationFiltersComponent } from './location-filters/location-filters.component';
+import { TypeaheadComponent } from './typeahead/typeahead.component';
+import { RemoveModalComponent } from './remove-modal/remove-modal.component';
+import { ReviewService } from 'app/@akita/review';
 
 @NgModule({
-    imports: [ShozasSharedLibsModule, ShozasSharedCommonModule, StarRatingModule.forRoot()],
+    imports: [ShozasSharedLibsModule, ShozasSharedCommonModule, StarRatingModule.forRoot(), AngularMaterialModule, ReactiveFormsModule],
     declarations: [
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
         DetailLikeComponent,
         DetailSpecComponent,
+        RealStateListComponent,
         ListingComponent,
-        UserRatingComponent
+        UserRatingComponent,
+        LocationFiltersComponent,
+        CommentComponent,
+        TypeaheadComponent,
+        BoughtModalComponent,
+        RemoveModalComponent
     ],
-    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
-    entryComponents: [JhiLoginModalComponent],
+    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }, ReviewService],
+    entryComponents: [JhiLoginModalComponent, BoughtModalComponent, RemoveModalComponent],
     exports: [
         ShozasSharedCommonModule,
         JhiLoginModalComponent,
@@ -30,10 +43,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         AngularMaterialModule,
         DetailLikeComponent,
         DetailSpecComponent,
+        RealStateListComponent,
         ListingComponent,
         UserRatingComponent,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        LocationFiltersComponent,
+        CommentComponent,
+        RemoveModalComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
