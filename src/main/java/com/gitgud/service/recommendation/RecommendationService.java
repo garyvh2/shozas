@@ -314,7 +314,7 @@ public class RecommendationService {
      */
     @Transactional
     public void addRating(String userId, String itemId, double rating) throws ApiException {
-        this.recombeeClient.send(new AddRating(userId, itemId, rating)
+        this.recombeeClient.send(new AddRating(userId, itemId, ((rating-3)/2))
             .setTimestamp(new Date())
             .setCascadeCreate(true)
         );
