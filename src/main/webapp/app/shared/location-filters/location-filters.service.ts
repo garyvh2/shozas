@@ -19,10 +19,15 @@ export class LocationFiltersService {
         this.landingService.getLocation().subscribe(
             data => {
                 this.getProvincias().subscribe(provincias => {
+                    console.log(data, provincias);
                     Object.keys(provincias).forEach(key => {
-                        if (data.city === provincias[key]) {
+                        if (data.state_prov === provincias[key]) {
                             provincia.next(Number(key));
                             loading.next(false);
+                            return;
+                        } else {
+                            loading.next(false);
+                            provincia.next(null);
                         }
                     });
                 });
