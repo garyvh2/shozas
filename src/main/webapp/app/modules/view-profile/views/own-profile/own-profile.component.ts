@@ -40,8 +40,8 @@ export class OwnProfileComponent implements OnInit, OnChanges {
         this.getUserRealState(this.user);
         this.getFavorites(this.user);
         this.account.getAuthenticationState().subscribe(us => {
-            this.getUserRealState(this.user);
-            this.getFavorites(this.user);
+            this.getUserRealState(us);
+            this.getFavorites(us);
         });
     }
 
